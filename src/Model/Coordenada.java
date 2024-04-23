@@ -5,8 +5,7 @@ public class Coordenada {
 	private int linha;
 	
 	public Coordenada(String coordenada) {
-		String c = coordenada.substring(0,1).toUpperCase();
-		linha = c.charAt(0)-65;
+		linha = coordenada.substring(0,1).toUpperCase()coordenada.substring(0,1).toUpperCase().charAt(0)-65;
 		coluna = Integer.parseInt(coordenada.substring(1,coordenada.length()))-1;
 	}
 
