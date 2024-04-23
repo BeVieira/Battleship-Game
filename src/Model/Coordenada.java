@@ -1,27 +1,28 @@
 package Model;
 
 public class Coordenada {
-	private int xCoord;
-	private int yCoord;
+	private int coluna;
+	private int linha;
 	
 	public Coordenada(String coordenada) {
-		xCoord = Integer.valueOf(coordenada.substring(1,coordenada.length()))-1;
-		yCoord = Integer.valueOf(coordenada.charAt(0))-65;
+		String c = coordenada.substring(0,1).toUpperCase();
+		linha = c.charAt(0)-65;
+		coluna = Integer.parseInt(coordenada.substring(1,coordenada.length()))-1;
 	}
 
-	public int getxCoord() {
-		return xCoord;
+	public int getColuna() {
+		return coluna;
 	}
 
-	public int getyCoord() {
-		return yCoord;
+	public int getLinha() {
+		return linha;
 	}
 	
-	public void setxCoord(int xCoord) {
-		this.xCoord = xCoord;
+	public void setColuna(int coluna) {
+		this.coluna = coluna;
 	}
 
-	public void setyCoord(int yCoord) {
-		this.yCoord = yCoord;
+	public void setLinha(int linha) {
+		this.linha = linha;
 	}
 }

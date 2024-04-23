@@ -1,6 +1,6 @@
 package Model;
 
-public abstract class Embarcacao {
+public class Embarcacao {
 	private int tipo;
 	
 	public Embarcacao(int tipo) {
@@ -11,6 +11,13 @@ public abstract class Embarcacao {
 		return tipo;
 	}
 	
-	public abstract boolean Posicionar(Tabuleiro tabuleiro, Coordenada coordenada, String orientacao);
+	public boolean Posicionar(Tabuleiro tabuleiro, Coordenada coordenada, String orientacao) {
+		int colunaAux = coordenada.getColuna();
+		for (int i = 0; i < this.getTipo(); i++) {
+			coordenada.setColuna(colunaAux+i);
+			tabuleiro.setCasa(coordenada, this.getTipo());
+		}
+		return true;
+	}
 
 }

@@ -34,6 +34,10 @@ public class Jogador {
 		navios.add(new Hidroaviao());
 	}
 	
+	public ArrayList<Embarcacao> getNavios() {
+		return navios;
+	}
+
 	public boolean InserirEmbarcacao(String entrada, Embarcacao embarcacao){
 		Coordenada coordenada = new Coordenada(entrada);
 		return embarcacao.Posicionar(this.tabuleiro, coordenada, "OL");

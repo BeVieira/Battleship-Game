@@ -1,14 +1,14 @@
 package Model;
 
 public class Tabuleiro {
-	private int[][] tabuleiro;
+	int[][] tabuleiro;
 	
 	public int getCasa(Coordenada coordenada) {
-		return tabuleiro[coordenada.getxCoord()][coordenada.getyCoord()];
+		return tabuleiro[coordenada.getLinha()][coordenada.getColuna()];
 	}
 
 	public void setCasa(Coordenada coordenada, int tipoEmbarcacao) {
-		this.tabuleiro[coordenada.getxCoord()][coordenada.getyCoord()] = tipoEmbarcacao;
+		this.tabuleiro[coordenada.getLinha()][coordenada.getColuna()] = tipoEmbarcacao;
 	}
 
 	public Tabuleiro() {

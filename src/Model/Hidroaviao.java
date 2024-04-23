@@ -7,7 +7,12 @@ public class Hidroaviao extends Embarcacao{
 
 	@Override
 	public boolean Posicionar(Tabuleiro tabuleiro, Coordenada coordenada, String orientacao) {
-		// TODO Auto-generated method stub
+		tabuleiro.setCasa(coordenada, this.getTipo());
+		coordenada.setLinha(coordenada.getLinha()+1);
+		coordenada.setColuna(coordenada.getColuna()-1);
+		tabuleiro.setCasa(coordenada, this.getTipo());
+		coordenada.setColuna(coordenada.getColuna()+2);
+		tabuleiro.setCasa(coordenada, this.getTipo());
 		return false;
 	}
 }
