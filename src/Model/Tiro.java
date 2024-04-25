@@ -3,7 +3,7 @@ package Model;
 public class Tiro {
     public Tiro (Coordenada coordenada){
         Tabuleiro t = new Tabuleiro();
-        private int pos = t.getCasa(coordenada);
+        int pos = t.getCasa(coordenada);
         if (pos == 0){
             t.setCasa(coordenada,-100);
         }
