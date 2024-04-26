@@ -43,8 +43,12 @@ public class Jogador {
 		return embarcacao.Posicionar(this.tabuleiro, coordenada, "OL");
 	}
 	
-	public boolean Atirar(String entrada){
-		//Completar
+	public boolean Atirar(Coordenada coordenada, Tabuleiro tabuleiro){
+		int casa = tabuleiro.getCasa(coordenada);
+		if (casa == 0)
+			tabuleiro.setCasa(coordenada, -100);
+		else
+			tabuleiro.setCasa(coordenada, -casa);
 		return true;
 	}
 }
