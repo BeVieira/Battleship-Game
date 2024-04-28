@@ -6,10 +6,12 @@ public class Jogador {
 	private String nome;
 	private ArrayList<Embarcacao> navios;
 	protected Tabuleiro tabuleiro;
+	protected Tabuleiro tabuleiroAlvo;
 
 	public Jogador(String nome) {
 		this.nome = nome;
 		tabuleiro = new Tabuleiro();
+		tabuleiroAlvo = new Tabuleiro();
 		
 		navios = new ArrayList<Embarcacao>();
 		//1 Couraçado
@@ -43,12 +45,12 @@ public class Jogador {
 		return embarcacao.Posicionar(this.tabuleiro, coordenada, "OL");
 	}
 	
-	public boolean Atirar(Coordenada coordenada, Tabuleiro tabuleiro){
-		int casa = tabuleiro.getCasa(coordenada);
+	public boolean Atirar(Coordenada coordenada){
+		int casa = tabuleiroAlvo.getCasa(coordenada);
 		if (casa == 0)
-			tabuleiro.setCasa(coordenada, -100);
+			tabuleiroAlvo.setCasa(coordenada, -100);
 		else
-			tabuleiro.setCasa(coordenada, -casa);
+			tabuleiroAlvo.setCasa(coordenada, -casa);
 		return true;
 	}
 }
