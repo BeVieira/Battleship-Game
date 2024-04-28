@@ -11,6 +11,7 @@ public class Embarcacao {
 		return tipo;
 	}
 	
+	//TO-DO validar posiçao da embarcaçao (Override no Hidroaviao)
 	public boolean Posicionar(Tabuleiro tabuleiro, Coordenada coordenada, String orientacao) {
 		int colunaAux = coordenada.getColuna();
 		for (int i = 0; i < this.getTipo(); i++) {

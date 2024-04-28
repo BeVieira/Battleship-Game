@@ -45,12 +45,16 @@ public class Jogador {
 		return embarcacao.Posicionar(this.tabuleiro, coordenada, "OL");
 	}
 	
+	//Retorna falso caso o tiro seja em uma casa atirada
 	public boolean Atirar(Coordenada coordenada){
 		int casa = tabuleiroAlvo.getCasa(coordenada);
 		if (casa == 0)
 			tabuleiroAlvo.setCasa(coordenada, -100);
-		else
+		else if (casa > 0)
 			tabuleiroAlvo.setCasa(coordenada, -casa);
+		else
+			return false;
 		return true;
+		
 	}
 }

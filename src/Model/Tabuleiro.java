@@ -1,7 +1,7 @@
 package Model;
 
 public class Tabuleiro {
-	int[][] tabuleiro;
+	protected int[][] tabuleiro;
 	
 	public int getCasa(Coordenada coordenada) {
 		return tabuleiro[coordenada.getLinha()][coordenada.getColuna()];
@@ -15,6 +15,7 @@ public class Tabuleiro {
 		tabuleiro = new int [15][15];
 	}
 	
+	//Tirar antes da entrega
 	public void ExibeTabuleiro() {
 		System.out.println("  1 2 3 4 5 6 7 8 9 0 1 2 3 4 5");
 		for (int i = 0; i < 15; i++) {
