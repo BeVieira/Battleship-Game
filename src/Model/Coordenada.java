@@ -4,6 +4,7 @@ public class Coordenada {
 	private int coluna;
 	private int linha;
 	
+	//Será modificada quando tivermos o tabuleiro da View
 	public Coordenada(String coordenada) {
 		linha = coordenada.substring(0,1).toUpperCase().charAt(0)-65;
 		coluna = Integer.parseInt(coordenada.substring(1,coordenada.length()))-1;

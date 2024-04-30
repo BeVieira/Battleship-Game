@@ -40,9 +40,10 @@ public class Jogador {
 		return navios;
 	}
 
+	//Alterar parâmetro entrada quando tivermos as coordenadas do clique da View
 	public boolean InserirEmbarcacao(String entrada, Embarcacao embarcacao){
 		Coordenada coordenada = new Coordenada(entrada);
-		return embarcacao.Posicionar(this.tabuleiro, coordenada, "OL");
+		return embarcacao.Posicionar(this.tabuleiro, coordenada);
 	}
 	
 	//Retorna falso caso o tiro seja em uma casa atirada
