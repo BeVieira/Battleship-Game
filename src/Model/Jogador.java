@@ -40,9 +40,8 @@ public class Jogador {
 		return navios;
 	}
 
-	//Alterar parâmetro entrada quando tivermos as coordenadas do clique da View
-	public boolean InserirEmbarcacao(String entrada, Embarcacao embarcacao){
-		Coordenada coordenada = new Coordenada(entrada);
+	//Controller fica responável por gerar a Coordenada
+	public boolean InserirEmbarcacao(Coordenada coordenada, Embarcacao embarcacao){
 		return embarcacao.Posicionar(this.tabuleiro, coordenada);
 	}
 	
