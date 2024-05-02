@@ -17,6 +17,8 @@ public class Embarcacao {
 	}
 
 	public boolean ValidaLinha(Tabuleiro t, Coordenada c){
+		if (c.getLinha() + this.getTipo() > 14)
+			return false;
 		for (int i = 0, colunaTemp = c.getColuna(); i < this.getTipo(); i++){
 			c.setColuna(colunaTemp+i);
 			if (t.getCasa(c) != 0)
@@ -36,7 +38,7 @@ public class Embarcacao {
 			int linhaOriginal = aux.getLinha();
 			int linhaAnterior = linhaOriginal - 1;
 			int linhaSeguinte = linhaOriginal + 1;
-
+			
 			//Caso casas onde a embarcação será inserida estar ocupada
 			for (int i = 0, colunaTemp = c.getColuna(); i < this.getTipo(); i++){
 				aux.setColuna(colunaTemp+i);
@@ -44,7 +46,7 @@ public class Embarcacao {
 					return false;
 			}
 			aux.setColuna(colunaOriginal);
-		
+			
 			//Caso selecione casa ocupada (por tiro ou embarcação)
 			if (t.getCasa(c) != 0)
 				return false;
@@ -75,11 +77,11 @@ public class Embarcacao {
 				}
 				else{
 					//Valida Antes
-	                aux.setColuna(colunaAnterior);
+	                		aux.setColuna(colunaAnterior);
 					if (!ValidaCasa(t,aux))
 						return false;
 					//Valida Depois
-	                aux.setColuna(colunaPosterior);
+	               	 		aux.setColuna(colunaPosterior);
 					if (!ValidaCasa(t,aux))
 						return false;
 				}
@@ -87,7 +89,7 @@ public class Embarcacao {
 			//Linha O
 			else if (linhaOriginal == 14){
 				//Valida Acima
-	            aux.setLinha(linhaAnterior);
+	            		aux.setLinha(linhaAnterior);
 				if (!ValidaLinha(t,aux))
 					return false;
 				aux.setLinha(linhaOriginal);
@@ -95,31 +97,31 @@ public class Embarcacao {
 				//Coluna 1
 				if (colunaOriginal == 0){
 					//Valida Depois
-	                aux.setColuna(colunaPosterior);
+	                		aux.setColuna(colunaPosterior);
 					if (!ValidaCasa(t,aux))
 						return false;
 				}
 				//Coluna 15
-				else if ((colunaOriginal + tam) == 14){
+				else if ((colunaOriginal + tam) >= 14){
 					//Valida Antes
-	                aux.setColuna(colunaAnterior);
+	                		aux.setColuna(colunaAnterior);
 					if (!ValidaCasa(t,aux))
 						return false;
 				}
 				else{
 					//Valida Antes
-	                aux.setColuna(colunaAnterior);
+	                		aux.setColuna(colunaAnterior);
 					if (!ValidaCasa(t,aux))
 						return false;
 					//Valida Depois
-	                aux.setColuna(colunaPosterior);
+	                		aux.setColuna(colunaPosterior);
 					if (!ValidaCasa(t,aux))
 						return false;
 				}
 			}
 			else {
 				//Valida Acima
-	            aux.setLinha(linhaAnterior);
+	            		aux.setLinha(linhaAnterior);
 				if (!ValidaLinha(t,aux))
 					return false;
 				aux.setLinha(linhaSeguinte);
@@ -127,13 +129,13 @@ public class Embarcacao {
 					return false;
 				aux.setLinha(linhaOriginal);
 				//Valida Antes
-	            aux.setColuna(colunaAnterior);
-	            if (!ValidaCasa(t,aux))
-	                return false;
-	            //Valida Depois
-	            aux.setColuna(colunaPosterior);
-	            if (!ValidaCasa(t,aux))
-	                return false;
+	            		aux.setColuna(colunaAnterior);
+	            		if (!ValidaCasa(t,aux))
+	                		return false;
+	            		//Valida Depois
+	            		aux.setColuna(colunaPosterior);
+	            		if (!ValidaCasa(t,aux))
+	                		return false;
 			}
 			return true;
 	}
