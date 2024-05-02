@@ -5,13 +5,8 @@ public class main {
 
 	public static void main(String[] args) {
 		Jogador P1 = new Jogador("P1");
-		P1.InserirEmbarcacao("A1", new Couracado());
-		Jogador P2 = new Jogador("P2");
-		P2.tabuleiroAlvo = P1.tabuleiro;
-		P2.Atirar(new Coordenada("A5"));
-		System.out.println("P1: ");
+		P1.tabuleiro.setCasa(new Coordenada(6,0), 1);
+		P1.InserirEmbarcacao(new Coordenada(4,1), new Couracado());
 		P1.tabuleiro.ExibeTabuleiro();
-		System.out.println("P2: ");
-		P2.tabuleiroAlvo.ExibeTabuleiro();
 	}
 }
