@@ -12,66 +12,37 @@ public class Embarcacao {
 	}
 	
 	//TO-DO validar posiçao da embarcaçao (Override no Hidroaviao)
-	public boolean validaAdjacente(Coordenada c) {
-		int coluna = c.getColuna();
-		int linha =  c.getLinha();
-		String str = c.getString();
-		Coordenada aux = new Coordenada(str);
-		Tabuleiro t = new Tabuleiro();
-		//to considerando que ser for diferente de 0 tem alguma embarcaçao na posiçao
-		//lado direito do centro
-		aux.setColuna(coluna+1);
-		if(t.getCasa(aux) != 0) {
-			return false;
+	public boolean ValidaPosicionar(Tabuleiro t, Coordenada c) {
+		int tam = this.getTipo();
+		
+		Coordenada aux = new Coordenada(c.getColuna(), c.getLinha());
+		int coluna_aux = aux.getColuna();
+		int linha_aux = aux.getLinha();
+		
+		//testar a coordenada anterior
+		aux.setColuna(coluna_aux-1);
+		if (t.getCasa(aux) == 0) {
+			//se a anterior tiver ok entra aqui e vai validar a parte toda de cima
+			aux.setLinha(linha_aux-1);
+			aux.setColuna(coluna_aux+1);
+			//Voltei a coordenada original
+			for (int i = 0; i < tam; i++) {
+				if (t.getCasa(aux) != 0)
+					return false;
+				aux.setColuna(coluna_aux+i);
+			}
 		}
-		//lado esquerdo do centro
-		aux.setColuna(coluna-1);
-		if(t.getCasa(aux) != 0) {
-			return false;
-		}
-		//em baixo do centro
-		aux.setLinha(linha-1);
-		if(t.getCasa(aux) != 0) {
-			return false;
-		}
-		//em cima do centro
-		aux.setLinha(linha+1);
-		if(t.getCasa(aux) != 0) {
-			return false;
-		}
-		//em cima a direita
-		aux.setColuna(coluna+1);
-		aux.setLinha(linha-1);
-		if(t.getCasa(aux) != 0) {
-			return false;
-		}
-		//em cima a esquerda
-		aux.setColuna(coluna-1);
-		aux.setLinha(linha-1);
-		if(t.getCasa(aux) != 0) {
-			return false;
-		}
-		//em baixo a esquerda
-		aux.setColuna(coluna-1);
-		aux.setLinha(linha+1);
-		if(t.getCasa(aux) != 0) {
-			return false;
-		}
-		//em baixo a direita
-		aux.setColuna(coluna+1);
-		aux.setLinha(linha+1);
-		if(t.getCasa(aux) != 0) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean validaPosicao(Coordenada c) {
-		Tabuleiro t = new Tabuleiro();
-		if(t.getCasa(c) == 0 && validaAdjacente(c) ) {
+			//parte de cima ok testando a de baixo agr
+			aux.setColuna(coluna_aux);
+			aux.setLinha(linha_aux+1);
+			if (t.getCasa(aux) == 0) {
+				for (int i = 0; i < tam;  i++) {
+					if (t.getCasa(aux) != 0)
+						return false;
+					aux.setColuna(coluna_aux+i);
+				}
+			}
 			return true;
-		}
-		return false;
 	}
 	
 	public boolean Posicionar(Tabuleiro tabuleiro, Coordenada coordenada) {
