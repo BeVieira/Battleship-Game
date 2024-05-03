@@ -12,41 +12,41 @@ public class Jogador {
 		this.nome = nome;
 		tabuleiro = new Tabuleiro();
 		tabuleiroAlvo = new Tabuleiro();
-		
+
 		navios = new ArrayList<Embarcacao>();
-		//1 Couraçado
+		// 1 Couraçado
 		navios.add(new Couracado());
-		//2 Cruzadores
+		// 2 Cruzadores
 		navios.add(new Cruzador());
 		navios.add(new Cruzador());
-		//3 Destroyers
+		// 3 Destroyers
 		navios.add(new Destroyer());
 		navios.add(new Destroyer());
 		navios.add(new Destroyer());
-		//4 Submarinos
+		// 4 Submarinos
 		navios.add(new Submarino());
 		navios.add(new Submarino());
 		navios.add(new Submarino());
 		navios.add(new Submarino());
-		//5 Hidroaviões
+		// 5 Hidroaviões
 		navios.add(new Hidroaviao());
 		navios.add(new Hidroaviao());
 		navios.add(new Hidroaviao());
 		navios.add(new Hidroaviao());
 		navios.add(new Hidroaviao());
 	}
-	
+
 	public ArrayList<Embarcacao> getNavios() {
 		return navios;
 	}
 
-	//Controller fica responável por gerar a Coordenada
-	public boolean InserirEmbarcacao(Coordenada coordenada, Embarcacao embarcacao){
+	// Controller fica responável por gerar a Coordenada
+	public boolean InserirEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
 		return embarcacao.Posicionar(this.tabuleiro, coordenada);
 	}
-	
-	//Retorna falso caso o tiro seja em uma casa atirada
-	public boolean Atirar(Coordenada coordenada){
+
+	// Retorna falso caso o tiro seja em uma casa atirada
+	public boolean Atirar(Coordenada coordenada) {
 		int casa = tabuleiroAlvo.getCasa(coordenada);
 		if (casa == 0)
 			tabuleiroAlvo.setCasa(coordenada, -100);
@@ -55,6 +55,6 @@ public class Jogador {
 		else
 			return false;
 		return true;
-		
+
 	}
 }
