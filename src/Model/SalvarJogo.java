@@ -3,6 +3,7 @@ package Model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 public class SalvarJogo {
 	public ArrayList<Embarcacao> navios = new ArrayList<Embarcacao>();
