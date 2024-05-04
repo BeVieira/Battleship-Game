@@ -1,8 +1,11 @@
-package Model;
+package Testes;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import Model.Coordenada;
+import Model.Jogador;
 
 public class TestJogador {
 

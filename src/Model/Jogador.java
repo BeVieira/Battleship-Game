@@ -37,7 +37,43 @@ public class Jogador {
 	}
 
 	public ArrayList<Embarcacao> getNavios() {
+		//todo 
+		//tem que conseguir andar nos navios para poder escrever corretamente
 		return navios;
+	}
+	//tem que ser feita uma atualiza qtd de nav
+	public int getqtdnavios() {
+		//todo
+		//retornar qtd atualizade de navios
+		return 15;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Tabuleiro getTabuleiro() {
+		return tabuleiro;
+	}
+
+	public void setTabuleiro(Tabuleiro tabuleiro) {
+		this.tabuleiro = tabuleiro;
+	}
+
+	public Tabuleiro getTabuleiroAlvo() {
+		return tabuleiroAlvo;
+	}
+
+	public void setTabuleiroAlvo(Tabuleiro tabuleiroAlvo) {
+		this.tabuleiroAlvo = tabuleiroAlvo;
+	}
+
+	public void setNavios(ArrayList<Embarcacao> navios) {
+		this.navios = navios;
 	}
 
 	// Controller fica responável por gerar a Coordenada
