@@ -8,7 +8,7 @@ public class SalvarJogador{
 	protected Tabuleiro tabuleiro;
 	protected Tabuleiro tabuleiroAlvo;
 	
-	public void SalvarJogador(Jogador j) {
+	public void Salva(Jogador j) {
 		this.nome = j.getNome();
 		this.navios = j.getNavios();
 		this.tabuleiro = j.getTabuleiro();

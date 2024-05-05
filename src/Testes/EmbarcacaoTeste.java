@@ -1,8 +1,17 @@
-package Model;
+package Testes;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import Model.Coordenada;
+import Model.Couracado;
+import Model.Cruzador;
+import Model.Destroyer;
+import Model.Embarcacao;
+import Model.Hidroaviao;
+import Model.Submarino;
+import Model.Tabuleiro;
 
 public class EmbarcacaoTeste {
 
@@ -82,7 +91,7 @@ public class EmbarcacaoTeste {
 		sub.Posicionar(tabuleiro, new Coordenada(0, 0));
 		assertEquals("Erro ao inserir em A1", sub.getTipo(), tabuleiro.getCasa(new Coordenada(0, 0)));
 		couracado.Posicionar(tabuleiro, new Coordenada(14, 14));
-		tabuleiro.ExibeTabuleiro();
+		//tabuleiro.ExibeTabuleiro();
 		assertEquals("Inserção indevida em O15", 0, tabuleiro.getCasa(new Coordenada(14, 14)));
 	}
 }
