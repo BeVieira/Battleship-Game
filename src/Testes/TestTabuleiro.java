@@ -15,7 +15,6 @@ public class TestTabuleiro {
 		for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 15; j++) {
 				Coordenada c = new Coordenada(j, i);
-				System.out.println("linha: " + c.getLinha() + "coluna: " + c.getColuna());
 				assertEquals("Inicializacao incorreta", tab.getCasa(c), 0);
 			}
 		}

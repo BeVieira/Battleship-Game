@@ -15,9 +15,11 @@ public class Hidroaviao extends Embarcacao {
 		tabuleiro.setCasa(coordenada, this.getTipo());
 		return true;
 	}
+	
+	@Override 
+	public boolean ValidaPosicionar(Tabuleiro t, Coordenada c) { 
+		//TO-DO
+		return true; 
+	}
 
-	/*
-	 * @Override public boolean ValidaPosicionar(Tabuleiro t, Coordenada c) { return
-	 * true; }
-	 */
 }
