@@ -17,9 +17,9 @@ public class Main {
 		Coordenada c = new Coordenada(1,1);
 		Embarcacao e = new Embarcacao(1);
 		p1.InserirEmbarcacao(c, e);
-		p1.tabuleiro.ExibeTabuleiro();
+		//p1.tabuleiro.ExibeTabuleiro();
 		SalvarJogador savep1 = new SalvarJogador();
-		savep1.SalvarJogador(p1);
+		savep1.Salva(p1);
 		SalvarJogo save = new SalvarJogo();
 		save.SalvaJogo(p1);
 	}

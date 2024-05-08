@@ -41,7 +41,8 @@ public class SalvarJogo {
 				}
 				
 			}
-		}	
+		}
+		output.close();
 	}
 
 }
