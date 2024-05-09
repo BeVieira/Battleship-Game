@@ -1,9 +1,12 @@
 package View;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Exibe extends JFrame{
 	
@@ -15,6 +18,10 @@ public class Exibe extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE); //encerra o programa quando clica no x
 		setResizable(false);
 		setLocationRelativeTo(null); // faz ir pro meio da tela ao abrir
+
+		
+
+
 	}
 	
 	
@@ -114,6 +121,13 @@ public class Exibe extends JFrame{
 			
 		}
 		//faz botao
+		JButton b = new JButton("proximo jogador");
+		setLayout(null);
+		b.setBounds(300, 390,150, 40);
+		b.setVisible(true);
+		add(b);
+		//pq o botao so aparece quando passa o mouse em cima? peguntar pro ivan
+
 		
 		
 	}
