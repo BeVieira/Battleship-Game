@@ -12,9 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class Exibe extends JFrame implements ActionListener{
+public class Exibe2 extends JFrame implements ActionListener{
 	
-	public  Exibe() {
+	public  Exibe2() {
 		
 		setVisible(true);
 		setSize(850, 500);
@@ -116,28 +116,27 @@ public class Exibe extends JFrame implements ActionListener{
 		y2 = 65;
 		x2 = 505;
 		for(int i = 0; i<15;i++){
-			g.drawString(String.format("%d ", i+1), x2, y2);
+			g.drawString(String.format("%d ", i), x2, y2);
 			x2+=20;
 			
 		}
 		//faz botao
-		JButton b = new JButton("Próximo jogador");
+		JButton b = new JButton("Tabuleiro Pronto");
 		setLayout(null);
 		b.setBounds(300, 390,150, 40);
 		b.setVisible(true);
 		add(b);
 		//pq o botao so aparece quando passa o mouse em cima? peguntar pro ivan
 		b.addActionListener(this);
-		//como identificar o jogador de acordo com o nome que ele digitar
-		g.drawString("Jogador 1 selecione uma arma na lista", 270, 410);
+		g.drawString("Jogador 2 selecione uma arma na lista", 270, 410);
 		
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		 new Exibe2();
-		 dispose();// fecha janela atual
 		
 	}
 
-}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+			new Ataque();
+			dispose();
+		}
+		
+	}
