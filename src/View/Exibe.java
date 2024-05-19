@@ -2,20 +2,34 @@ package View;
 
 import java.awt.BorderLayout;
 import Model.Jogador;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Exibe extends JFrame implements ActionListener{
+	List<Navio> navios = new ArrayList<Navio>();
+	int navioMouse = 0;
+
+	// Somente para fim de testes
+	Model.Tabuleiro tabTeste = new Model.Tabuleiro();
 	
 	public Exibe() {
 		
+		inicializaNavios();
+		addMouseListener(new LerMouse());
 		setVisible(true);
 		setSize(850, 500);
 		setTitle("Batalha Naval");
@@ -25,63 +39,264 @@ public class Exibe extends JFrame implements ActionListener{
 
 	}
 	
+	private class Navio extends JButton {
+		int index;
+		boolean live;
+		int tipo;
+		public Navio(int i, int t) {
+			super("");
+			setVisible(true);
+			index = i;
+			live = true;
+			tipo = t;
+		}
+		public void drawSelf(Graphics g, int x, int y, int len) {
+			g.fillRect(x, y,20*len, 20);
+		}
+	}
+	
+	private class Hidro extends Navio {
+		public Hidro(int i, int tipo) {
+			super(i, tipo);
+		}
+		public void drawSelf(Graphics g, int x, int y, int len) {
+			
+			// Desenha dois quadrados inferiores
+			g.fillRect(x, y+20,20, 20);
+			g.fillRect(x+40, y+20, 20, 20);
+			
+			// Desenha quadrado superior
+			g.fillRect(x+20, y,20, 20);
+		}
+	}
+	
+	private class LerMouse extends MouseAdapter{
+		public void mousePressed(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+			
+			if ((x >= 500) && (x <= 800) && (y >= 70) && (y <= 370)) {
+				int indexX = (x - 500)/20;
+				int indexY = (y - 70)/20;
+				Model.Coordenada coord = new Model.Coordenada(indexX, indexY);
+				if (navioMouse != 0) {
+					Model.Embarcacao emb;
+					switch (navioMouse) {
+						case 1:
+							emb = new Model.Submarino();
+							emb.Posicionar(tabTeste, coord);
+							break;
+						case 2:
+							emb = new Model.Destroyer();
+							emb.Posicionar(tabTeste, coord);
+							break;
+						case 3:
+							emb = new Model.Hidroaviao();
+							emb.Posicionar(tabTeste, coord);
+							break;
+						case 4:
+							emb = new Model.Cruzador();
+							emb.Posicionar(tabTeste, coord);
+							break;
+						case 5:
+							emb = new Model.Couracado();
+							emb.Posicionar(tabTeste, coord);
+							break;
+					}
+					navioMouse = 0;
+					repaint();
+				}
+			}
+		}
+	}
+	
+	private void inicializaNavios() {
+		Navio n;
+		int index = 0;
+		
+		// Hidroavioes
+		for (int i = 0; i < 5; i++) {
+			n = new Hidro(index, 3);
+			navios.add(n);
+			index++;
+		}
+		
+		// Submarinos
+		for (int i = 0; i < 4; i++) {
+			n = new Navio(index, 1);
+			navios.add(n);
+			index++;
+		}
+		
+		// Destroyers
+		for (int i = 0; i < 3; i++) {
+			n = new Navio(index, 2);
+			navios.add(n);
+			index++;
+		}
+		
+		// Cruzadores
+		for (int i = 0; i < 2; i++) {
+			n = new Navio(index, 4);
+			navios.add(n);
+			index++;
+		}
+		
+		// Couracados
+		for (int i = 0; i < 1; i++) {
+			n = new Navio(index, 5);
+			navios.add(n);
+			index++;
+		}
+	}
+	
+	private void desenhaCasa(int x, int y, int tipo, Graphics g) {
+		switch (tipo) {
+		case 1:
+			g.setColor(Color.red);
+			g.fillRect(x, y, 20, 20);
+			break;
+		case 2:
+			g.setColor(Color.blue);
+			g.fillRect(x, y, 20, 20);
+			break;
+		case 3:
+			g.setColor(Color.green);
+			g.fillRect(x, y, 20, 20);
+			break;
+		case 4:
+			g.setColor(Color.magenta);
+			g.fillRect(x, y, 20, 20);
+			break;
+		case 5:
+			g.setColor(Color.red);
+			g.fillRect(x, y, 20, 20);
+			break;
+		default:
+			break;
+		}
+	}
 	
 	public void paint(Graphics g) {
-		//desenha hidroaviao verde
-		int x_inicial = 30;
-		int x_inicial_cima = 50;
-		g.setColor(Color.green);
-		for(int i = 0; i< 5;i++) {
-			g.fillRect(x_inicial_cima, 80,20, 20);
-			x_inicial_cima+=80;
-		}
-		//desenha parte debaixo do hidro
-		for(int i = 0; i< 10;i++) {
-			g.fillRect(x_inicial, 100,20, 20);
-			x_inicial+=40;
-		}
-		//desenha submarinos
-		g.setColor(Color.red);
-		int y = 150;
+		Navio n;
+		int index = 0;
 		int x = 30;
-		for(int i = 0; i< 4;i++) {
-			g.fillRect(x, y,20, 20);
-			x+=40;
+		int y = 80;
+		
+		//desenha hidroaviao
+
+		for(int i = 0; i< 5;i++) {
+			n = navios.get(index);
+			index++;
+			if (n.live) {
+				g.setColor(Color.green);
+			}
+			else {
+				g.setColor(Color.gray);
+			}
+				n.setBounds(x, y, 60, 40);
+				n.drawSelf(g, x, y, 0);
+				add(n);
+				n.addActionListener(this);
+				x += 80;
 		}
+
+		//desenha submarinos
+		x = 30;
+		y = 150;
+		for(int i = 0; i< 4;i++) {
+			n = navios.get(index);
+			index++;
+			if (n.live) {
+				g.setColor(Color.red);
+			}
+			else {
+				g.setColor(Color.gray);
+			}
+			n.drawSelf(g, x, y, 1);
+			n.setBounds(x, y, 20, 20);
+			add(n);
+			n.addActionListener(this);
+			x += 40;
+		}
+		
 		//desenha destroyer
-		g.setColor(Color.BLUE);
 		x=30;
 		y=200;
 		for(int i = 0; i< 3;i++) {
-			g.fillRect(x, y,20, 20);
-			x+=20;
-			g.fillRect(x, y,20, 20);
-			x+=40;
+			n = navios.get(index);
+			index++;
+			if (n.live) {
+				g.setColor(Color.BLUE);
+			}
+			else {
+				g.setColor(Color.gray);
+			}
+			n.drawSelf(g, x, y, 2);
+			n.setBounds(x, y, 40, 20);
+			add(n);
+			n.addActionListener(this);
+			x += 60;
 		}
 		//desenha cruzadores
-		g.setColor(Color.MAGENTA);
 		x=30;
 		y =240;
 		for(int i = 0; i< 2;i++) {
-			for(int j = 0; j< 4;j++) {
-				g.fillRect(x, y,20, 20);
-				x+=20;
+			n = navios.get(index);
+			index++;
+			if (n.live) {
+				g.setColor(Color.MAGENTA);
 			}
-			//g.fillRect(x, y,20, 20);
-			x+=30;
+			else {
+				g.setColor(Color.gray);
+			}
+			n.drawSelf(g, x, y, 3);
+			n.setBounds(x, y, 60, 20);
+			add(n);
+			n.addActionListener(this);
+			x += 80;
 		}
+		
 		//desenha couraçado
-		g.setColor(Color.red);
 		x=30;
 		y =280;
-		for(int i = 0; i < 5;i++) {
-			g.fillRect(x, y,20, 20);
-			x+=20;
+		for(int i = 0; i < 1;i++) {
+			n = navios.get(index);
+			index++;
+			if (n.live) {
+				g.setColor(Color.red);
+			}
+			else {
+				g.setColor(Color.gray);
+			}
+			n.drawSelf(g, x, y, 4);
+			n.setBounds(x, y, 80, 20);
+			add(n);
+			n.addActionListener(this);
+			x += 100;
 		}
+		
 		//desenha tabuleiro
 		g.setColor(Color.WHITE);
 		//desenha quadradao
 		g.fillRect(500, 70,300, 300);
+		
+		
+		// percorre tabuleiro e desenha cada casa
+		Model.Coordenada coords = new Model.Coordenada(0, 0);
+		int tipo;
+		for (int i = 0; i < 15; i++) {
+			coords.setLinha(i);
+			for (int j = 0; j < 15; j++) {
+				x = 500 + (20 * j);
+				y = 70 + (20 * i);
+				
+				coords.setColuna(j);
+				tipo = tabTeste.getCasa(coords);
+				desenhaCasa(x, y, tipo, g);
+			}
+		}
+		
 		g.setColor(Color.black);
 		int x1 = 500;
 		int x2 = 500;
@@ -120,6 +335,9 @@ public class Exibe extends JFrame implements ActionListener{
 			x2+=20;
 			
 		}
+		
+		
+		
 		//faz botao
 		JButton b = new JButton("Próximo jogador");
 		setLayout(null);
@@ -129,15 +347,22 @@ public class Exibe extends JFrame implements ActionListener{
 		//pq o botao so aparece quando passa o mouse em cima? peguntar pro ivan
 		b.addActionListener(this);
 		//como identificar o jogador de acordo com o nome que ele digitar
-		g.drawString("Jogador selecione uma arma na lista", 270, 410);
+		g.drawString("Jogador 1 selecione uma arma na lista", 270, 410);
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		 new Exibe2();
-		 dispose();// fecha janela atual
-		
+		if (e.getActionCommand() == "Próximo jogador") {
+			new Exibe2();
+			dispose();// fecha janela atual
+		}
+		else {
+			Navio n = (Navio) e.getSource();
+			if (n.live) {
+				navioMouse = n.tipo;
+			}
+		}
 	}
 
 }
