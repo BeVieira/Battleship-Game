@@ -37,10 +37,9 @@ public class Jogador {
 	}
 
 	public ArrayList<Embarcacao> getNavios() {
-		//todo 
-		//tem que conseguir andar nos navios para poder escrever corretamente
 		return navios;
 	}
+	
 	//tem que ser feita uma atualiza qtd de nav
 	public int getqtdnavios() {
 		//todo
