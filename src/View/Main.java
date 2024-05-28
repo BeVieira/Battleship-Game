@@ -3,7 +3,7 @@ package View;
 public class Main {
 
 	public static void main(String[] args) {
-		new JanelaInicioJogo();
+		//JanelaInicioJogo();
 		// new Ataque();
 		new Exibe();
 	}

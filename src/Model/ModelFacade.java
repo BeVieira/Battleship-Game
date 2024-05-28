@@ -15,7 +15,6 @@ public class ModelFacade {
 	}
 	
 	public void RemoveEmbarcacao(Jogador jogador, Embarcacao navio) {
-		//Preciso remover o navio da lista de embarcações do jogador
-		//Pensando em como fazer
+		jogador.removeNavio(navio);
 	}
 }

@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Jogador {
 	private String nome;
@@ -40,13 +41,21 @@ public class Jogador {
 		return navios;
 	}
 	
-	//tem que ser feita uma atualiza qtd de nav
-	public int getqtdnavios() {
-		//todo
-		//retornar qtd atualizade de navios
-		return 15;
+	public int getQtdNavios() {
+		return this.getNavios().size();
 	}
 
+	public void removeNavio(int tipoNavio) {
+	    Iterator<Embarcacao> iterator = this.navios.iterator();
+	    while (iterator.hasNext()) {
+	        Embarcacao e = iterator.next();
+	        if (e.getTipo() == tipoNavio) {
+	            iterator.remove();
+	            break;
+	        }
+	    }
+	}
+	
 	public String getNome() {
 		return nome;
 	}

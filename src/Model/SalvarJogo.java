@@ -14,7 +14,7 @@ public class SalvarJogo {
 		output.println(j.getNome());
 		
 		//salva  navios
-		for(int i = 0; i< j.getqtdnavios(); i++ ) {
+		for(int i = 0; i< j.getQtdNavios(); i++ ) {
 			output.println(this.navios.get(i));
 		}
 		
