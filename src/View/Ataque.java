@@ -111,7 +111,7 @@ public class Ataque extends JFrame implements ActionListener{
 		//pq o botao so aparece quando passa o mouse em cima? peguntar pro ivan
 		b.addActionListener(this);
 		//como identificar o jogador de acordo com o nome que ele digitar
-		g.drawString("visao bloqueda Jogador.getnome() deve clicar para desbloquear visao", 300, 450);
+		g.drawString("Visao bloqueda, " + "Jogador.getnome()" + " deve clicar para desbloquear visao", 300, 450);
 		g.drawString("tabuleiro Jogador.getnome()", 40, 65);
 		g.drawString("tabuleiro Jogador.getnome()", 500, 65);
 		b.addActionListener(this);
