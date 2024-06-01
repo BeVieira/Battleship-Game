@@ -9,15 +9,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class Ataque extends JFrame implements ActionListener{
-public  Ataque() {
-		
+	public  Ataque() {	
 		setVisible(true);
 		setSize(870, 550);
 		setTitle("Batalha Naval");
 		setDefaultCloseOperation(EXIT_ON_CLOSE); //encerra o programa quando clica no x
 		setResizable(false);
 		setLocationRelativeTo(null); // faz ir pro meio da tela ao abrir
-
 	}
 	
 	

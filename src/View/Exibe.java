@@ -22,12 +22,13 @@ import javax.swing.JPanel;
 public class Exibe extends JFrame implements ActionListener{
 	List<Navio> navios = new ArrayList<Navio>();
 	int navioMouse = 0;
+	int numJogador;
 
 	// Somente para fim de testes
 	Model.Tabuleiro tabTeste = new Model.Tabuleiro();
 	
-	public Exibe() {
-		
+	public Exibe(int n) {
+		numJogador = n;
 		inicializaNavios();
 		addMouseListener(new LerMouse());
 		setVisible(true);
@@ -339,7 +340,14 @@ public class Exibe extends JFrame implements ActionListener{
 		
 		
 		//faz botao
-		JButton b = new JButton("Próximo jogador");
+		String textoBotao;
+		if (numJogador == 1) {
+			textoBotao = "Próximo jogador";
+		}
+		else {
+			textoBotao = "Tabuleiro Pronto";
+		}
+		JButton b = new JButton(textoBotao);
 		setLayout(null);
 		b.setBounds(300, 390,150, 40);
 		add(b);
@@ -347,15 +355,19 @@ public class Exibe extends JFrame implements ActionListener{
 		//pq o botao so aparece quando passa o mouse em cima? peguntar pro ivan
 		b.addActionListener(this);
 		//como identificar o jogador de acordo com o nome que ele digitar
-		g.drawString("Jogador 1 selecione uma arma na lista", 270, 410);
+		g.drawString("Jogador " + numJogador + " selecione uma arma na lista", 270, 410);
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "Próximo jogador") {
-			new Exibe2();
+			new Exibe(2);
 			dispose();// fecha janela atual
+		}
+		else if (e.getActionCommand() == "Tabuleiro Pronto") {
+			new Ataque();
+			dispose();
 		}
 		else {
 			Navio n = (Navio) e.getSource();
