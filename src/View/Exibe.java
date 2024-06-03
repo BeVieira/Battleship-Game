@@ -5,6 +5,7 @@ import Model.Jogador;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -40,12 +41,13 @@ public class Exibe extends JFrame implements ActionListener{
 
 	}
 	
-	private class Navio extends JButton {
+	private class Navio {
 		int index;
 		boolean live;
 		int tipo;
+		Shape caixa; // Para ser usado posteriormente
+		
 		public Navio(int i, int t) {
-			super("");
 			setVisible(true);
 			index = i;
 			live = true;
@@ -107,6 +109,27 @@ public class Exibe extends JFrame implements ActionListener{
 					navioMouse = 0;
 					repaint();
 				}
+			}
+			
+			// hidroaviao - tipo 3
+			else if ((x >= 30) && (x <= 410) && (y >= 80) && (y <= 120)) {
+				navioMouse = 3;
+			}
+			// submarino - tipo 1
+			else if ((x >= 30) && (x <= 170) && (y >= 150) && (y <= 170)) {
+				navioMouse = 1;
+			}
+			// destroyer - tipo 2
+			else if ((x >= 30) && (x <= 190) && (y >= 200) && (y <= 220)) {
+				navioMouse = 2;
+			}
+			// cruzador - tipo 4
+			else if ((x >= 30) && (x <= 170) && (y >= 240) && (y <= 260)) {
+				navioMouse = 4;
+			}
+			// couracado - tipo 5
+			else if ((x >= 30) && (x <= 110) && (y >= 280) && (y <= 300)) {
+				navioMouse = 5;
 			}
 		}
 	}
@@ -195,10 +218,10 @@ public class Exibe extends JFrame implements ActionListener{
 			else {
 				g.setColor(Color.gray);
 			}
-				n.setBounds(x, y, 60, 40);
+				//n.setBounds(x, y, 60, 40);
 				n.drawSelf(g, x, y, 0);
-				add(n);
-				n.addActionListener(this);
+				//add(n);
+				//n.addActionListener(this);
 				x += 80;
 		}
 
@@ -215,9 +238,9 @@ public class Exibe extends JFrame implements ActionListener{
 				g.setColor(Color.gray);
 			}
 			n.drawSelf(g, x, y, 1);
-			n.setBounds(x, y, 20, 20);
-			add(n);
-			n.addActionListener(this);
+			//n.setBounds(x, y, 20, 20);
+			//add(n);
+			//n.addActionListener(this);
 			x += 40;
 		}
 		
@@ -234,9 +257,9 @@ public class Exibe extends JFrame implements ActionListener{
 				g.setColor(Color.gray);
 			}
 			n.drawSelf(g, x, y, 2);
-			n.setBounds(x, y, 40, 20);
-			add(n);
-			n.addActionListener(this);
+			//n.setBounds(x, y, 40, 20);
+			//add(n);
+			//n.addActionListener(this);
 			x += 60;
 		}
 		//desenha cruzadores
@@ -252,9 +275,9 @@ public class Exibe extends JFrame implements ActionListener{
 				g.setColor(Color.gray);
 			}
 			n.drawSelf(g, x, y, 3);
-			n.setBounds(x, y, 60, 20);
-			add(n);
-			n.addActionListener(this);
+			//n.setBounds(x, y, 60, 20);
+			//add(n);
+			//n.addActionListener(this);
 			x += 80;
 		}
 		
@@ -271,9 +294,9 @@ public class Exibe extends JFrame implements ActionListener{
 				g.setColor(Color.gray);
 			}
 			n.drawSelf(g, x, y, 4);
-			n.setBounds(x, y, 80, 20);
-			add(n);
-			n.addActionListener(this);
+			//n.setBounds(x, y, 80, 20);
+			//add(n);
+			//n.addActionListener(this);
 			x += 100;
 		}
 		
@@ -368,12 +391,6 @@ public class Exibe extends JFrame implements ActionListener{
 		else if (e.getActionCommand() == "Tabuleiro Pronto") {
 			new Ataque();
 			dispose();
-		}
-		else {
-			Navio n = (Navio) e.getSource();
-			if (n.live) {
-				navioMouse = n.tipo;
-			}
 		}
 	}
 
