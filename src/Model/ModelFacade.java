@@ -15,6 +15,6 @@ public class ModelFacade {
 	}
 	
 	public void RemoveEmbarcacao(Jogador jogador, Embarcacao navio) {
-		jogador.removeNavio(navio);
+		jogador.removeNavio(navio.getTipo());
 	}
 }

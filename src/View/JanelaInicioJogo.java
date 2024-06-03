@@ -23,6 +23,8 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 	int alturaBotao = 50;
 	JPanel menu = new JPanel();
 	JPanel defineJogador = new JPanel();
+	JTextField nomeJ1;
+    JTextField nomeJ2;
 	
 	public JanelaInicioJogo() {
 		CentralizaTela();
@@ -90,8 +92,8 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 		getContentPane().add(indicaJ1);
 		getContentPane().add(indicaJ2);
 		
-		JTextField nomeJ1 = new JTextField(20);
-		JTextField nomeJ2 = new JTextField(20);
+		nomeJ1 = new JTextField(20);
+		nomeJ2 = new JTextField(20);
 		
 		defineJogador.add(nomeJ1);
 		defineJogador.add(nomeJ2);
@@ -112,6 +114,8 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
             getContentPane().removeAll(); 
             DefineJogador(); 
             repaint();
+        } else if (e.getActionCommand().equals("Começar")) {
+        	//Lógica para exportar os nomes do JTextField
         }
     }
 	
