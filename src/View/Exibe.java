@@ -39,6 +39,7 @@ public class Exibe extends JFrame implements ActionListener{
 		setResizable(false);
 		setLocationRelativeTo(null); // faz ir pro meio da tela ao abrir
 
+
 	}
 	
 	private class Navio {
@@ -202,6 +203,7 @@ public class Exibe extends JFrame implements ActionListener{
 	}
 	
 	public void paint(Graphics g) {
+		super.paintComponents(g);
 		Navio n;
 		int index = 0;
 		int x = 30;
@@ -364,19 +366,21 @@ public class Exibe extends JFrame implements ActionListener{
 		
 		//faz botao
 		String textoBotao;
+
 		if (numJogador == 1) {
 			textoBotao = "Próximo jogador";
 		}
 		else {
 			textoBotao = "Tabuleiro Pronto";
 		}
-		JButton b = new JButton(textoBotao);
+		JButton b = new JButton();
 		setLayout(null);
 		b.setBounds(300, 390,150, 40);
 		add(b);
 		b.setVisible(true);
-		//pq o botao so aparece quando passa o mouse em cima? peguntar pro ivan
+		b.setText(textoBotao);
 		b.addActionListener(this);
+		
 		//como identificar o jogador de acordo com o nome que ele digitar
 		g.drawString("Jogador " + numJogador + " selecione uma arma na lista", 270, 410);
 		
