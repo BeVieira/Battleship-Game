@@ -16,13 +16,19 @@ public class Embarcacao {
 	}
 
 	public boolean ValidaLinha(Tabuleiro t, Coordenada c) {
-		if (c.getLinha() + this.getTipo() > 14)
+		int colunaOriginal = c.getColuna();
+		if (c.getLinha() + this.getTipo() > 14) {
+			c.setColuna(colunaOriginal);
 			return false;
+		}
 		for (int i = 0, colunaTemp = c.getColuna(); i < this.getTipo(); i++) {
 			c.setColuna(colunaTemp + i);
-			if (t.getCasa(c) != 0)
+			if (t.getCasa(c) != 0) {
+				c.setColuna(colunaOriginal);
 				return false;
+			}
 		}
+		c.setColuna(colunaOriginal);
 		return true;
 	}
 
@@ -56,6 +62,7 @@ public class Embarcacao {
 			aux.setLinha(linhaSeguinte);
 			if (!ValidaLinha(t, aux))
 				return false;
+			aux.setColuna(colunaOriginal);
 			aux.setLinha(linhaOriginal);
 
 			// Coluna 1
@@ -137,12 +144,15 @@ public class Embarcacao {
 
 	public boolean Posicionar(Tabuleiro tabuleiro, Coordenada coordenada) {
 		int colunaAux = coordenada.getColuna();
-		if (ValidaPosicionar(tabuleiro, coordenada)) {
-			for (int i = 0; i < this.getTipo(); i++) {
-				coordenada.setColuna(colunaAux + i);
-				tabuleiro.setCasa(coordenada, this.getTipo());
+		int tamanho = this.getTipo();
+		if ((coordenada.getColuna()+tamanho)<=14) {
+			if (ValidaPosicionar(tabuleiro, coordenada)) {
+				for (int i = 0; i < tamanho; i++) {
+					coordenada.setColuna(colunaAux + i);
+					tabuleiro.setCasa(coordenada, this.getTipo());
+				}
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}

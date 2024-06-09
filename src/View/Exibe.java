@@ -30,7 +30,6 @@ public class Exibe extends JFrame implements ActionListener{
 	
 	public Exibe(int n) {
 		numJogador = n;
-		inicializaNavios();
 		addMouseListener(new LerMouse());
 		setVisible(true);
 		setSize(850, 500);
@@ -208,6 +207,10 @@ public class Exibe extends JFrame implements ActionListener{
 		int index = 0;
 		int x = 30;
 		int y = 80;
+		
+		if (navios.isEmpty()) {
+			inicializaNavios();
+		}
 		
 		//desenha hidroaviao
 
