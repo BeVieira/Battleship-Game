@@ -37,14 +37,12 @@ public class Embarcacao {
 	public boolean Posicionar(Tabuleiro tabuleiro, Coordenada coordenada) {
 		int colunaAux = coordenada.getColuna();
 		int tamanho = this.getTipo();
-		if ((coordenada.getColuna()+tamanho)<=14) {
-			if (ValidaPosicionar(tabuleiro, coordenada)) {
-				for (int i = 0; i < tamanho; i++) {
-					coordenada.setColuna(colunaAux + i);
-					tabuleiro.setCasa(coordenada, this.getTipo());
-				}
-				return true;
+		if (ValidaPosicionar(tabuleiro, coordenada)) {
+			for (int i = 0; i < tamanho; i++) {
+				coordenada.setColuna(colunaAux + i);
+				tabuleiro.setCasa(coordenada, this.getTipo());
 			}
+			return true;
 		}
 		return false;
 	}
