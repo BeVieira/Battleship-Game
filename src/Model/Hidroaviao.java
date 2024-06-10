@@ -7,13 +7,16 @@ public class Hidroaviao extends Embarcacao {
 
 	@Override
 	public boolean Posicionar(Tabuleiro tabuleiro, Coordenada coordenada) {
-		tabuleiro.setCasa(coordenada, this.getTipo());
-		coordenada.setLinha(coordenada.getLinha() + 1);
-		coordenada.setColuna(coordenada.getColuna() - 1);
-		tabuleiro.setCasa(coordenada, this.getTipo());
-		coordenada.setColuna(coordenada.getColuna() + 2);
-		tabuleiro.setCasa(coordenada, this.getTipo());
-		return true;
+		if (ValidaPosicionar(tabuleiro, coordenada)) {
+			tabuleiro.setCasa(coordenada, this.getTipo());
+			coordenada.setLinha(coordenada.getLinha() + 1);
+			coordenada.setColuna(coordenada.getColuna() - 1);
+			tabuleiro.setCasa(coordenada, this.getTipo());
+			coordenada.setColuna(coordenada.getColuna() + 2);
+			tabuleiro.setCasa(coordenada, this.getTipo());
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -38,29 +41,28 @@ public class Hidroaviao extends Embarcacao {
 	
 	@Override 
 	public boolean ValidaPosicionar(Tabuleiro t, Coordenada c) { 
+		Coordenada cAux = new Coordenada(c.getColuna(), c.getLinha());
+		
 		//Verifica cabeça
-		if (!ValidaQuadrado(t,c)) {
-			System.out.println("Entrou 1");
-			return false;}
+		if (!ValidaQuadrado(t,cAux))
+			return false;
 		
 		//Verifica esquerda
-		if (c.getLinha()+1 > 14 && c.getColuna()-1 < 0) {
-			System.out.println("Entrou 2");
+		if (cAux.getLinha()+1 > 14 && cAux.getColuna()-1 < 0)
 			return false;
-		}
-		c.setLinha(c.getLinha()+1);
-        c.setColuna(c.getColuna()-1);
-        if (!ValidaQuadrado(t,c))
+	
+		cAux.setLinha(cAux.getLinha()+1);
+        cAux.setColuna(cAux.getColuna()-1);
+        if (!ValidaQuadrado(t,cAux))
 			return false;
         
         //Verifica direita
-		if (c.getLinha()+1 > 14 && c.getColuna()-1 > 14) {
-			System.out.println("Entrou 3");
+		if (cAux.getLinha()+1 > 14 && cAux.getColuna()-1 > 14)
 			return false;
-		}
-		c.setLinha(c.getLinha()+1);
-        c.setColuna(c.getColuna()-1);
-        if (!ValidaQuadrado(t,c))
+				
+		cAux.setLinha(cAux.getLinha()+1);
+        cAux.setColuna(cAux.getColuna()-1);
+        if (!ValidaQuadrado(t,cAux))
 			return false;
         
         return true; 
