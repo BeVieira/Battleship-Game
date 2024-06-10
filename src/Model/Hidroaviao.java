@@ -19,51 +19,45 @@ public class Hidroaviao extends Embarcacao {
 	
 	private boolean ValidaQuadrado(Tabuleiro t, Coordenada c) {
 		int linha = c.getLinha();
-        int coluna = c.getColuna();
+	        int coluna = c.getColuna();
 		for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                int novaLinha = linha + i;
-                int novaColuna = coluna + j;
-                if (novaLinha >= 0 && novaLinha <= 14 && novaColuna >= 0 && novaColuna <= 14) {
-                    Coordenada novaC = new Coordenada(0,0);
-                    novaC.setLinha(novaLinha);
-                    novaC.setColuna(novaColuna);
-                	if (t.getCasa(novaC) != 0)
-                        return false;
-                }
-            }
-    	}
+            		for (int j = -1; j <= 1; j++) {
+                		int novaLinha = linha + i;
+                		int novaColuna = coluna + j;
+                		if (novaLinha >= 0 && novaLinha <= 14 && novaColuna >= 0 && novaColuna <= 14) {
+                    			Coordenada novaC = new Coordenada(0,0);
+                    			novaC.setLinha(novaLinha);
+                    			novaC.setColuna(novaColuna);
+                			if (t.getCasa(novaC) != 0)
+                        			return false;
+                		}
+            		}
+    		}
 		return true;
 	}
 	
 	@Override 
 	public boolean ValidaPosicionar(Tabuleiro t, Coordenada c) { 
 		//Verifica cabeça
-		if (!ValidaQuadrado(t,c)) {
-			System.out.println("Entrou 1");
-			return false;}
+		if (!ValidaQuadrado(t,c))
+			return false;
 		
 		//Verifica esquerda
-		if (c.getLinha()+1 > 14 && c.getColuna()-1 < 0) {
-			System.out.println("Entrou 2");
+		if (c.getLinha()+1 > 14 && c.getColuna()-1 < 0)
 			return false;
-		}
 		c.setLinha(c.getLinha()+1);
-        c.setColuna(c.getColuna()-1);
-        if (!ValidaQuadrado(t,c))
+        	c.setColuna(c.getColuna()-1);
+        	if (!ValidaQuadrado(t,c))
 			return false;
         
-        //Verifica direita
-		if (c.getLinha()+1 > 14 && c.getColuna()-1 > 14) {
-			System.out.println("Entrou 3");
+        	//Verifica direita
+		if (c.getLinha()+1 > 14 && c.getColuna()-1 > 14)
 			return false;
-		}
-		c.setLinha(c.getLinha()+1);
-        c.setColuna(c.getColuna()-1);
-        if (!ValidaQuadrado(t,c))
+	        c.setColuna(c.getColuna()+2);
+	        if (!ValidaQuadrado(t,c))
 			return false;
         
-        return true; 
+        	return true; 
 	}
 
 }
