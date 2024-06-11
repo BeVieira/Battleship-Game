@@ -15,7 +15,7 @@ public class Embarcacao {
 	        int linha = c.getLinha();
 	        int coluna = c.getColuna();
 	        Coordenada novaC = new Coordenada(0,0);
-	        if (coluna + this.getTipo() > 14) // Tem que mudar a logica da view (0 até 14)
+	        if (coluna + this.getTipo() > 15)
 	        	return false;
 	        for (int n = 0; n < this.getTipo(); n++) {
 	        	for (int i = -1; i <= 1; i++) {
