@@ -24,7 +24,7 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 	JPanel menu = new JPanel();
 	JPanel defineJogador = new JPanel();
 	JTextField nomeJ1;
-    JTextField nomeJ2;
+   	JTextField nomeJ2;
 	
 	public JanelaInicioJogo() {
 		CentralizaTela();
@@ -116,6 +116,8 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
             repaint();
         } else if (e.getActionCommand().equals("Começar")) {
         	//Lógica para exportar os nomes do JTextField
+		new Exibe(1);
+		dispose();
         }
     }
 	
