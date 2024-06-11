@@ -22,7 +22,7 @@ public class Hidroaviao extends Embarcacao {
 	
 	private boolean ValidaQuadrado(Tabuleiro t, Coordenada c) {
 		int linha = c.getLinha();
-        int coluna = c.getColuna();
+        	int coluna = c.getColuna();
 		for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 int novaLinha = linha + i;
@@ -42,6 +42,9 @@ public class Hidroaviao extends Embarcacao {
 	@Override 
 	public boolean ValidaPosicionar(Tabuleiro t, Coordenada c) { 
 		Coordenada cAux = new Coordenada(c.getColuna(), c.getLinha());
+
+		if (c.getColuna() == 0 || c.getColuna() == 14 || c.getLinha() == 14)
+			return false;
 		
 		//Verifica cabeça
 		if (!ValidaQuadrado(t,cAux))
