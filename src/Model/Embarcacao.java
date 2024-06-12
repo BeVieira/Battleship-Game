@@ -29,7 +29,7 @@ public class Embarcacao {
 			                            return false;
 	                    		}
 	                	}
-	        	linha += n;
+	        	coluna += n;
 	        	}
 	        }
 	        return true; 
