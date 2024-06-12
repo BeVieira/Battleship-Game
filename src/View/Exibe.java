@@ -24,7 +24,7 @@ public class Exibe extends JFrame implements ActionListener {
 	int navioMouse = 0;
 	int numJogador;
 
-	int hidros, submarinos, destroyers, cruzadores, couracados;
+	int hidros = 5, submarinos = 4, destroyers = 3, cruzadores = 2, couracados = 1;
 
 	// Somente para fim de testes
 	Model.Tabuleiro tabTeste = new Model.Tabuleiro();
@@ -68,29 +68,44 @@ public class Exibe extends JFrame implements ActionListener {
 					Model.Embarcacao emb;
 					switch (navioMouse) {
 						case 1:
-							emb = new Model.Submarino();
-							emb.Posicionar(tabTeste, coord);
-							submarinos += -1;
+							if (submarinos > 0) {
+								emb = new Model.Submarino();
+								if (emb.Posicionar(tabTeste, coord)) {
+									submarinos += -1;
+								}
+							}
 							break;
 						case 2:
-							emb = new Model.Destroyer();
-							emb.Posicionar(tabTeste, coord);
-							destroyers += -1;
+							if (destroyers > 0) {
+								emb = new Model.Destroyer();
+								if (emb.Posicionar(tabTeste, coord)) {
+									destroyers += -1;
+								}
+							}
 							break;
 						case 3:
-							emb = new Model.Hidroaviao();
-							emb.Posicionar(tabTeste, coord);
-							hidros += -1;
+							if (hidros > 0) {
+								emb = new Model.Hidroaviao();
+								if (emb.Posicionar(tabTeste, coord)) {
+									hidros += -1;
+								}
+							}
 							break;
 						case 4:
-							emb = new Model.Cruzador();
-							emb.Posicionar(tabTeste, coord);
-							cruzadores += -1;
+							if (cruzadores > 0) {
+								emb = new Model.Cruzador();
+								if (emb.Posicionar(tabTeste, coord)) {
+									cruzadores += -1;
+								}
+							}
 							break;
 						case 5:
-							emb = new Model.Couracado();
-							emb.Posicionar(tabTeste, coord);
-							couracados += -1;
+							if (couracados > 0) {
+								emb = new Model.Couracado();
+								if (emb.Posicionar(tabTeste, coord)) {
+									couracados += -1;
+								}
+							}
 							break;
 					}
 					navioMouse = 0;
@@ -154,7 +169,6 @@ public class Exibe extends JFrame implements ActionListener {
 		int y = 80;
 
 		// desenha hidroaviao
-		hidros = 5;
 		for (int i = 0; i < hidros; i++) {
 			g.setColor(Color.green);
 			drawHidro(g, x, y, 0);
@@ -165,7 +179,6 @@ public class Exibe extends JFrame implements ActionListener {
 		x = 30;
 		y = 150;
 
-		submarinos = 4;
 		for (int i = 0; i < submarinos; i++) {
 			g.setColor(Color.red);
 			drawNavio(g, x, y, 1);
@@ -175,7 +188,6 @@ public class Exibe extends JFrame implements ActionListener {
 		// desenha destroyer
 		x = 30;
 		y = 200;
-		destroyers = 3;
 		for (int i = 0; i < destroyers; i++) {
 			g.setColor(Color.BLUE);
 			drawNavio(g, x, y, 2);
@@ -185,7 +197,6 @@ public class Exibe extends JFrame implements ActionListener {
 		// desenha cruzadores
 		x = 30;
 		y = 240;
-		cruzadores = 2;
 		for (int i = 0; i < cruzadores; i++) {
 			g.setColor(Color.MAGENTA);
 			drawNavio(g, x, y, 3);
@@ -195,7 +206,6 @@ public class Exibe extends JFrame implements ActionListener {
 		// desenha couraçado
 		x = 30;
 		y = 280;
-		couracados = 1;
 		for (int i = 0; i < couracados; i++) {
 			g.setColor(Color.red);
 			drawNavio(g, x, y, 4);
