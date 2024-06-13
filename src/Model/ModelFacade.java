@@ -42,7 +42,4 @@ public class ModelFacade {
 	public void setColuna(int coluna) {
 		coordenadaj1.setColuna(coluna);
 	}
-	
-
-
 }
