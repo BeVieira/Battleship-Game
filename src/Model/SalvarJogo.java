@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-public class SalvarJogo {
+class SalvarJogo {
 	public ArrayList<Embarcacao> navios = new ArrayList<Embarcacao>();
 	
 	public void SalvaJogo(Jogador j) throws FileNotFoundException {

@@ -1,6 +1,6 @@
 package Model;
 
-public class Coordenada {
+class Coordenada {
 	private int coluna;
 	private int linha;
 

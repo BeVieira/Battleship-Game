@@ -43,7 +43,9 @@ public class Embarcacao {
 				coordenada.setColuna(colunaAux + i);
 				tabuleiro.setCasa(coordenada, this.getTipo());
 			}
+			tabuleiro.ExibeTabuleiro();
 			return true;
+			
 		}
 		return false;
 	}
