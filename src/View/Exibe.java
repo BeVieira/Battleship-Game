@@ -1,7 +1,8 @@
 package View;
 
 import java.awt.BorderLayout;
-import Model.Jogador;
+import Model.ModelFacade;
+import Model.Observadoif;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,14 +21,16 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class Exibe extends JFrame implements ActionListener {
+import Controller.Control;
+
+public class Exibe extends JFrame implements ActionListener, ObservadorIf {
 	int navioMouse = 0;
 	int numJogador;
 
 	int hidros = 5, submarinos = 4, destroyers = 3, cruzadores = 2, couracados = 1;
 
 	// Somente para fim de testes
-	Model.Tabuleiro tabTeste = new Model.Tabuleiro();
+	ModelFacade.Tabuleiro tabTeste = new ModelFacade.Tabuleiro();
 
 	public Exibe(int n) {
 		numJogador = n;
@@ -39,12 +42,12 @@ public class Exibe extends JFrame implements ActionListener {
 		setResizable(false);
 		setLocationRelativeTo(null); // faz ir pro meio da tela ao abrir
 	}
-
-	private void drawNavio(Graphics g, int x, int y, int len) {
+	
+	public void drawNavio(Graphics g, int x, int y, int len) {
 		g.fillRect(x, y, 20 * len, 20);
 	}
 
-	private void drawHidro(Graphics g, int x, int y, int len) {
+	public void drawHidro(Graphics g, int x, int y, int len) {
 
 		// Desenha dois quadrados inferiores
 		g.fillRect(x, y + 20, 20, 20);
@@ -218,15 +221,14 @@ public class Exibe extends JFrame implements ActionListener {
 		g.fillRect(500, 70, 300, 300);
 
 		// percorre tabuleiro e desenha cada casa
-		Model.Coordenada coords = new Model.Coordenada(0, 0);
 		int tipo;
 		for (int i = 0; i < 15; i++) {
-			coords.setLinha(i);
+			Control.getController().setLinha(i);
 			for (int j = 0; j < 15; j++) {
 				x = 500 + (20 * j);
 				y = 70 + (20 * i);
 
-				coords.setColuna(j);
+				Control.getController().setColuna(j);
 				tipo = tabTeste.getCasa(coords);
 				desenhaCasa(x, y, tipo, g);
 			}
@@ -301,6 +303,14 @@ public class Exibe extends JFrame implements ActionListener {
 			new Ataque();
 			dispose();
 		}
+	}
+
+	@Override
+	public void notify(Observadoif observado) {
+		//pinta tela de acordo com o tabuleiro mudando
+		
+		
+		
 	}
 
 }

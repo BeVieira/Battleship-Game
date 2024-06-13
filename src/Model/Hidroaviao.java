@@ -1,6 +1,6 @@
 package Model;
 
-public class Hidroaviao extends Embarcacao {
+class Hidroaviao extends Embarcacao {
 	public Hidroaviao() {
 		super(3);
 	}
@@ -39,7 +39,6 @@ public class Hidroaviao extends Embarcacao {
 		return true;
 	}
 	
-	@Override 
 	public boolean ValidaPosicionar(Tabuleiro t, Coordenada c) { 
 		Coordenada cAux = new Coordenada(c.getColuna(), c.getLinha());
 

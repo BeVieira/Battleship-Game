@@ -3,11 +3,13 @@ package Model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Jogador {
+import View.ObservadorIf;
+
+class Jogador {
 	private String nome;
 	private ArrayList<Embarcacao> navios;
-	protected Tabuleiro tabuleiro;
-	protected Tabuleiro tabuleiroAlvo;
+	private Tabuleiro tabuleiro;
+	private Tabuleiro tabuleiroAlvo;
 
 	public Jogador(String nome) {
 		this.nome = nome;
@@ -100,5 +102,11 @@ public class Jogador {
 			return false;
 		return true;
 
+	}
+	
+	public void registra(ObservadorIf observador) {
+		this.tabuleiro.add(observador);
+		this.tabuleiroAlvo.add(observador);
+		
 	}
 }

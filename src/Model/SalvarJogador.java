@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class SalvarJogador{
+class SalvarJogador{
 	private String nome;
 	private ArrayList<Embarcacao> navios;
 	protected Tabuleiro tabuleiro;

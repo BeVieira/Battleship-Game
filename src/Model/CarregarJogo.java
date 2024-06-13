@@ -1,6 +1,6 @@
 package Model;
 
-public class CarregarJogo {
+class CarregarJogo {
 	//todo
 	//pegar os dados do txt e rodar
 }
