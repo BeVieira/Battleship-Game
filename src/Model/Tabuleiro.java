@@ -7,6 +7,14 @@ import View.ObservadorIf;
 class Tabuleiro  implements Observadoif{
 	private int[][] tabuleiro;
 	private List<ObservadorIf> lst = new ArrayList<ObservadorIf>();
+	
+	public int[][] getTabuleiroEstado() {
+		return tabuleiro;
+	}
+	
+	public void setTabuleiro(int[][] tabuleiro) {
+		this.tabuleiro = tabuleiro;
+	}
 
 	public int getCasa(Coordenada coordenada) {
 		return tabuleiro[coordenada.getLinha()][coordenada.getColuna()];

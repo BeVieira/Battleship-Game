@@ -5,8 +5,8 @@ import java.util.ArrayList;
 class SalvarJogador{
 	private String nome;
 	private ArrayList<Embarcacao> navios;
-	protected Tabuleiro tabuleiro;
-	protected Tabuleiro tabuleiroAlvo;
+	protected int[][] tabuleiro;
+	protected int[][] tabuleiroAlvo;
 	
 	public void Salva(Jogador j) {
 		this.nome = j.getNome();

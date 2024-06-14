@@ -3,18 +3,27 @@ package Model;
 import View.ObservadorIf;
 
 public class ModelFacade {
-	private Jogador jogador1;
+	private Jogador jogador;
 	private Coordenada coordenadaj1;
+	static ModelFacade f = null;
+	
+	public static ModelFacade getFacade() {
+		if(f==null)
+			f=new ModelFacade();
+		return f;	
+	}
 	
 	public void registra(ObservadorIf observador) {
-		jogador1.registra(observador);
+		jogador.registra(observador);
 	}
 	
-	public void inicializaPartida() {
-		jogador1 = new Jogador("");
-		coordenadaj1 = new Coordenada(0,0);
+	public int[][] getEstadoTabuleiro() {
+		return jogador.getTabuleiro().getTabuleiroEstado();
 	}
 	
+	public void criaJogador(String nome) {
+		this.jogador = new Jogador(nome);
+	}
 	public void DefineNome(Jogador jogador, String nome) {
 		jogador.setNome(nome);
 	}
