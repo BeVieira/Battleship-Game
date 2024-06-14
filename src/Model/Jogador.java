@@ -88,9 +88,12 @@ class Jogador {
 
 	// Controller fica responável por gerar a Coordenada
 	public boolean InserirEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
-		return tabuleiro.Posicionar(coordenada, embarcacao.getTipo());
+		return tabuleiro.Posicionar(coordenada, embarcacao);
 	}
 
+	public void girarEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
+		tabuleiro.girarNavio(embarcacao);
+	}
 	// Retorna falso caso o tiro seja em uma casa atirada
 	public boolean Atirar(Coordenada coordenada) {
 		int casa = tabuleiroAlvo.getCasa(coordenada);

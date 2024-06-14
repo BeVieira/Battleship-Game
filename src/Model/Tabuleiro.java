@@ -20,9 +20,10 @@ class Tabuleiro  implements Observadoif{
 		tabuleiro = new int[15][15];
 	}
 	
-	public boolean Posicionar(Coordenada coordenada, int tipo) {
+	public boolean Posicionar(Coordenada coordenada, Embarcacao embarcacao) {
 		int linha = coordenada.getLinha();
 		int coluna = coordenada.getColuna();
+		int tipo = embarcacao.getTipo();
 		
 		if (tipo == 3) {
 			if (ValidaPosicionarHidroaviao(coordenada)) {
@@ -32,6 +33,7 @@ class Tabuleiro  implements Observadoif{
 				tabuleiro[linha][coluna] = tipo;
 				coluna += 2;
 				tabuleiro[linha][coluna] = tipo;
+				embarcacao.setPosicao(coordenada);
 				return true;
 				}
 			return false;
@@ -40,9 +42,119 @@ class Tabuleiro  implements Observadoif{
 		if (ValidaPosicionar(coordenada, tipo)) {
 			for (int i = 0; i < tipo; i++)
 				tabuleiro[linha][coluna + i] = tipo;
+			embarcacao.setPosicao(coordenada);
 			return true;
 		}
 		return false;
+	}
+	
+	public void removerNavio(Embarcacao embarcacao) {
+		int linha = embarcacao.getPosicao().getLinha();
+		int coluna = embarcacao.getPosicao().getColuna();
+		int tipo = embarcacao.getTipo();
+		int orientacao = embarcacao.getOrientacao();
+
+		if (tipo == 3) {
+			removerHidroaviao(embarcacao);
+		} else {
+			switch (orientacao) {
+				//Remocao da orientacao anterior
+				case 1:
+					for (int i = 0; i < tipo; i++)
+						tabuleiro[linha + i][coluna] = 0;
+					break;
+				case 2:
+					for (int i = 0; i < tipo; i++)
+						tabuleiro[linha][coluna + i] = 0;
+					break;
+				case 3:
+					for (int i = 0; i < tipo; i++)
+						tabuleiro[linha - i][coluna] = 0;
+					break;
+				case 4:
+					for (int i = 0; i < tipo; i++)
+						tabuleiro[linha][coluna - i] = 0;
+					break;
+				}
+		}
+	}
+	
+	public void girarNavio(Embarcacao embarcacao) {
+		int tipo = embarcacao.getTipo();
+		int orientacao = embarcacao.getOrientacao();
+		int linha = embarcacao.getPosicao().getLinha();
+		int coluna = embarcacao.getPosicao().getColuna();
+		
+		removerNavio(embarcacao);
+		
+		if (tipo == 3) {
+			girarHidroaviao(embarcacao);
+		}
+		else {
+			switch (orientacao) {
+			case 1:
+				for (int i = 0; i < tipo; i++)
+					tabuleiro[linha][coluna + i] = tipo;
+				break;
+			case 2:
+				for (int i = 0; i < tipo; i++)
+					tabuleiro[linha - i][coluna] = tipo;
+				break;
+			case 3:
+				for (int i = 0; i < tipo; i++)
+					tabuleiro[linha][coluna - i] = tipo;
+				break;
+			case 4:
+				for (int i = 0; i < tipo; i++)
+					tabuleiro[linha + i][coluna] = tipo;
+				break;
+			}	
+		}
+	}
+	
+	private void girarHidroaviao(Embarcacao embarcacao) {
+		int tipo = embarcacao.getTipo();
+		int orientacao = embarcacao.getOrientacao();
+		int linha = embarcacao.getPosicao().getLinha();
+		int coluna = embarcacao.getPosicao().getColuna();
+		
+		switch (orientacao) {
+		case 1:
+			tabuleiro[linha + 1][coluna + 1] = tipo;
+			break;
+		case 2:
+			tabuleiro[linha - 1][coluna + 1] = tipo;
+			break;
+		case 3:
+			tabuleiro[linha - 1][coluna - 1] = tipo;
+			break;
+		case 4:
+			tabuleiro[linha + 1][coluna - 1] = tipo;
+			break;
+		}
+		
+	}
+
+	private void removerHidroaviao(Embarcacao embarcacao) {
+		int orientacao = embarcacao.getOrientacao();
+		int linha = embarcacao.getPosicao().getLinha();
+		int coluna = embarcacao.getPosicao().getColuna();
+		
+		switch (orientacao) {
+			//Remocao da orientacao anterior
+			case 1:
+				tabuleiro[linha - 1][coluna - 1] = 0;
+				break;
+			case 2:
+				tabuleiro[linha + 1][coluna - 1] = 0;
+				break;
+			case 3:
+				tabuleiro[linha + 1][coluna + 1] = 0;
+				break;
+			case 4:
+				tabuleiro[linha - 1][coluna + 1] = 0;
+				break;
+			}
 	}
 		
 	private boolean ValidaQuadrado(int linha, int coluna) {

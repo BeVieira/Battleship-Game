@@ -30,7 +30,7 @@ public class Exibe extends JFrame implements ActionListener, ObservadorIf {
 	int hidros = 5, submarinos = 4, destroyers = 3, cruzadores = 2, couracados = 1;
 
 	// Somente para fim de testes
-	ModelFacade.Tabuleiro tabTeste = new ModelFacade.Tabuleiro();
+	Model.Tabuleiro tabTeste = new Tabuleiro();
 
 	public Exibe(int n) {
 		numJogador = n;
