@@ -23,7 +23,7 @@ class SalvarJogo {
 		for(int i = 0; i<15; i++) {
 			for(int k = 0; k<15; k++) {
 				Coordenada t = new Coordenada(i,k);
-				output.print(j.tabuleiro.getCasa(t));
+				output.print(j.getTabuleiro().getCasa(t));
 				if(k == 14) {
 					output.println();
 				}
@@ -35,7 +35,7 @@ class SalvarJogo {
 		for(int i = 0; i<15; i++) {
 			for(int k = 0; k<15; k++) {
 				Coordenada t = new Coordenada(i,k);
-				output.print(j.tabuleiroAlvo.getCasa(t));
+				output.print(j.getTabuleiroAlvo().getCasa(t));
 				if(k == 14) {
 					output.println();
 				}
