@@ -10,11 +10,12 @@ class SalvarJogo {
 	
 	public void SalvaJogo(Jogador j) throws FileNotFoundException {
 		navios = j.getNavios();
+		int tam = navios.size();
 		PrintStream output = new PrintStream(new File("saida.txt"));
 		output.println(j.getNome());
 		
 		//salva  navios
-		for(int i = 0; i< j.getQtdNavios(); i++ ) {
+		for(int i = 0; i< tam; i++ ) {
 			output.println(this.navios.get(i));
 		}
 		

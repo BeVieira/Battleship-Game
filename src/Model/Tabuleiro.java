@@ -8,6 +8,10 @@ class Tabuleiro  implements Observadoif{
 	private int[][] tabuleiro;
 	private List<ObservadorIf> lst = new ArrayList<ObservadorIf>();
 	
+	public Tabuleiro() {
+		tabuleiro = new int[15][15];
+	}
+	
 	public int[][] getTabuleiroEstado() {
 		return tabuleiro;
 	}
@@ -24,39 +28,29 @@ class Tabuleiro  implements Observadoif{
 		this.tabuleiro[coordenada.getLinha()][coordenada.getColuna()] = tipoEmbarcacao;
 	}
 
-	public Tabuleiro() {
-		tabuleiro = new int[15][15];
-	}
 	
-	public boolean Posicionar(Coordenada coordenada, Embarcacao embarcacao) {
+	public void posicionarEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
 		int linha = coordenada.getLinha();
 		int coluna = coordenada.getColuna();
 		int tipo = embarcacao.getTipo();
 		
 		if (tipo == 3) {
-			if (ValidaPosicionarHidroaviao(coordenada)) {
-				tabuleiro[linha][coluna] = tipo;
-				linha += 1;
-				coluna -= 1;
-				tabuleiro[linha][coluna] = tipo;
-				coluna += 2;
-				tabuleiro[linha][coluna] = tipo;
-				embarcacao.setPosicao(coordenada);
-				return true;
-				}
-			return false;
-			}
-		
-		if (ValidaPosicionar(coordenada, tipo)) {
+			tabuleiro[linha][coluna] = tipo;
+			linha += 1;
+			coluna -= 1;
+			tabuleiro[linha][coluna] = tipo;
+			coluna += 2;
+			tabuleiro[linha][coluna] = tipo;
+			embarcacao.setPosicao(coordenada);
+		}
+		else {
 			for (int i = 0; i < tipo; i++)
 				tabuleiro[linha][coluna + i] = tipo;
 			embarcacao.setPosicao(coordenada);
-			return true;
 		}
-		return false;
 	}
 	
-	public void removerNavio(Embarcacao embarcacao) {
+	public void removerEmbarcacao(Embarcacao embarcacao) {
 		int linha = embarcacao.getPosicao().getLinha();
 		int coluna = embarcacao.getPosicao().getColuna();
 		int tipo = embarcacao.getTipo();
@@ -87,13 +81,13 @@ class Tabuleiro  implements Observadoif{
 		}
 	}
 	
-	public void girarNavio(Embarcacao embarcacao) {
+	public void girarEmbarcacao(Embarcacao embarcacao) {
 		int tipo = embarcacao.getTipo();
 		int orientacao = embarcacao.getOrientacao();
 		int linha = embarcacao.getPosicao().getLinha();
 		int coluna = embarcacao.getPosicao().getColuna();
 		
-		removerNavio(embarcacao);
+		removerEmbarcacao(embarcacao);
 		
 		if (tipo == 3) {
 			girarHidroaviao(embarcacao);
@@ -165,7 +159,7 @@ class Tabuleiro  implements Observadoif{
 			}
 	}
 		
-	private boolean ValidaQuadrado(int linha, int coluna) {
+	private boolean validaQuadrado(int linha, int coluna) {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				int novaLinha = linha + i;
@@ -178,7 +172,7 @@ class Tabuleiro  implements Observadoif{
 		return true;
 	}
 	
-	private boolean ValidaPosicionar(Coordenada coordenada, int tipo) {
+	public boolean validaPosicionar(Coordenada coordenada, int tipo) {
 		int linha = coordenada.getLinha();
         int coluna = coordenada.getColuna();
         
@@ -186,13 +180,13 @@ class Tabuleiro  implements Observadoif{
         	return false;
         
         for (int i = 0; i < tipo; i++) {
-        	if (!ValidaQuadrado(linha, coluna + i))
+        	if (!validaQuadrado(linha, coluna + i))
         		return false;
         }
         return true; 
 	}
 	
-	private boolean ValidaPosicionarHidroaviao(Coordenada coordenada) { 
+	public boolean validaPosicionarHidroaviao(Coordenada coordenada) { 
 		int linha = coordenada.getLinha();
         int coluna = coordenada.getColuna();
 
@@ -200,18 +194,18 @@ class Tabuleiro  implements Observadoif{
 			return false;
 		
 		//Verifica cabeça
-		if (!ValidaQuadrado(linha, coluna))
+		if (!validaQuadrado(linha, coluna))
 			return false;
 		
 		//Verifica esquerda
 		linha+=1;
 		coluna=-1;
-        if (!ValidaQuadrado(linha, coluna))
+        if (!validaQuadrado(linha, coluna))
 			return false;
         
         //Verifica direita
         coluna += 2;
-        if (!ValidaQuadrado(linha, coluna))
+        if (!validaQuadrado(linha, coluna))
 			return false;
         
         return true; 
@@ -238,7 +232,7 @@ class Tabuleiro  implements Observadoif{
         }
     }
 	
-	public void ExibeTabuleiro() {
+	public void exibeTabuleiro() {
 		System.out.println("  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4");
 		for (int i = 0; i < 15; i++) {
 			System.out.print(String.format("%d ", i>= 10 ? i-10 : i));

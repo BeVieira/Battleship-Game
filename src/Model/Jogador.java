@@ -11,11 +11,7 @@ class Jogador {
 	private Tabuleiro tabuleiro;
 	private Tabuleiro tabuleiroAlvo;
 
-	public Jogador(String nome) {
-		this.nome = nome;
-		tabuleiro = new Tabuleiro();
-		tabuleiroAlvo = new Tabuleiro();
-
+	public Jogador() {
 		navios = new ArrayList<Embarcacao>();
 		// 1 Couraçado
 		navios.add(new Couracado());
@@ -43,8 +39,8 @@ class Jogador {
 		return navios;
 	}
 	
-	public int getQtdNavios() {
-		return this.getNavios().size();
+	public void setNavios(ArrayList<Embarcacao> navios) {
+		this.navios = navios;
 	}
 
 	public void removeNavio(int tipoNavio) {
@@ -82,20 +78,15 @@ class Jogador {
 		this.tabuleiroAlvo = tabuleiroAlvo;
 	}
 
-	public void setNavios(ArrayList<Embarcacao> navios) {
-		this.navios = navios;
-	}
-
-	// Controller fica responável por gerar a Coordenada
-	public boolean InserirEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
-		return tabuleiro.Posicionar(coordenada, embarcacao);
+	public void inserirEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
+		tabuleiro.posicionarEmbarcacao(coordenada, embarcacao);
 	}
 
 	public void girarEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
-		tabuleiro.girarNavio(embarcacao);
+		tabuleiro.girarEmbarcacao(embarcacao);
 	}
-	// Retorna falso caso o tiro seja em uma casa atirada
-	public boolean Atirar(Coordenada coordenada) {
+	
+	public boolean realizarTiro(Coordenada coordenada) {
 		int casa = tabuleiroAlvo.getCasa(coordenada);
 		if (casa == 0)
 			tabuleiroAlvo.setCasa(coordenada, -100);
@@ -107,7 +98,7 @@ class Jogador {
 
 	}
 	
-	public void registra(ObservadorIf observador) {
+	public void registrar(ObservadorIf observador) {
 		this.tabuleiro.add(observador);
 		this.tabuleiroAlvo.add(observador);
 		

@@ -11,8 +11,8 @@ class SalvarJogador{
 	public void Salva(Jogador j) {
 		this.nome = j.getNome();
 		this.navios = j.getNavios();
-		this.tabuleiro = j.getTabuleiro();
-		this.tabuleiroAlvo = j.getTabuleiroAlvo();
+		this.tabuleiro = j.getTabuleiro().getTabuleiroEstado();
+		this.tabuleiroAlvo = j.getTabuleiroAlvo().getTabuleiroEstado();
 	}
 		
 	
