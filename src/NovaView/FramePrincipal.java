@@ -18,6 +18,7 @@ class FramePrincipal extends JFrame {
 		setBounds(x,y,LARG_DEFAULT,ALT_DEFAULT);
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // encerra o programa quando clica no x
 		setResizable(false);
+		addMouseListener(new TratadorEventos());
 		getContentPane().add(new PainelPosicionamento(1));
 		setTitle("Batalha Naval");
 	}

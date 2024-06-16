@@ -1,7 +1,6 @@
-package View;
+package NovaView;
 
 import java.awt.BorderLayout;
-import Model.Jogador;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import View.Exibe;
 
 public class JanelaInicioJogo extends JFrame implements ActionListener {
 	public final int LARG_DEFAULT = 400;
@@ -116,7 +117,7 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
             repaint();
         } else if (e.getActionCommand().equals("Começar")) {
         	//Lógica para exportar os nomes do JTextField
-		new Exibe(1);
+		new PainelPosicionamento(1);
 		dispose();
         }
     }

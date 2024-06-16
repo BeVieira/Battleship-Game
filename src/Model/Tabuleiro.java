@@ -59,25 +59,22 @@ class Tabuleiro  implements Observadoif{
 		if (tipo == 3) {
 			removerHidroaviao(embarcacao);
 		} else {
-			switch (orientacao) {
-				//Remocao da orientacao anterior
+			for (int i = 0; i < tipo; i++) {
+				switch (orientacao) {
 				case 1:
-					for (int i = 0; i < tipo; i++)
-						tabuleiro[linha + i][coluna] = 0;
+					tabuleiro[linha][coluna + i] = 0;
 					break;
 				case 2:
-					for (int i = 0; i < tipo; i++)
-						tabuleiro[linha][coluna + i] = 0;
+					tabuleiro[linha - i][coluna] = 0;
 					break;
 				case 3:
-					for (int i = 0; i < tipo; i++)
-						tabuleiro[linha - i][coluna] = 0;
+					tabuleiro[linha][coluna - i] = 0;
 					break;
 				case 4:
-					for (int i = 0; i < tipo; i++)
-						tabuleiro[linha][coluna - i] = 0;
+					tabuleiro[linha + i][coluna] = 0;
 					break;
 				}
+			}
 		}
 	}
 	
@@ -93,23 +90,21 @@ class Tabuleiro  implements Observadoif{
 			girarHidroaviao(embarcacao);
 		}
 		else {
-			switch (orientacao) {
-			case 1:
-				for (int i = 0; i < tipo; i++)
+			for (int i = 0; i < tipo; i++) {
+				switch (orientacao) {
+				case 1:
 					tabuleiro[linha][coluna + i] = tipo;
-				break;
-			case 2:
-				for (int i = 0; i < tipo; i++)
+					break;
+				case 2:
 					tabuleiro[linha - i][coluna] = tipo;
-				break;
-			case 3:
-				for (int i = 0; i < tipo; i++)
+					break;
+				case 3:
 					tabuleiro[linha][coluna - i] = tipo;
-				break;
-			case 4:
-				for (int i = 0; i < tipo; i++)
+					break;
+				case 4:
 					tabuleiro[linha + i][coluna] = tipo;
-				break;
+					break;
+				}
 			}	
 		}
 	}
@@ -143,18 +138,17 @@ class Tabuleiro  implements Observadoif{
 		int coluna = embarcacao.getPosicao().getColuna();
 		
 		switch (orientacao) {
-			//Remocao da orientacao anterior
 			case 1:
-				tabuleiro[linha - 1][coluna - 1] = 0;
-				break;
-			case 2:
 				tabuleiro[linha + 1][coluna - 1] = 0;
 				break;
-			case 3:
+			case 2:
 				tabuleiro[linha + 1][coluna + 1] = 0;
 				break;
-			case 4:
+			case 3:
 				tabuleiro[linha - 1][coluna + 1] = 0;
+				break;
+			case 4:
+				tabuleiro[linha - 1][coluna - 1] = 0;
 				break;
 			}
 	}

@@ -43,15 +43,16 @@ class Jogador {
 		this.navios = navios;
 	}
 
-	public void removeNavio(int tipoNavio) {
+	public Embarcacao retiraNavio(int tipoNavio) {
 	    Iterator<Embarcacao> iterator = this.navios.iterator();
 	    while (iterator.hasNext()) {
 	        Embarcacao e = iterator.next();
 	        if (e.getTipo() == tipoNavio) {
-	            iterator.remove();
-	            break;
+	           iterator.remove();
+	           return e;
 	        }
 	    }
+	    return null;
 	}
 	
 	public String getNome() {

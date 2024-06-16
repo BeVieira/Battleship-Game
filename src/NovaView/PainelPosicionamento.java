@@ -13,12 +13,17 @@ public class PainelPosicionamento extends JPanel{
     final int xInicial = 500;
     final int yInicial = 50;
     final int tamanhoTabuleiro = lado * tamanhoCasa;
+    ModelFacade facade;
+    
+    final Color ciano = new Color(173, 216, 230);
+    final Color verdeClaro = new Color(144, 238, 144);
+    final Color verdeEscuro = new Color(0, 100, 0);
+    
     int numJogador;
     
-
     public PainelPosicionamento(int num) {
     	this.numJogador = num;
-    	ModelFacade facade = ModelFacade.getFacade();
+    	facade = ModelFacade.getFacade();
     }
     
 
@@ -27,6 +32,7 @@ public class PainelPosicionamento extends JPanel{
         super.paintComponent(g);
         desenhaTabuleiro(g);
         desenhaNavios(g);
+        atualizaTabuleiro(g);
     }
 
     private void desenhaTabuleiro(Graphics g) {
@@ -62,6 +68,48 @@ public class PainelPosicionamento extends JPanel{
         }
     }
 
+    private void atualizaTabuleiro(Graphics g) {
+        int[][] tabuleiro = facade.getTabuleiro();
+        
+        for (int i = 1; i < 15; i++) {
+            for (int j = 1; j < 15; j++) {
+                int tipo = tabuleiro[i][j];
+                int x = xInicial + j * 20;
+                int y = yInicial + i * 20;
+                /* Lógica para pintar de vermelho se não posicionar
+                if (!tratadorEventos.isValido()) {
+                	g.setColor(Color.RED);
+                }
+                 */
+            	switch (tipo) {
+            	case 1:
+            		g.setColor(Color.YELLOW);
+            		break;
+            	case 2:
+            		g.setColor(ciano);
+            		break;
+            	case 3:
+            		g.setColor(verdeClaro);
+            		break;
+            	case 4:
+            		g.setColor(Color.ORANGE);
+            		break;
+            	case 5:
+            		g.setColor(verdeEscuro);
+            		break;
+            	default:
+            		g.setColor(Color.WHITE);
+            		break;
+            	}
+                g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
+                g.setColor(Color.BLACK);
+                g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
+                repaint();
+            }
+        }
+    }
+
+    
     private void desenhaNavios(Graphics g) {
         final int alinhamento = 30;
         int x = 30;
@@ -83,7 +131,7 @@ public class PainelPosicionamento extends JPanel{
         x = alinhamento;
         y += 50;
         for (int i = 0; i < 3; i++, x+=3*tamanhoCasa) {
-            desenhaNavio(g, x, y, 2, new Color(173, 216, 230));
+            desenhaNavio(g, x, y, 2, ciano);
         }
         
         //Cruzador
@@ -96,7 +144,7 @@ public class PainelPosicionamento extends JPanel{
         //Couracado
         x = alinhamento;
         y += 40;
-        desenhaNavio(g, x, y, 5, new Color(0, 100, 0));
+        desenhaNavio(g, x, y, 5, verdeEscuro);
         
         g.setColor(Color.BLACK);
         g.drawString("Jogador " + numJogador + " posicione suas armas", 270, 380);
@@ -108,7 +156,7 @@ public class PainelPosicionamento extends JPanel{
     }
 
     private void desenhaHidroaviao(Graphics g, int x, int y) {
-        g.setColor(new Color(144, 238, 144));
+        g.setColor(verdeClaro);
         g.fillRect(x + tamanhoCasa, y, tamanhoCasa, tamanhoCasa);
         g.fillRect(x, y + tamanhoCasa, tamanhoCasa, tamanhoCasa);
 		g.fillRect(x + 2 * tamanhoCasa, y + tamanhoCasa, tamanhoCasa, tamanhoCasa);

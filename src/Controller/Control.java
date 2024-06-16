@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.ModelFacade;
-import View.JanelaInicioJogo;
+import NovaView.JanelaInicioJogo;
 import View.ObservadorIf;
 
 public class Control {

@@ -8,10 +8,12 @@ public class ModelFacade {
 	static ModelFacade f = null;
     private Tabuleiro tabuleiro;
     private Jogador jogador;
+    private Coordenada coordenada;
 	
 	private ModelFacade() {
 		this.tabuleiro = new Tabuleiro();
 		this.jogador = new Jogador();
+		this.coordenada = new Coordenada(0,0);
 		jogador.setTabuleiro(tabuleiro);
 	}
 	
@@ -25,12 +27,22 @@ public class ModelFacade {
         return jogador.getNavios();
     }
 
-    public void posicionarEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
-        jogador.inserirEmbarcacao(coordenada, embarcacao);
+    public void posicionarEmbarcacao(int tipo) {
+    	Embarcacao embarcacao = jogador.retiraNavio(tipo);
+        jogador.inserirEmbarcacao(this.coordenada, embarcacao);
     }
 
-    public boolean isPosicaoValida(Embarcacao embarcacao, Coordenada coordenada) {
-        return jogador.getTabuleiro().validaPosicionar(coordenada, embarcacao.getTipo());
+    public boolean isPosicaoValida(int tipo) {
+        return jogador.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+    }
+    
+    public void definirCoordenada(int x, int y) {
+    	this.coordenada.setColuna(x);
+    	this.coordenada.setLinha(y);
+    }
+    
+    public int[][] getTabuleiro(){
+    	return jogador.getTabuleiro().getTabuleiroEstado();
     }
 	
 
