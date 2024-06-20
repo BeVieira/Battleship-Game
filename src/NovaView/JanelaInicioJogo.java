@@ -117,8 +117,8 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
             repaint();
         } else if (e.getActionCommand().equals("Começar")) {
         	//Lógica para exportar os nomes do JTextField
-		new PainelPosicionamento(1);
-		dispose();
+        	getContentPane().add(new PainelPosicionamento(1));
+        	dispose();
         }
     }
 	

@@ -42,11 +42,13 @@ class Tabuleiro  implements Observadoif{
 			coluna += 2;
 			tabuleiro[linha][coluna] = tipo;
 			embarcacao.setPosicao(coordenada);
+			atualiza();
 		}
 		else {
 			for (int i = 0; i < tipo; i++)
 				tabuleiro[linha][coluna + i] = tipo;
 			embarcacao.setPosicao(coordenada);
+			atualiza();
 		}
 	}
 	
@@ -85,7 +87,7 @@ class Tabuleiro  implements Observadoif{
 		int coluna = embarcacao.getPosicao().getColuna();
 		
 		removerEmbarcacao(embarcacao);
-		
+		orientacao = alterarOrientacao(orientacao);
 		if (tipo == 3) {
 			girarHidroaviao(embarcacao);
 		}
@@ -107,6 +109,7 @@ class Tabuleiro  implements Observadoif{
 				}
 			}	
 		}
+		embarcacao.setOrientacao(orientacao);
 	}
 	
 	private void girarHidroaviao(Embarcacao embarcacao) {
@@ -153,6 +156,12 @@ class Tabuleiro  implements Observadoif{
 			}
 	}
 		
+	private int alterarOrientacao(int orientacao) {
+		orientacao += 1;
+		if (orientacao == 5)
+			return 1;
+		return orientacao;
+	}
 	private boolean validaQuadrado(int linha, int coluna) {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {

@@ -83,7 +83,7 @@ class Jogador {
 		tabuleiro.posicionarEmbarcacao(coordenada, embarcacao);
 	}
 
-	public void girarEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
+	public void girarEmbarcacao(Embarcacao embarcacao) {
 		tabuleiro.girarEmbarcacao(embarcacao);
 	}
 	

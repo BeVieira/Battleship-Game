@@ -40,6 +40,7 @@ public class TratadorEventos extends MouseAdapter{
 				boolean valido = facade.isPosicaoValida(tipoNavio); //Queria exportar isso para o painel 
 				facade.posicionarEmbarcacao(tipoNavio);
 				tipoNavio = 0;
+				
 			}
 		}			
 	}
