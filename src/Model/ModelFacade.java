@@ -45,5 +45,7 @@ public class ModelFacade {
     	return jogador.getTabuleiro().getTabuleiroEstado();
     }
 	
-
+    public void registra(ObservadorIf observador) {
+    	//fazer
+    }
 }

@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.Control;
 import View.Exibe;
 
 public class JanelaInicioJogo extends JFrame implements ActionListener {
@@ -26,6 +27,8 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 	JPanel defineJogador = new JPanel();
 	JTextField nomeJ1;
    	JTextField nomeJ2;
+   	private String nomet1;
+   	private String nomet2;
 	
 	public JanelaInicioJogo() {
 		CentralizaTela();
@@ -117,6 +120,13 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
             repaint();
         } else if (e.getActionCommand().equals("Começar")) {
         	//Lógica para exportar os nomes do JTextField
+        	nomet1 = nomeJ1.getText();
+        	nomet2 = nomeJ2.getText();
+        	Control.getController().passanome1(nomet1);
+        	Control.getController().passanome2(nomet2);
+        	
+        	System.out.println("nomet1  " + nomet1);
+        	System.out.println("nomet2  " + nomet2);
         	getContentPane().add(new PainelPosicionamento(1));
         	dispose();
         }

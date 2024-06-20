@@ -1,9 +1,11 @@
 package View;
 
+import NovaView.JanelaInicioJogo;
+
 public class Main {
 
 	public static void main(String[] args) {
-		new Exibe(1);
+		new JanelaInicioJogo();
 	}
 
 }
