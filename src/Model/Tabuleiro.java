@@ -157,11 +157,9 @@ class Tabuleiro  implements Observadoif{
 	}
 		
 	private int alterarOrientacao(int orientacao) {
-		orientacao += 1;
-		if (orientacao == 5)
-			return 1;
-		return orientacao;
+		return (orientacao % 4 + 1);
 	}
+	
 	private boolean validaQuadrado(int linha, int coluna) {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
