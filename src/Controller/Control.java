@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.ModelFacade;
-import NovaView.JanelaInicioJogo;
 import View.ObservadorIf;
 
 public class Control {
@@ -18,9 +17,8 @@ public class Control {
 	        return controller;
 	    }
 	    
-	    Control(){
-	    	new JanelaInicioJogo();
-
+	    private Control(){
+	    	facade = ModelFacade.getFacade();
 	    	
 	    }
 	    
@@ -38,6 +36,13 @@ public class Control {
 	   }
 	   public String setnome1() {
 		  return nomej1;
+	   }
+	   
+	   public String getnomej1() {
+		   return facade.getnomej1();
+	   }
+	   public String getnomej2() {
+		   return facade.getnomej2();
 	   }
 	    
 

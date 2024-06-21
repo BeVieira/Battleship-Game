@@ -27,10 +27,12 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 	JPanel defineJogador = new JPanel();
 	JTextField nomeJ1;
    	JTextField nomeJ2;
+   	private Control controller;
    	private String nomet1;
    	private String nomet2;
 	
 	public JanelaInicioJogo() {
+		controller = Control.getController();
 		CentralizaTela();
 		Menu();
 	}
@@ -107,27 +109,30 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 		
 		getContentPane().add(nomeJ1);
 		getContentPane().add(nomeJ2);
+
 	}
 	
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Carregar Jogo")) {
+        	System.out.println("entrei primeiro if");
         	getContentPane().removeAll();
-        	DefineJogador();
         	repaint();// Adicionar aqui a lógica para carregar o painel de carregamento de jogo
         } else if (e.getActionCommand().equals("Novo Jogo")) {
+        	System.out.println("entrei penultimo if");
             getContentPane().removeAll(); 
             DefineJogador(); 
             repaint();
         } else if (e.getActionCommand().equals("Começar")) {
-        	//Lógica para exportar os nomes do JTextField
-        	nomet1 = nomeJ1.getText();
+        	System.out.println("entrei ultimo if");
+          	nomet1 = nomeJ1.getText();
         	nomet2 = nomeJ2.getText();
-        	Control.getController().passanome1(nomet1);
-        	Control.getController().passanome2(nomet2);
-        	
+        	controller.passanome1(nomet1);
+        	controller.passanome2(nomet2);
         	System.out.println("nomet1  " + nomet1);
         	System.out.println("nomet2  " + nomet2);
-        	getContentPane().add(new PainelPosicionamento(1));
+
+        	new FramePrincipal();
+
         	dispose();
         }
     }

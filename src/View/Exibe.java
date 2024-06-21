@@ -3,6 +3,7 @@ package View;
 import java.awt.BorderLayout;
 import Model.ModelFacade;
 import Model.Observadoif;
+import NovaView.Ataque;
 
 import java.awt.Color;
 import java.awt.Graphics;

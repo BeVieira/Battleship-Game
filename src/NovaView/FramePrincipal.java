@@ -9,6 +9,7 @@ class FramePrincipal extends JFrame {
 	final int ALT_DEFAULT=500;
 	
 	public FramePrincipal() {
+		setVisible(true);
 		Toolkit tk=Toolkit.getDefaultToolkit();
 		Dimension screenSize=tk.getScreenSize();
 		int sl=screenSize.width;
@@ -23,7 +24,4 @@ class FramePrincipal extends JFrame {
 		setTitle("Batalha Naval");
 	}
 	
-	public static void main(String args[]) {
-		new FramePrincipal().setVisible(true);
-	}
 }

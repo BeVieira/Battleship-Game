@@ -2,17 +2,20 @@ package NovaView;
 
 import javax.swing.JPanel;
 
+import Controller.Control;
 import Model.ModelFacade;
 
 import java.awt.Graphics;
 import java.awt.Color;
 
 public class PainelPosicionamento extends JPanel{
+	private String nomej;
     final int lado = 15;
     final int tamanhoCasa = 20;
     final int xInicial = 500;
     final int yInicial = 50;
     final int tamanhoTabuleiro = lado * tamanhoCasa;
+    Control controller = Control.getController();
     ModelFacade facade;
     int hidro = 5;
     int sub = 4;
@@ -81,7 +84,7 @@ public class PainelPosicionamento extends JPanel{
                 int tipo = tabuleiro[i][j];
                 int x = xInicial + j * 20;
                 int y = yInicial + i * 20;
-                System.out.println("Alou");
+              // System.out.println("Alou");
                 /* Lógica para pintar de vermelho se não posicionar
                 if (!tratadorEventos.isValido()) {
                 	g.setColor(Color.RED);
@@ -161,7 +164,15 @@ public class PainelPosicionamento extends JPanel{
         
         
         g.setColor(Color.BLACK);
-        g.drawString("Jogador " + numJogador + " posicione suas armas", 270, 380);
+ 
+        if(numJogador == 1) {
+        	nomej= controller.setnome1();
+        }
+        else {
+        	nomej= controller.setnome2();
+        }
+        g.drawString("Jogador " + nomej  + " posicione suas armas", 270, 380);
+        
     }
 
     private void desenhaNavio(Graphics g, int x, int y, int tam, Color cor) {

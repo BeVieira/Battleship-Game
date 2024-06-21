@@ -1,4 +1,4 @@
-package View;
+package NovaView;
 
 import java.awt.Color;
 import java.awt.Graphics;
