@@ -1,12 +1,12 @@
 package Model;
 import java.util.ArrayList;
-import java.util.ListIterator;
-import java.util.List;
-import View.ObservadorIf;
 
-class Tabuleiro  implements Observadoif{
+import Observer.Observer;
+import Observer.Subject;
+
+class Tabuleiro implements Subject{
 	private int[][] tabuleiro;
-	private List<ObservadorIf> lst = new ArrayList<ObservadorIf>();
+	private ArrayList<Observer> observadores;
 	
 	public Tabuleiro() {
 		tabuleiro = new int[15][15];
@@ -27,7 +27,6 @@ class Tabuleiro  implements Observadoif{
 	public void setCasa(Coordenada coordenada, int tipoEmbarcacao) {
 		this.tabuleiro[coordenada.getLinha()][coordenada.getColuna()] = tipoEmbarcacao;
 	}
-
 	
 	public void posicionarEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
 		int linha = coordenada.getLinha();
@@ -42,14 +41,13 @@ class Tabuleiro  implements Observadoif{
 			coluna += 2;
 			tabuleiro[linha][coluna] = tipo;
 			embarcacao.setPosicao(coordenada);
-			atualiza();
 		}
 		else {
 			for (int i = 0; i < tipo; i++)
 				tabuleiro[linha][coluna + i] = tipo;
 			embarcacao.setPosicao(coordenada);
-			atualiza();
 		}
+		notificarObservadores();
 	}
 	
 	public void removerEmbarcacao(Embarcacao embarcacao) {
@@ -110,8 +108,48 @@ class Tabuleiro  implements Observadoif{
 			}	
 		}
 		embarcacao.setOrientacao(orientacao);
+		notificarObservadores();
 	}
 	
+	public boolean validaPosicionar(Coordenada coordenada, int tipo) {
+		int linha = coordenada.getLinha();
+        int coluna = coordenada.getColuna();
+        
+        if (coluna + tipo > 15)
+        	return false;
+        
+        for (int i = 0; i < tipo; i++) {
+        	if (!validaQuadrado(linha, coluna + i))
+        		return false;
+        }
+        return true; 
+	}
+	
+	public boolean validaPosicionarHidroaviao(Coordenada coordenada) { 
+		int linha = coordenada.getLinha();
+        int coluna = coordenada.getColuna();
+
+		if (coluna == 0 || coluna == 14 || linha == 14)
+			return false;
+		
+		//Verifica cabeça
+		if (!validaQuadrado(linha, coluna))
+			return false;
+		
+		//Verifica esquerda
+		linha+=1;
+		coluna=-1;
+        if (!validaQuadrado(linha, coluna))
+			return false;
+        
+        //Verifica direita
+        coluna += 2;
+        if (!validaQuadrado(linha, coluna))
+			return false;
+        
+        return true; 
+	}	
+
 	private void girarHidroaviao(Embarcacao embarcacao) {
 		int tipo = embarcacao.getTipo();
 		int orientacao = embarcacao.getOrientacao();
@@ -173,63 +211,20 @@ class Tabuleiro  implements Observadoif{
 		return true;
 	}
 	
-	public boolean validaPosicionar(Coordenada coordenada, int tipo) {
-		int linha = coordenada.getLinha();
-        int coluna = coordenada.getColuna();
-        
-        if (coluna + tipo > 15)
-        	return false;
-        
-        for (int i = 0; i < tipo; i++) {
-        	if (!validaQuadrado(linha, coluna + i))
-        		return false;
-        }
-        return true; 
-	}
-	
-	public boolean validaPosicionarHidroaviao(Coordenada coordenada) { 
-		int linha = coordenada.getLinha();
-        int coluna = coordenada.getColuna();
-
-		if (coluna == 0 || coluna == 14 || linha == 14)
-			return false;
-		
-		//Verifica cabeça
-		if (!validaQuadrado(linha, coluna))
-			return false;
-		
-		//Verifica esquerda
-		linha+=1;
-		coluna=-1;
-        if (!validaQuadrado(linha, coluna))
-			return false;
-        
-        //Verifica direita
-        coluna += 2;
-        if (!validaQuadrado(linha, coluna))
-			return false;
-        
-        return true; 
-	}	
-
 	@Override
-	public void add(ObservadorIf observador) {
-		lst.add(observador);
-		
-	}
+    public void registrarObservador(Observer observador) {
+        observadores.add(observador);
+    }
 
-	@Override
-	public void get() {
-		atualiza();
-		
-	}
-	
-	public void atualiza()
-    {
-        ListIterator<ObservadorIf> li = lst.listIterator();
+    @Override
+    public void removerObservador(Observer observador) {
+        observadores.remove(observador);
+    }
 
-        while(li.hasNext()) {
-            li.next().notify(this);
+    @Override
+    public void notificarObservadores() {
+        for (Observer observador : observadores) {
+            observador.atualizar();
         }
     }
 	

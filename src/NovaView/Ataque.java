@@ -1,4 +1,4 @@
-package View;
+package NovaView;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,9 +11,9 @@ import javax.swing.JFrame;
 import Controller.Control;
 
 public class Ataque extends JFrame implements ActionListener{
-	private String nomejogador1;
-	private String nomejogador2;
+	Control controle;
 	public  Ataque() {	
+		controle = Control.getController();
 		setVisible(true);
 		setSize(870, 550);
 		setTitle("Batalha Naval");
@@ -114,10 +114,8 @@ public class Ataque extends JFrame implements ActionListener{
 		add(b);
 		//pq o botao so aparece quando passa o mouse em cima? peguntar pro ivan
 		b.addActionListener(this);
-		nomejogador1 = Control.getController().setnome1();
-		nomejogador2 = Control.getController().setnome2();
 		//como identificar o jogador de acordo com o nome que ele digitar
-		g.drawString("Visao bloqueda, " + nomejogador1 + " deve clicar para desbloquear visao", 250, 450);
+		g.drawString("Visao bloqueda, " + controle.getNome() + " deve clicar para desbloquear visao", 250, 450);
 		g.drawString("tabuleiro do " + nomejogador1 , 40, 65);
 		g.drawString("tabuleiro do " + nomejogador2, 500, 65);
 		b.addActionListener(this);

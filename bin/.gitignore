@@ -1,4 +1,5 @@
-/Model/
+/Controller/
 /NovaView/
 /View/
-/Controller/
+/Model/
+/Observer/

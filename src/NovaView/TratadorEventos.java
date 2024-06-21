@@ -2,13 +2,12 @@ package NovaView;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import Controller.Control;
 import Model.ModelFacade;
 
 public class TratadorEventos extends MouseAdapter{
 	int tipoNavio = 0;
-
-	ModelFacade facade = ModelFacade.getFacade();
+	Control controle = Control.getController();
 	
 	public void mousePressed(MouseEvent e) {
 		int x = e.getX();
@@ -36,9 +35,9 @@ public class TratadorEventos extends MouseAdapter{
 			if ((x >= 510) && (x <= 810) && (y >= 80) && (y <= 380)) {
 				int xIndex = (x - 510) / 20;
 				int yIndex = (y - 80) / 20;
-				facade.definirCoordenada(xIndex, yIndex);
+				facade.definirCoordenada(xIndex, yIndex); //Criar método no controler para definiar a coordenada
 				boolean valido = facade.isPosicaoValida(tipoNavio); //Queria exportar isso para o painel 
-				facade.posicionarEmbarcacao(tipoNavio);
+				controle.adicionarEmbarcacao(tipoNavio));
 				tipoNavio = 0;
 				
 			}

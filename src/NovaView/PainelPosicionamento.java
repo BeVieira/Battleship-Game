@@ -2,18 +2,22 @@ package NovaView;
 
 import javax.swing.JPanel;
 
+import Controller.Control;
 import Model.ModelFacade;
+import Observer.Observer;
 
 import java.awt.Graphics;
 import java.awt.Color;
 
-public class PainelPosicionamento extends JPanel{
+public class PainelPosicionamento extends JPanel implements Observer{
+	private Control controle;
     final int lado = 15;
     final int tamanhoCasa = 20;
     final int xInicial = 500;
     final int yInicial = 50;
     final int tamanhoTabuleiro = lado * tamanhoCasa;
-    ModelFacade facade;
+
+    
     int hidro = 5;
     int sub = 4;
     int destroyer = 3;
@@ -24,11 +28,10 @@ public class PainelPosicionamento extends JPanel{
     final Color verdeClaro = new Color(144, 238, 144);
     final Color verdeEscuro = new Color(0, 100, 0);
     
-    int numJogador;
     
-    public PainelPosicionamento(int num) {
-    	this.numJogador = num;
-    	facade = ModelFacade.getFacade();
+    public PainelPosicionamento() {
+    	controle = Control.getController();
+    	controle.registrarObservador(this);
     }
     
 
@@ -37,7 +40,7 @@ public class PainelPosicionamento extends JPanel{
         super.paintComponent(g);
         desenhaTabuleiro(g);
         desenhaNavios(g);
-        atualizaTabuleiro(g);
+        //atualizar();
     }
 
     private void desenhaTabuleiro(Graphics g) {
@@ -73,8 +76,8 @@ public class PainelPosicionamento extends JPanel{
         }
     }
 
-    private void atualizaTabuleiro(Graphics g) {
-        int[][] tabuleiro = facade.getTabuleiro();
+    public void atualizarTab(Graphics g) {
+        int[][] tabuleiro = null;
         
         for (int i = 1; i < 15; i++) {
             for (int j = 1; j < 15; j++) {
@@ -119,7 +122,12 @@ public class PainelPosicionamento extends JPanel{
         }
     }
 
-    
+    @Override
+    public void atualizar() {
+        // Lógica para atualizar a interface gráfica quando o modelo mudar
+    	// Talvez tirar a atualizarTab
+        repaint();
+    }
     private void desenhaNavios(Graphics g) {
         final int alinhamento = 30;
         int x = 30;
@@ -160,7 +168,8 @@ public class PainelPosicionamento extends JPanel{
         
         
         g.setColor(Color.BLACK);
-        g.drawString("Jogador " + numJogador + " posicione suas armas", 270, 380);
+        g.drawString(controle.getNome()  + " posicione suas armas", 270, 380);
+        
     }
 
     private void desenhaNavio(Graphics g, int x, int y, int tam, Color cor) {

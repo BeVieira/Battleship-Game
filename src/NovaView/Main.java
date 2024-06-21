@@ -1,6 +1,4 @@
-package View;
-
-import NovaView.JanelaInicioJogo;
+package NovaView;
 
 public class Main {
 

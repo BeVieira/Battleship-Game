@@ -3,8 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import View.ObservadorIf;
-
 class Jogador {
 	private String nome;
 	private ArrayList<Embarcacao> navios;
@@ -97,11 +95,5 @@ class Jogador {
 			return false;
 		return true;
 
-	}
-	
-	public void registrar(ObservadorIf observador) {
-		this.tabuleiro.add(observador);
-		this.tabuleiroAlvo.add(observador);
-		
 	}
 }

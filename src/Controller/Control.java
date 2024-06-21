@@ -1,44 +1,66 @@
 package Controller;
 
 import Model.ModelFacade;
-import NovaView.JanelaInicioJogo;
-import View.ObservadorIf;
+import Observer.Observer;
+import Observer.Subject;
+import java.util.ArrayList;
 
-public class Control {
-	private String nomej1;
-	private String nomej2;
-	// singleton
-	private static Control controller = null;
-	private ModelFacade facade;
+public class Control implements Subject {
+	private static Control controle = null;
+	private ModelFacade fachada;
+	private ArrayList<Observer> observadores;
+	private int turno = 0;
 
 	public static Control getController() {
-		if (controller == null)
-			controller = new Control();
-		return controller;
+		if (controle == null)
+			controle = new Control();
+		return controle;
 	}
 
-	Control() {
-
+	private Control() {
+		fachada = ModelFacade.getFacade();
+		this.observadores = new ArrayList<>();
 	}
 
-	public void registra(ObservadorIf observador) {
-		facade.registra(observador);
+	public void comecar(String nomeJ1, String nomeJ2) {
+		fachada.inicializaJogadores(nomeJ1, nomeJ2);
 	}
 
-	public void passanome1(String nome1) {
-		nomej1 = nome1;
+	public String getNome() {
+		return fachada.getNome(this.turno);
 	}
 
-	public void passanome2(String nome2) {
-		nomej2 = nome2;
+	@Override
+	public void registrarObservador(Observer observador) {
+		observadores.add(observador);
 	}
 
-	public String setnome2() {
-		return nomej2;
+	@Override
+	public void removerObservador(Observer observador) {
+		observadores.remove(observador);
 	}
 
-	public String setnome1() {
-		return nomej1;
+	@Override
+	public void notificarObservadores() {
+		for (Observer observador : observadores) {
+			observador.atualizar();
+		}
+	}
+	
+	public void adicionarEmbarcacao(int tipo) {
+		fachada.posicionarEmbarcacao(tipo, this.turno);
+		notificarObservadores();
+	}
+
+	public void trocaTurno() {
+		if (this.turno == 0)
+			this.turno = 1;
+		else
+			this.turno = this.turno % 2 + 1;	
+	}
+
+	public int getTurno() {
+		return this.turno;
 	}
 
 }

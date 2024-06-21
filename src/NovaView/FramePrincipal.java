@@ -9,6 +9,7 @@ class FramePrincipal extends JFrame {
 	final int ALT_DEFAULT=500;
 	
 	public FramePrincipal() {
+		setVisible(true);
 		Toolkit tk=Toolkit.getDefaultToolkit();
 		Dimension screenSize=tk.getScreenSize();
 		int sl=screenSize.width;
@@ -19,11 +20,8 @@ class FramePrincipal extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		addMouseListener(new TratadorEventos());
-		getContentPane().add(new PainelPosicionamento(1));
+		getContentPane().add(new PainelPosicionamento());
 		setTitle("Batalha Naval");
 	}
 	
-	public static void main(String args[]) {
-		new FramePrincipal().setVisible(true);
-	}
 }

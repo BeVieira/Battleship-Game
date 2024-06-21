@@ -2,7 +2,9 @@ package View;
 
 import java.awt.BorderLayout;
 import Model.ModelFacade;
-import Model.Observadoif;
+import NovaView.Ataque;
+import Observer.Observado;
+import Observer.ObservadorIf;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -210,7 +212,7 @@ public class Exibe extends JFrame implements ActionListener, ObservadorIf {
 	}
 
 	@Override
-	public void notify(Observadoif observado) {
+	public void notify(Observado observado) {
 		//pinta tela de acordo com o tabuleiro mudando
 		
 		
