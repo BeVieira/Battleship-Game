@@ -196,8 +196,6 @@ public class Exibe extends JFrame implements ActionListener, ObservadorIf {
 		b.addActionListener(this);
 
 		// como identificar o jogador de acordo com o nome que ele digitar
-		g.drawString("Jogador " + numJogador + " selecione uma arma na lista", 270, 410);
-
 	}
 
 	@Override

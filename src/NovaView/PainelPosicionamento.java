@@ -1,5 +1,6 @@
 package NovaView;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import Controller.Control;
@@ -7,10 +8,13 @@ import Model.ModelFacade;
 import Observer.Observer;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 
-public class PainelPosicionamento extends JPanel implements Observer{
+public class PainelPosicionamento extends JPanel implements Observer, ActionListener{
 	private Control controle;
+	JButton bt;
     final int lado = 15;
     final int tamanhoCasa = 20;
     final int xInicial = 500;
@@ -23,6 +27,7 @@ public class PainelPosicionamento extends JPanel implements Observer{
     int destroyer = 3;
     int cruzador = 2;
     int couracado = 1;
+    int somatorio = hidro + sub +destroyer + cruzador + couracado;
     
     final Color ciano = new Color(173, 216, 230);
     final Color verdeClaro = new Color(144, 238, 144);
@@ -32,6 +37,8 @@ public class PainelPosicionamento extends JPanel implements Observer{
     public PainelPosicionamento() {
     	controle = Control.getController();
     	controle.registrarObservador(this);
+    	bt = new JButton("Proximo jogador");
+	
     }
     
 
@@ -40,7 +47,7 @@ public class PainelPosicionamento extends JPanel implements Observer{
         super.paintComponent(g);
         desenhaTabuleiro(g);
         desenhaNavios(g);
-        //atualizar();
+       // atualizarTab(g);
     }
 
     private void desenhaTabuleiro(Graphics g) {
@@ -166,7 +173,11 @@ public class PainelPosicionamento extends JPanel implements Observer{
         	desenhaNavio(g, x, y, 5, verdeEscuro);
         }
         
-        
+    	bt.setBounds(300, 390, 150, 40);
+    	bt.setVisible(true);
+    	System.out.println("getturno = " + controle.getTurno());
+    	bt.addActionListener(this);
+    	add(bt);
         g.setColor(Color.BLACK);
         g.drawString(controle.getNome()  + " posicione suas armas", 270, 380);
         
@@ -178,9 +189,31 @@ public class PainelPosicionamento extends JPanel implements Observer{
     }
 
     private void desenhaHidroaviao(Graphics g, int x, int y, Color cor) {
+
         g.setColor(cor);
         g.fillRect(x + tamanhoCasa, y, tamanhoCasa, tamanhoCasa);
         g.fillRect(x, y + tamanhoCasa, tamanhoCasa, tamanhoCasa);
 		g.fillRect(x + 2 * tamanhoCasa, y + tamanhoCasa, tamanhoCasa, tamanhoCasa);
     }
+
+
+	
+    @Override
+	public void actionPerformed(ActionEvent e) {
+    	if(controle.getTurno() == 1) {
+    		if(somatorio == 0) {
+    			controle.trocaTurno();
+            	bt.setText("Iniciar game");
+        		repaint();
+    		}
+        	
+    	}
+    	else {
+    		new Ataque();
+    		
+    	}
+
+		
+		
+	}
 }

@@ -35,9 +35,9 @@ public class TratadorEventos extends MouseAdapter{
 			if ((x >= 510) && (x <= 810) && (y >= 80) && (y <= 380)) {
 				int xIndex = (x - 510) / 20;
 				int yIndex = (y - 80) / 20;
-				facade.definirCoordenada(xIndex, yIndex); //Criar método no controler para definiar a coordenada
-				boolean valido = facade.isPosicaoValida(tipoNavio); //Queria exportar isso para o painel 
-				controle.adicionarEmbarcacao(tipoNavio));
+				controle.definirCoordenada(xIndex, yIndex); //Criar método no controler para definiar a coordenada
+				//boolean valido = .isPosicaoValida(tipoNavio); //Queria exportar isso para o painel 
+				controle.adicionarEmbarcacao(tipoNavio);
 				tipoNavio = 0;
 				
 			}

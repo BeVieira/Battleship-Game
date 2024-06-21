@@ -29,6 +29,12 @@ public class Control implements Subject {
 	public String getNome() {
 		return fachada.getNome(this.turno);
 	}
+	public String getNome1() {
+		return fachada.getNome(1);
+	}
+	public String getNome2() {
+		return fachada.getNome(2);
+	}
 
 	@Override
 	public void registrarObservador(Observer observador) {
@@ -61,6 +67,15 @@ public class Control implements Subject {
 
 	public int getTurno() {
 		return this.turno;
+	}
+
+	public void definirCoordenada(int xIndex, int yIndex) {
+		fachada.definirCoordenada(xIndex, yIndex);
+		
+	}
+
+	public int[][] getTabuleiro() {
+		return fachada.getTabuleiro(this.turno);
 	}
 
 }
