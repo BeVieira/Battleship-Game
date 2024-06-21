@@ -16,7 +16,7 @@ class FramePrincipal extends JFrame {
 		int x=sl/2-LARG_DEFAULT/2;
 		int y=sa/2-ALT_DEFAULT/2;
 		setBounds(x,y,LARG_DEFAULT,ALT_DEFAULT);
-		setDefaultCloseOperation(EXIT_ON_CLOSE); // encerra o programa quando clica no x
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		addMouseListener(new TratadorEventos());
 		getContentPane().add(new PainelPosicionamento(1));

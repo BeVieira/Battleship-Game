@@ -112,7 +112,6 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Carregar Jogo")) {
         	getContentPane().removeAll();
-        	DefineJogador();
         	repaint();// Adicionar aqui a lógica para carregar o painel de carregamento de jogo
         } else if (e.getActionCommand().equals("Novo Jogo")) {
             getContentPane().removeAll(); 

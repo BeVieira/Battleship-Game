@@ -81,7 +81,6 @@ public class PainelPosicionamento extends JPanel{
                 int tipo = tabuleiro[i][j];
                 int x = xInicial + j * 20;
                 int y = yInicial + i * 20;
-                System.out.println("Alou");
                 /* Lógica para pintar de vermelho se não posicionar
                 if (!tratadorEventos.isValido()) {
                 	g.setColor(Color.RED);
