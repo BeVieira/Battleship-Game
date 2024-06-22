@@ -46,6 +46,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         desenhaTabuleiro(g);
+        atualizarTab(g);
         desenhaNavios(g);
        // atualizarTab(g);
     }
@@ -84,7 +85,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     }
 
     public void atualizarTab(Graphics g) {
-        int[][] tabuleiro = null;
+        int[][] tabuleiro = controle.getTabuleiro();
         
         for (int i = 1; i < 15; i++) {
             for (int j = 1; j < 15; j++) {
@@ -124,17 +125,15 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
                 g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
                 g.setColor(Color.BLACK);
                 g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
-                repaint(); //Esse repaint tem q vir do observer
             }
         }
     }
 
     @Override
     public void atualizar() {
-        // Lógica para atualizar a interface gráfica quando o modelo mudar
-    	// Talvez tirar a atualizarTab
         repaint();
     }
+    
     private void desenhaNavios(Graphics g) {
         final int alinhamento = 30;
         int x = 30;
