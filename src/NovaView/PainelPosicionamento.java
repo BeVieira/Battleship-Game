@@ -48,7 +48,6 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         desenhaTabuleiro(g);
         atualizarTab(g);
         desenhaNavios(g);
-       // atualizarTab(g);
     }
 
     private void desenhaTabuleiro(Graphics g) {
@@ -208,6 +207,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         	
     	}
     	else {
+    		controle.removerObservador(this);
     		new Ataque();
     		
     	}
