@@ -62,7 +62,7 @@ public class ModelFacade{
 		this.coordenada.setColuna(x);
 		this.coordenada.setLinha(y);
 	}
-
+	
 	public int[][] getTabuleiro(int turno) {
 		if (turno == 1)
 			return jogador1.getTabuleiro().getTabuleiroEstado();
