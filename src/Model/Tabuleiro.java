@@ -47,7 +47,7 @@ class Tabuleiro implements Subject{
 				tabuleiro[linha][coluna + i] = tipo;
 			embarcacao.setPosicao(coordenada);
 		}
-		notificarObservadores();
+		//notificarObservadores();
 	}
 	
 	public void removerEmbarcacao(Embarcacao embarcacao) {
@@ -108,7 +108,7 @@ class Tabuleiro implements Subject{
 			}	
 		}
 		embarcacao.setOrientacao(orientacao);
-		notificarObservadores();
+		//notificarObservadores();
 	}
 	
 	public boolean validaPosicionar(Coordenada coordenada, int tipo) {

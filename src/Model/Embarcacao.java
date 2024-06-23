@@ -1,9 +1,12 @@
 package Model;
 
+import java.util.ArrayList;
+
 class Embarcacao {
 	private int tipo;
 	private int orientacao;
 	private Coordenada posicao;
+	protected ArrayList<Coordenada> pontos;
 
 	public Embarcacao(int tipo) {
 		this.tipo = tipo;
