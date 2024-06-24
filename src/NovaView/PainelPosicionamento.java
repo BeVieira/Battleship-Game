@@ -172,6 +172,54 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 			g.setColor(Color.BLACK);
 			g.drawRect(x+20, y+20, tamanhoCasa, tamanhoCasa);
 			break;
+		case 1:
+			g.setColor(cor);
+			g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
+			
+			g.setColor(cor);
+			g.fillRect(x+20, y-20, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x+20, y-20, tamanhoCasa, tamanhoCasa);
+			
+			g.setColor(cor);
+			g.fillRect(x+20, y+20, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x+20, y+20, tamanhoCasa, tamanhoCasa);
+			break;
+		case 2:
+			g.setColor(cor);
+			g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
+			
+			g.setColor(cor);
+			g.fillRect(x-20, y-20, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x-20, y-20, tamanhoCasa, tamanhoCasa);
+			
+			g.setColor(cor);
+			g.fillRect(x+20, y-20, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x+20, y-20, tamanhoCasa, tamanhoCasa);
+			break;
+		case 3:
+			g.setColor(cor);
+			g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
+			
+			g.setColor(cor);
+			g.fillRect(x-20, y+20, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x-20, y+20, tamanhoCasa, tamanhoCasa);
+			
+			g.setColor(cor);
+			g.fillRect(x-20, y-20, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x-20, y-20, tamanhoCasa, tamanhoCasa);
+			break;
 	}
 	}
 	
@@ -183,6 +231,30 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 					g.fillRect(x + (20*i), y, tamanhoCasa, tamanhoCasa);
 					g.setColor(Color.BLACK);
 					g.drawRect(x + (20*i), y, tamanhoCasa, tamanhoCasa);
+				}
+				break;
+			case 1:
+				for (int i = 0; i < tipo; i++) {
+					g.setColor(cor);
+					g.fillRect(x, y + (20*i), tamanhoCasa, tamanhoCasa);
+					g.setColor(Color.BLACK);
+					g.drawRect(x, y + (20*i), tamanhoCasa, tamanhoCasa);
+				}
+				break;
+			case 2:
+				for (int i = 0; i < tipo; i++) {
+					g.setColor(cor);
+					g.fillRect(x + (20*-i), y, tamanhoCasa, tamanhoCasa);
+					g.setColor(Color.BLACK);
+					g.drawRect(x + (20*-i), y, tamanhoCasa, tamanhoCasa);
+				}
+				break;
+			case 3:
+				for (int i = 0; i < tipo; i++) {
+					g.setColor(cor);
+					g.fillRect(x, y + (20*-i), tamanhoCasa, tamanhoCasa);
+					g.setColor(Color.BLACK);
+					g.drawRect(x, y + (20*-i), tamanhoCasa, tamanhoCasa);
 				}
 				break;
 		}

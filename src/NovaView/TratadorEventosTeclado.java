@@ -20,10 +20,10 @@ public class TratadorEventosTeclado extends KeyAdapter implements Subject{
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			if (ghost.getValid() == true) {
 				controle.adicionarEmbarcacao(ghost.getType());
-				ghost.removeGhost();
+				ghost.remove();
 			}
 			else {
-				ghost.removeGhost();
+				ghost.remove();
 			}
 		}
 	}

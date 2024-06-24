@@ -83,6 +83,10 @@ public class ModelFacade{
 	public int getGhostType() {
 		return posicionando.getTipo();
 	}
+	
+	public void setGhostOrientation(int orientacao) {
+		posicionando.setOrientacao(orientacao);
+	}
 
 	public boolean isPosicaoValida(int tipo) {
 		//Incompleto

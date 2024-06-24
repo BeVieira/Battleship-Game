@@ -27,7 +27,7 @@ public class GhostController implements Subject {
 	
 	public void definirGhost(int tipo, int turno) {
 		isValid = fachada.definirGhost(tipo, turno);
-		notificarObservadores();
+		this.notificarObservadores();
 	}
 	
 	public int[] getPosition() {
@@ -46,9 +46,15 @@ public class GhostController implements Subject {
 		return isValid;
 	}
 	
-	public void removeGhost() {
+	public void remove() {
 		posicionando = false;
-		notificarObservadores();
+		this.notificarObservadores();
+	}
+	
+	public void rotate() {
+		int orientacao = (this.getOrientation() + 1) % 4;
+		fachada.setGhostOrientation(orientacao);
+		this.notificarObservadores();
 	}
 
 	@Override
