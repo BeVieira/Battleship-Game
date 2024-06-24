@@ -25,10 +25,9 @@ public class GhostController implements Subject {
 		this.observadores = new ArrayList<>();
 	}
 	
-	public boolean definirGhost(int tipo, int turno) {
+	public void definirGhost(int tipo, int turno) {
 		isValid = fachada.definirGhost(tipo, turno);
 		notificarObservadores();
-		return isValid;
 	}
 	
 	public int[] getPosition() {
@@ -45,6 +44,11 @@ public class GhostController implements Subject {
 	
 	public boolean getValid() {
 		return isValid;
+	}
+	
+	public void removeGhost() {
+		posicionando = false;
+		notificarObservadores();
 	}
 
 	@Override

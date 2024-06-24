@@ -36,8 +36,6 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     final Color verdeClaro = new Color(144, 238, 144);
     final Color verdeEscuro = new Color(0, 100, 0);
     
-    boolean ghostValido = true;
-    
     public PainelPosicionamento() {
     	controle = Control.getController();
     	controle.registrarObservador(this);
@@ -141,7 +139,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         int x = xInicial + pos[0] * 20;
         int y = yInicial + pos[1] * 20;
     	Color cor;
-		if (ghostValido == true) {
+		if (ghost.getValid() == true) {
 			cor = Color.green;
 		}
 		else {
@@ -149,12 +147,46 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 		}
 		
     	if (ghost.getType() == 3) {
-    		desenhaHidroaviao(g, x-20, y, cor);
+    		desenhaGhostHidroaviao(g, x, y, cor);
     	}
     	else {
-    		desenhaNavio(g, x, y, ghost.getType(), cor);
+    		desenhaGhostNavio(g, x, y, ghost.getType(), cor);
     	}
     }
+	
+	public void desenhaGhostHidroaviao(Graphics g, int x, int y, Color cor) {
+		switch (ghost.getOrientation()) {
+		case 0:
+			g.setColor(cor);
+			g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
+			
+			g.setColor(cor);
+			g.fillRect(x-20, y+20, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x-20, y+20, tamanhoCasa, tamanhoCasa);
+			
+			g.setColor(cor);
+			g.fillRect(x+20, y+20, tamanhoCasa, tamanhoCasa);
+			g.setColor(Color.BLACK);
+			g.drawRect(x+20, y+20, tamanhoCasa, tamanhoCasa);
+			break;
+	}
+	}
+	
+	public void desenhaGhostNavio(Graphics g, int x, int y, int tipo, Color cor) {
+		switch (ghost.getOrientation()) {
+			case 0:
+				for (int i = 0; i < tipo; i++) {
+					g.setColor(cor);
+					g.fillRect(x + (20*i), y, tamanhoCasa, tamanhoCasa);
+					g.setColor(Color.BLACK);
+					g.drawRect(x + (20*i), y, tamanhoCasa, tamanhoCasa);
+				}
+				break;
+		}
+	}
     
     @Override
     public void atualizar() {
@@ -248,7 +280,5 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     		}
     	}
 
-		
-		
 	}
 }

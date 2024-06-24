@@ -20,6 +20,7 @@ class FramePrincipal extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		addMouseListener(new TratadorEventos());
+		addKeyListener(new TratadorEventosTeclado());
 		getContentPane().add(new PainelPosicionamento());
 		//getContentPane().add(new PainelAtaque());
 		setTitle("Batalha Naval");

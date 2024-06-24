@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import Controller.Control;
 import Controller.GhostController;
-import Model.ModelFacade;
 import Observer.Observer;
 import Observer.Subject;
 
@@ -45,8 +44,6 @@ public class TratadorEventos extends MouseAdapter implements Subject{
 				ghost.posicionando = true;
 				controle.definirCoordenada(xIndex, yIndex);
 				ghost.definirGhost(ghost.tipo, controle.getTurno());
-				
-				//controle.adicionarEmbarcacao(ghost.tipo);
 			}
 		}			
 	}
