@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import Controller.Control;
+import Controller.GhostController;
 import Model.ModelFacade;
 import Observer.Observer;
 
@@ -12,33 +13,37 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
+
 public class PainelPosicionamento extends JPanel implements Observer, ActionListener{
 	private Control controle;
+	private GhostController ghost;
 	JButton bt;
     final int lado = 15;
     final int tamanhoCasa = 20;
     final int xInicial = 500;
     final int yInicial = 50;
     final int tamanhoTabuleiro = lado * tamanhoCasa;
-
+    
+    int criadoAtaque = 0;
     
     int hidro = 5;
     int sub = 4;
     int destroyer = 3;
     int cruzador = 2;
     int couracado = 1;
-    int somatorio = hidro + sub +destroyer + cruzador + couracado;
     
     final Color ciano = new Color(173, 216, 230);
     final Color verdeClaro = new Color(144, 238, 144);
     final Color verdeEscuro = new Color(0, 100, 0);
     
+    boolean ghostValido = true;
     
     public PainelPosicionamento() {
     	controle = Control.getController();
     	controle.registrarObservador(this);
+    	ghost = GhostController.getController();
+    	ghost.registrarObservador(this);
     	bt = new JButton("Proximo jogador");
-	
     }
     
 
@@ -47,6 +52,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         super.paintComponent(g);
         desenhaTabuleiro(g);
         atualizarTab(g);
+        atualizaGhost(g);
         desenhaNavios(g);
     }
 
@@ -86,8 +92,8 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     public void atualizarTab(Graphics g) {
         int[][] tabuleiro = controle.getTabuleiro();
         
-        for (int i = 1; i < 15; i++) {
-            for (int j = 1; j < 15; j++) {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
                 int tipo = tabuleiro[i][j];
                 int x = xInicial + j * 20;
                 int y = yInicial + i * 20;
@@ -99,23 +105,23 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
             	switch (tipo) {
             	case 1:
             		g.setColor(Color.YELLOW);
-            		sub -= 1;
+            		//sub -= 1;
             		break;
             	case 2:
             		g.setColor(ciano);
-            		destroyer -= 1;
+            		//destroyer -= 1;
             		break;
             	case 3:
             		g.setColor(verdeClaro);
-            		hidro -= 1;
+            		//hidro -= 1;
             		break;
             	case 4:
             		g.setColor(Color.ORANGE);
-            		cruzador -= 1;
+            		//cruzador -= 1;
             		break;
             	case 5:
             		g.setColor(verdeEscuro);
-            		couracado -= 1;
+            		//couracado -= 1;
             		break;
             	default:
             		g.setColor(Color.WHITE);
@@ -128,8 +134,35 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         }
     }
 
+	private void atualizaGhost(Graphics g) {
+    	if (ghost.posicionando == false) return;
+    	int pos[] = ghost.getPosition();
+    	
+        int x = xInicial + pos[0] * 20;
+        int y = yInicial + pos[1] * 20;
+    	Color cor;
+		if (ghostValido == true) {
+			cor = Color.green;
+		}
+		else {
+			cor = Color.red;
+		}
+		
+    	if (ghost.getType() == 3) {
+    		desenhaHidroaviao(g, x-20, y, cor);
+    	}
+    	else {
+    		desenhaNavio(g, x, y, ghost.getType(), cor);
+    	}
+    }
+    
     @Override
     public void atualizar() {
+        hidro = controle.getEmbarcacaoNum(3, controle.getTurno());
+        sub = controle.getEmbarcacaoNum(1, controle.getTurno());
+        destroyer = controle.getEmbarcacaoNum(2, controle.getTurno());
+        cruzador = controle.getEmbarcacaoNum(4, controle.getTurno());
+        couracado = controle.getEmbarcacaoNum(5, controle.getTurno());
         repaint();
     }
     
@@ -194,22 +227,25 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 		g.fillRect(x + 2 * tamanhoCasa, y + tamanhoCasa, tamanhoCasa, tamanhoCasa);
     }
 
-
 	
     @Override
 	public void actionPerformed(ActionEvent e) {
     	if(controle.getTurno() == 1) {
-    		if(somatorio == 0) {
+    		if(controle.getEmbarcacaoNum(0, controle.getTurno()) == 0) {
     			controle.trocaTurno();
             	bt.setText("Iniciar game");
+            	this.atualizar();
         		repaint();
     		}
         	
     	}
     	else {
-    		controle.removerObservador(this);
-    		new Ataque();
-    		
+    		if (e.getActionCommand() == "Iniciar game") {
+    			if (criadoAtaque == 0) {
+    				controle.removerObservador(this);
+        			new Ataque();
+    			}
+    		}
     	}
 
 		

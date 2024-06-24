@@ -77,5 +77,9 @@ public class Control implements Subject {
 	public int[][] getTabuleiro() {
 		return fachada.getTabuleiro(this.turno);
 	}
+	
+	public int getEmbarcacaoNum(int tipo, int jogador) {
+		return fachada.getEmbarcacaoNum(tipo, jogador);
+	}
 
 }
