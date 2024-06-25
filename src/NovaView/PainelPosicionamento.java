@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 
 
-public class PainelPosicionamento extends JPanel implements Observer{
+public class PainelPosicionamento extends JPanel implements Observer, ActionListener{
 	private Control controle;
 	private GhostController ghost;
 	JButton bt;
@@ -42,9 +42,11 @@ public class PainelPosicionamento extends JPanel implements Observer{
     	ghost = GhostController.getController();
     	ghost.registrarObservador(this);
     	bt = new JButton("Proximo jogador");
-    	/*bt.addActionListener(new ActionListener() {
-    		
-    	});*/
+    	
+    	bt.addActionListener(this);
+    	bt.setVisible(true);
+    	bt.setFocusable(false);
+    	
     }
     
 
@@ -317,11 +319,11 @@ public class PainelPosicionamento extends JPanel implements Observer{
         	desenhaNavio(g, x, y, 5, verdeEscuro);
         }
         
-    	bt.setBounds(300, 390, 150, 40);
-    	bt.setVisible(true);
-    	System.out.println("getturno = " + controle.getTurno());
-    	bt.addActionListener(this);
+        bt.setBounds(300, 390, 150, 40);
+    	
     	add(bt);
+    	
+    	System.out.println("getturno = " + controle.getTurno());
         g.setColor(Color.BLACK);
         g.drawString(controle.getNome()  + " posicione suas armas", 270, 380);
         
