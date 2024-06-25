@@ -360,8 +360,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     			if (criadoAtaque == false) {
     				controle.removerObservador(this);
         			new Ataque();
-        			javax.swing.JFrame test = (JFrame) this.getParent();
-        			test.dispose();
+        			javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
         			//this.setEnabled(false);
         			//criadoAtaque = true;
     			}
