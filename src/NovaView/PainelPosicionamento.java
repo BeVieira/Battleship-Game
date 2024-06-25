@@ -1,11 +1,11 @@
 package NovaView;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Controller.Control;
 import Controller.GhostController;
-import Model.ModelFacade;
 import Observer.Observer;
 
 import java.awt.Graphics;
@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 
 
-public class PainelPosicionamento extends JPanel implements Observer, ActionListener{
+public class PainelPosicionamento extends JPanel implements Observer{
 	private Control controle;
 	private GhostController ghost;
 	JButton bt;
@@ -24,7 +24,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     final int yInicial = 50;
     final int tamanhoTabuleiro = lado * tamanhoCasa;
     
-    int criadoAtaque = 0;
+    boolean criadoAtaque = false;
     
     int hidro = 5;
     int sub = 4;
@@ -42,6 +42,9 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     	ghost = GhostController.getController();
     	ghost.registrarObservador(this);
     	bt = new JButton("Proximo jogador");
+    	/*bt.addActionListener(new ActionListener() {
+    		
+    	});*/
     }
     
 
@@ -52,6 +55,12 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         atualizarTab(g);
         atualizaGhost(g);
         desenhaNavios(g);
+        if(controle.getEmbarcacaoNum(0, controle.getTurno()) == 0) {
+        	bt.setEnabled(true);
+        }
+        else {
+        //	bt.setEnabled(false);
+        }
     }
 
     private void desenhaTabuleiro(Graphics g) {
@@ -334,20 +343,25 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 	
     @Override
 	public void actionPerformed(ActionEvent e) {
+    	System.out.println("Action performed");
+    	
     	if(controle.getTurno() == 1) {
     		if(controle.getEmbarcacaoNum(0, controle.getTurno()) == 0) {
     			controle.trocaTurno();
             	bt.setText("Iniciar game");
-            	this.atualizar();
-        		repaint();
+            	ghost.notificarObservadores();
     		}
         	
     	}
     	else {
     		if (e.getActionCommand() == "Iniciar game") {
-    			if (criadoAtaque == 0) {
+    			if (criadoAtaque == false) {
     				controle.removerObservador(this);
         			new Ataque();
+        			javax.swing.JFrame test = (JFrame) this.getParent();
+        			test.dispose();
+        			//this.setEnabled(false);
+        			//criadoAtaque = true;
     			}
     		}
     	}

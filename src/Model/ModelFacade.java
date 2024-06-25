@@ -68,7 +68,7 @@ public class ModelFacade{
 		posicionando = new Embarcacao(tipo);
 		posicionando.setPosicao(coordenada);
 		posicionando.setOrientacao(0);
-		return isPosicaoValida(tipo);
+		return isPosicaoValida(tipo, turno);
 	}
 	
 	public int[] getGhostPosition() {
@@ -88,9 +88,11 @@ public class ModelFacade{
 		posicionando.setOrientacao(orientacao);
 	}
 
-	public boolean isPosicaoValida(int tipo) {
-		//Incompleto
-		return jogador1.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+	public boolean isPosicaoValida(int tipo, int turno) {
+		if (turno == 1) {
+			return jogador1.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+		}
+		return jogador2.getTabuleiro().validaPosicionar(this.coordenada, tipo);
 	}
 
 	public void definirCoordenada(int x, int y) {
