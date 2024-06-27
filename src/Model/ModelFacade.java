@@ -70,7 +70,7 @@ public class ModelFacade{
 		posicionando = new Embarcacao(tipo);
 		posicionando.setPosicao(coordenada);
 		posicionando.setOrientacao(0);
-		return isPosicaoValida(tipo);
+		return isPosicaoValida(tipo, turno);
 	}
 	
 	public int[] getGhostPosition() {

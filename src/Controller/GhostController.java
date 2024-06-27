@@ -26,6 +26,7 @@ public class GhostController implements Subject {
 	}
 	
 	public void definirGhost(int tipo, int turno) {
+		posicionando = true;
 		isValid = fachada.definirGhost(tipo, turno);
 		this.notificarObservadores();
 	}
@@ -48,6 +49,7 @@ public class GhostController implements Subject {
 	
 	public void remove() {
 		posicionando = false;
+		tipo = 0;
 		this.notificarObservadores();
 	}
 	
