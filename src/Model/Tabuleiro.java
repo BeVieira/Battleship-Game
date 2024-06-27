@@ -34,55 +34,61 @@ class Tabuleiro implements Subject{
 		int tipo = embarcacao.getTipo();
 		
 		if (tipo == 3) {
-			System.out.println("orientaçao " + orientacao);
+			tabuleiro[linha][coluna] = tipo;
 			switch(orientacao) {
-				case 0:
-
-					tabuleiro[linha][coluna] = tipo;
+				case 1:
 					linha += 1;
 					coluna -= 1;
 					tabuleiro[linha][coluna] = tipo;
 					coluna += 2;
 					tabuleiro[linha][coluna] = tipo;
-			
 					break;
-				case 1:
-
-					tabuleiro[linha][coluna] = tipo;
+					
+				case 2:
 					linha -= 1;
 					coluna += 1;
 					tabuleiro[linha][coluna] = tipo;
 					linha += 2;
 					tabuleiro[linha][coluna] = tipo;
 					break;
-				case 2:
-
-					tabuleiro[linha][coluna] = tipo;
+					
+				case 3:
 					linha -= 1;
 					coluna += 1;
 					tabuleiro[linha][coluna] = tipo;
 					coluna -= 2;
 					tabuleiro[linha][coluna] = tipo;
 					break;
-				case 3:
-
-					tabuleiro[linha][coluna] = tipo;
+					
+				case 4:
 					linha -= 1;
 					coluna -= 1;
 					tabuleiro[linha][coluna] = tipo;
 					linha += 2;
 					tabuleiro[linha][coluna] = tipo;
-					break;
-					
-					
+					break;		
 			}
 			
 		}
 		else {
-			for (int i = 0; i < tipo; i++)
-				tabuleiro[linha][coluna + i] = tipo;
-			embarcacao.setPosicao(embarcacao.getPosicao());
+			for (int i = 0; i < tipo; i++) {
+				switch (orientacao) {
+				case 1:
+					tabuleiro[linha][coluna + i] = tipo;
+					break;
+				case 2:
+					tabuleiro[linha - i][coluna] = tipo;
+					break;
+				case 3:
+					tabuleiro[linha][coluna - i] = tipo;
+					break;
+				case 4:
+					tabuleiro[linha + i][coluna] = tipo;
+					break;
+				}
+			}
 		}
+		embarcacao.setPosicao(embarcacao.getPosicao());
 		//notificarObservadores();
 	}
 	
@@ -147,16 +153,43 @@ class Tabuleiro implements Subject{
 		//notificarObservadores();
 	}
 	
-	public boolean validaPosicionar(Coordenada coordenada, int tipo) {
+	public boolean validaPosicionar(Coordenada coordenada, int tipo, int orientacao) {
 		int linha = coordenada.getLinha();
         int coluna = coordenada.getColuna();
         
-        if (coluna + tipo > 15)
-        	return false;
-        
-        for (int i = 0; i < tipo; i++) {
-        	if (!validaQuadrado(linha, coluna + i))
+        switch (orientacao) {
+        case 1:
+        	if (coluna + tipo > 15)
         		return false;
+        	for (int i = 0; i < tipo; i++) {
+        		if (!validaQuadrado(linha, coluna + i))
+        			return false;
+        	}
+			break;
+        case 2:
+        	if (linha - tipo < -1)
+        		return false;
+        	for (int i = 0; i < tipo; i++) {
+        		if (!validaQuadrado(linha - i, coluna))
+        			return false;
+        	}
+			break;
+        case 3:
+        	if (coluna - tipo < -1)
+        		return false;
+        	for (int i = 0; i < tipo; i++) {
+        		if (!validaQuadrado(linha, coluna - i))
+        			return false;
+        	}
+			break;
+        case 4:
+        	if (linha + tipo > 15)
+        		return false;
+        	for (int i = 0; i < tipo; i++) {
+        		if (!validaQuadrado(linha + i, coluna))
+        			return false;
+        	}
+			break;
         }
         return true; 
 	}
@@ -164,54 +197,80 @@ class Tabuleiro implements Subject{
 	public boolean validaPosicionarHidroaviao(Coordenada coordenada, int orientacao) { 
 		int linha = coordenada.getLinha();
         int coluna = coordenada.getColuna();
-        System.out.println("orientacao ---> " + orientacao);
-        System.out.println("linha ---> " + linha);
-        System.out.println("coluna ---> " + coluna + "");
-        if(linha == 0) {
-        	if(coluna == 0 || coluna == 14) {
-        		return false;
-        	}
-        	if(orientacao == 0) {
-        		return true;
-        	}
-        	return false;
-        }
-        else if(linha == 14) {
-        	if(coluna == 0 || coluna == 14) {
-        		return false;
-        	}
-        	 if(orientacao == 2) {
-        		 return true;
-        	 }
-        	 return false;
-        }
-        if(coluna == 0) { 
-        	if(orientacao == 1) {
-        		return true;
-        	}
-        	return false;  	
-        }
-        if(coluna == 14) { 
-        	if(orientacao == 3) {
-        		return true;
-        	}
-        	return false;  	
-        }
+		switch (orientacao) {
+		case 1:
+			if (coluna == 0 || coluna == 14 || linha == 14)
+				return false;
+			break;
+		case 2:
+			if (linha == 0 || linha == 14 || coluna == 14)
+				return false;
+			break;
+		case 3:
+			if (linha == 0 || coluna == 0 || coluna == 14)
+				return false;
+			break;
+		case 4:
+			if (linha == 0 || coluna == 0 || linha == 14)
+				return false;
+			break;
+		}
+        
+        //Valida colisão
 		//Verifica cabeça
 		if (!validaQuadrado(linha, coluna))
 			return false;
+		switch (orientacao) {
 		
-		//Verifica esquerda
-		linha+=1;
-		coluna=-1;
-        if (!validaQuadrado(linha, coluna))
-			return false;
-        
-        //Verifica direita
-        coluna += 2;
-        if (!validaQuadrado(linha, coluna))
-			return false;
-        
+    	case 1:
+    		//Esquerda embaixo
+    		linha+=1;
+    		coluna-=1;
+            if (!validaQuadrado(linha, coluna))
+    			return false;
+            //Direita embaixo
+            coluna += 2;
+            if (!validaQuadrado(linha, coluna))
+    			return false;
+            
+    		break;
+    	case 2:
+    		//Direita em cima
+    		linha-=1;
+    		coluna+=1;
+            if (!validaQuadrado(linha, coluna))
+    			return false;
+            //Direita embaixo
+            linha += 2;
+            if (!validaQuadrado(linha, coluna))
+    			return false;
+            
+    		break;
+    	case 3:
+    		//Esquerda em cima
+    		linha-=1;
+    		coluna-=1;
+            if (!validaQuadrado(linha, coluna))
+    			return false;
+            //Direita em cima
+            coluna += 2;
+            if (!validaQuadrado(linha, coluna))
+    			return false;
+            
+    		break;
+    	case 4:
+    		//Esquerda em cima
+    		linha-=1;
+    		coluna-=1;
+            if (!validaQuadrado(linha, coluna))
+    			return false;
+            //Direita embaixo
+            linha += 2;
+            if (!validaQuadrado(linha, coluna))
+    			return false;
+            
+    		break;
+		}  
         return true; 
 	}	
 

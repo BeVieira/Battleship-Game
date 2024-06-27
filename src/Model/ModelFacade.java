@@ -71,7 +71,6 @@ public class ModelFacade{
 	public boolean definirGhost(int tipo, int turno) {
 		posicionando = new Embarcacao(tipo);
 		posicionando.setPosicao(coordenada);
-		posicionando.setOrientacao(0);
 		return isPosicaoValida(tipo, turno);
 	}
 	
@@ -89,33 +88,27 @@ public class ModelFacade{
 	}
 	
 	public boolean setGhostOrientation(int orientacao, int turno) {
-		System.out.println("orientaçao " + orientacao);
 		posicionando.setOrientacao(orientacao);
 		return this.isPosicaoValida(posicionando.getTipo(), turno);
 	}
 
 	public boolean isPosicaoValida(int tipo, int turno) {
 		int orientacao = posicionando.getOrientacao();
-		
 		if (turno == 1) {
 			if(tipo == 3) {
 				return jogador1.getTabuleiro().validaPosicionarHidroaviao(this.coordenada,orientacao);
 			}
-			System.out.println("orientaçao " + orientacao);
-			return jogador1.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+			return jogador1.getTabuleiro().validaPosicionar(this.coordenada, tipo, orientacao);
 		}
 		else {
 			if(tipo == 3) {
-				System.out.println("entrei na isPosicaoValida do hidro");
 				return jogador2.getTabuleiro().validaPosicionarHidroaviao(this.coordenada,orientacao);
 			}
-			System.out.println("orientaçao " + orientacao);
-			return jogador2.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+			return jogador2.getTabuleiro().validaPosicionar(this.coordenada, tipo, orientacao);
 		}
 	}
 
 	public void definirCoordenada(int x, int y) {
-		//Incompleto
 		this.coordenada.setColuna(x);
 		this.coordenada.setLinha(y);
 	}

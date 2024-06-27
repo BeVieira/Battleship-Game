@@ -106,32 +106,23 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
                 int tipo = tabuleiro[i][j];
                 int x = xInicial + j * 20;
                 int y = yInicial + i * 20;
-                /* Lógica para pintar de vermelho se não posicionar
-                if (!tratadorEventos.isValido()) {
-                	g.setColor(Color.RED);
-                }
-                 */
+                
             	switch (tipo) {
             	case 1:
             		g.setColor(Color.YELLOW);
-            		//sub -= 1;
             		break;
             	case 2:
             		g.setColor(ciano);
-            		//destroyer -= 1;
             		break;
             	case 3:
             		g.setColor(verdeClaro);
-            		//hidro -= 1;
             		break;
             	case 4:
             		g.setColor(Color.ORANGE);
-            		//cruzador -= 1;
             		break;
             	case 5:
             		g.setColor(verdeEscuro);
-            		//couracado -= 1;
-            		break;
+            	    break;
             	default:
             		g.setColor(Color.WHITE);
             		break;
@@ -151,7 +142,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         int x = xInicial + pos[0] * 20;
         int y = yInicial + pos[1] * 20;
     	Color cor;
-		if (ghost.getValid() == true) {
+		if (ghost.getValid()) {
 			cor = Color.green;
 		}
 		else {
@@ -168,7 +159,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 	
 	public void desenhaGhostHidroaviao(Graphics g, int x, int y, Color cor) {
 		switch (ghost.getOrientation()) {
-		case 0:
+		case 1:
 			g.setColor(cor);
 			g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
 			g.setColor(Color.BLACK);
@@ -184,7 +175,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 			g.setColor(Color.BLACK);
 			g.drawRect(x+20, y+20, tamanhoCasa, tamanhoCasa);
 			break;
-		case 1:
+		case 2:
 			g.setColor(cor);
 			g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
 			g.setColor(Color.BLACK);
@@ -200,7 +191,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 			g.setColor(Color.BLACK);
 			g.drawRect(x+20, y+20, tamanhoCasa, tamanhoCasa);
 			break;
-		case 2:
+		case 3:
 			g.setColor(cor);
 			g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
 			g.setColor(Color.BLACK);
@@ -216,7 +207,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 			g.setColor(Color.BLACK);
 			g.drawRect(x+20, y-20, tamanhoCasa, tamanhoCasa);
 			break;
-		case 3:
+		case 4:
 			g.setColor(cor);
 			g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
 			g.setColor(Color.BLACK);
@@ -237,7 +228,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 	
 	public void desenhaGhostNavio(Graphics g, int x, int y, int tipo, Color cor) {
 		switch (ghost.getOrientation()) {
-			case 0:
+			case 1:
 				for (int i = 0; i < tipo; i++) {
 					g.setColor(cor);
 					g.fillRect(x + (20*i), y, tamanhoCasa, tamanhoCasa);
@@ -245,28 +236,28 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 					g.drawRect(x + (20*i), y, tamanhoCasa, tamanhoCasa);
 				}
 				break;
-			case 1:
-				for (int i = 0; i < tipo; i++) {
-					g.setColor(cor);
-					g.fillRect(x, y + (20*i), tamanhoCasa, tamanhoCasa);
-					g.setColor(Color.BLACK);
-					g.drawRect(x, y + (20*i), tamanhoCasa, tamanhoCasa);
-				}
-				break;
 			case 2:
 				for (int i = 0; i < tipo; i++) {
 					g.setColor(cor);
-					g.fillRect(x + (20*-i), y, tamanhoCasa, tamanhoCasa);
+					g.fillRect(x, y - (20*i), tamanhoCasa, tamanhoCasa);
 					g.setColor(Color.BLACK);
-					g.drawRect(x + (20*-i), y, tamanhoCasa, tamanhoCasa);
+					g.drawRect(x, y - (20*i), tamanhoCasa, tamanhoCasa);
 				}
 				break;
 			case 3:
 				for (int i = 0; i < tipo; i++) {
 					g.setColor(cor);
-					g.fillRect(x, y + (20*-i), tamanhoCasa, tamanhoCasa);
+					g.fillRect(x - (20*i), y, tamanhoCasa, tamanhoCasa);
 					g.setColor(Color.BLACK);
-					g.drawRect(x, y + (20*-i), tamanhoCasa, tamanhoCasa);
+					g.drawRect(x - (20*i), y, tamanhoCasa, tamanhoCasa);
+				}
+				break;
+			case 4:
+				for (int i = 0; i < tipo; i++) {
+					g.setColor(cor);
+					g.fillRect(x, y + (20*i), tamanhoCasa, tamanhoCasa);
+					g.setColor(Color.BLACK);
+					g.drawRect(x, y + (20*i), tamanhoCasa, tamanhoCasa);
 				}
 				break;
 		}
@@ -324,7 +315,6 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     	
     	add(bt);
     	
-    	//System.out.println("getturno = " + controle.getTurno());
         g.setColor(Color.BLACK);
         g.drawString(controle.getNome()  + " posicione suas armas", 270, 380);
         
@@ -346,8 +336,6 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 	
     @Override
 	public void actionPerformed(ActionEvent e) {
-    	System.out.println("Action performed");
-    	
     	if(controle.getTurno() == 1) {
     		if(controle.getEmbarcacaoNum(0, controle.getTurno()) == 0) {
     			controle.trocaTurno();
