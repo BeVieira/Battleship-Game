@@ -7,6 +7,7 @@ public class ModelFacade{
 	private Tabuleiro tabuleiroJ1, tabuleiroJ2;
 	private Jogador jogador1, jogador2;
 	private Coordenada coordenada;
+	private Embarcacao posicionando;
 
 	private ModelFacade() {
 		this.coordenada = new Coordenada(0, 0);
@@ -40,6 +41,17 @@ public class ModelFacade{
 			return jogador1.getNavios();
 		return jogador2.getNavios();
 	}
+	
+	public int getEmbarcacaoNum(int tipo, int turno) {
+		// Se tipo = 0 retorna o total
+		ArrayList<Embarcacao> navios = getEmbarcacoes(turno);
+		if (tipo == 0) return navios.size();
+		int result = 0;
+		for (int i = 0; i < navios.size(); i++) {
+			if (navios.get(i).getTipo() == tipo) result++;
+		}
+		return result;
+	}
 
 	public void posicionarEmbarcacao(int tipo, int turno) {
 		if (turno == 1) {
@@ -50,6 +62,30 @@ public class ModelFacade{
 			Embarcacao embarcacao = jogador2.retiraNavio(tipo);
 			jogador2.inserirEmbarcacao(this.coordenada, embarcacao);	
 		}
+	}
+	
+	public boolean definirGhost(int tipo, int turno) {
+		posicionando = new Embarcacao(tipo);
+		posicionando.setPosicao(coordenada);
+		posicionando.setOrientacao(0);
+		return isPosicaoValida(tipo);
+	}
+	
+	public int[] getGhostPosition() {
+		int coord[] = {posicionando.getPosicao().getColuna(), posicionando.getPosicao().getLinha()};
+		return coord;
+	}
+	
+	public int getGhostOrientation() {
+		return posicionando.getOrientacao();
+	}
+	
+	public int getGhostType() {
+		return posicionando.getTipo();
+	}
+	
+	public void setGhostOrientation(int orientacao) {
+		posicionando.setOrientacao(orientacao);
 	}
 
 	public boolean isPosicaoValida(int tipo) {

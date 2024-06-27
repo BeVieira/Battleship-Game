@@ -29,11 +29,9 @@ public class Control implements Subject {
 	public String getNome() {
 		return fachada.getNome(this.turno);
 	}
-	
 	public String getNome1() {
 		return fachada.getNome(1);
 	}
-	
 	public String getNome2() {
 		return fachada.getNome(2);
 	}
@@ -79,4 +77,9 @@ public class Control implements Subject {
 	public int[][] getTabuleiro() {
 		return fachada.getTabuleiro(this.turno);
 	}
+	
+	public int getEmbarcacaoNum(int tipo, int jogador) {
+		return fachada.getEmbarcacaoNum(tipo, jogador);
+	}
+
 }
