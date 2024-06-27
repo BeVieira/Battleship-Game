@@ -96,11 +96,9 @@ public class ModelFacade{
 
 	public boolean isPosicaoValida(int tipo, int turno) {
 		int orientacao = posicionando.getOrientacao();
-		System.out.println("entrei na isPosicaoValida");
 		
 		if (turno == 1) {
 			if(tipo == 3) {
-				System.out.println("entrei na isPosicaoValida do hidro");
 				return jogador1.getTabuleiro().validaPosicionarHidroaviao(this.coordenada,orientacao);
 			}
 			System.out.println("orientaçao " + orientacao);

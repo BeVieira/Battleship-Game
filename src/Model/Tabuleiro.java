@@ -34,18 +34,20 @@ class Tabuleiro implements Subject{
 		int tipo = embarcacao.getTipo();
 		
 		if (tipo == 3) {
+			System.out.println("orientaçao " + orientacao);
 			switch(orientacao) {
 				case 0:
-					System.out.println("case 0");
+
 					tabuleiro[linha][coluna] = tipo;
 					linha += 1;
 					coluna -= 1;
 					tabuleiro[linha][coluna] = tipo;
 					coluna += 2;
 					tabuleiro[linha][coluna] = tipo;
+			
 					break;
 				case 1:
-					System.out.println("case 1");
+
 					tabuleiro[linha][coluna] = tipo;
 					linha -= 1;
 					coluna += 1;
@@ -53,6 +55,26 @@ class Tabuleiro implements Subject{
 					linha += 2;
 					tabuleiro[linha][coluna] = tipo;
 					break;
+				case 2:
+
+					tabuleiro[linha][coluna] = tipo;
+					linha -= 1;
+					coluna += 1;
+					tabuleiro[linha][coluna] = tipo;
+					coluna -= 2;
+					tabuleiro[linha][coluna] = tipo;
+					break;
+				case 3:
+
+					tabuleiro[linha][coluna] = tipo;
+					linha -= 1;
+					coluna -= 1;
+					tabuleiro[linha][coluna] = tipo;
+					linha += 2;
+					tabuleiro[linha][coluna] = tipo;
+					break;
+					
+					
 			}
 			
 		}
@@ -142,18 +164,39 @@ class Tabuleiro implements Subject{
 	public boolean validaPosicionarHidroaviao(Coordenada coordenada, int orientacao) { 
 		int linha = coordenada.getLinha();
         int coluna = coordenada.getColuna();
-
-		if (coluna == 0|| coluna == 14 || linha == 14){
-			System.out.println("orientaçao valida " +orientacao);
-			System.out.println("coluna valida " + coluna);
-			if(coluna == 0 && orientacao == 1) {
-				return true;
-			}
-			if(coluna == 14 && orientacao == 4) {
-				return true;
-			}
-			return false;
-		}
+        System.out.println("orientacao ---> " + orientacao);
+        System.out.println("linha ---> " + linha);
+        System.out.println("coluna ---> " + coluna + "");
+        if(linha == 0) {
+        	if(coluna == 0 || coluna == 14) {
+        		return false;
+        	}
+        	if(orientacao == 0) {
+        		return true;
+        	}
+        	return false;
+        }
+        else if(linha == 14) {
+        	if(coluna == 0 || coluna == 14) {
+        		return false;
+        	}
+        	 if(orientacao == 2) {
+        		 return true;
+        	 }
+        	 return false;
+        }
+        if(coluna == 0) { 
+        	if(orientacao == 1) {
+        		return true;
+        	}
+        	return false;  	
+        }
+        if(coluna == 14) { 
+        	if(orientacao == 3) {
+        		return true;
+        	}
+        	return false;  	
+        }
 		//Verifica cabeça
 		if (!validaQuadrado(linha, coluna))
 			return false;
