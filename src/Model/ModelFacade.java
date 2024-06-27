@@ -57,11 +57,13 @@ public class ModelFacade{
 		if (turno == 1) {
 			Embarcacao embarcacao = jogador1.retiraNavio(tipo);
 			embarcacao.setPosicao(posicionando.getPosicao());
+			embarcacao.setOrientacao(posicionando.getOrientacao());
 			jogador1.inserirEmbarcacao(this.coordenada, embarcacao);	
 		}
 		else {
 			Embarcacao embarcacao = jogador2.retiraNavio(tipo);
 			embarcacao.setPosicao(posicionando.getPosicao());
+			embarcacao.setOrientacao(posicionando.getOrientacao());
 			jogador2.inserirEmbarcacao(this.coordenada, embarcacao);	
 		}
 	}

@@ -57,6 +57,7 @@ public class GhostController implements Subject {
 	public void rotate() {
 		int orientacao = (this.getOrientation() + 1) % 4;
 		isValid = fachada.setGhostOrientation(orientacao, ctrl.getTurno());
+		System.out.println(orientacao);
 		this.notificarObservadores();
 	}
 
