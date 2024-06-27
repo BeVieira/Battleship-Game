@@ -310,7 +310,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         
     	bt.setBounds(300, 390, 150, 40);
     	bt.setVisible(true);
-    	System.out.println("getturno = " + controle.getTurno());
+    //	System.out.println("getturno = " + controle.getTurno());
     	bt.addActionListener(this);
     	add(bt);
         g.setColor(Color.BLACK);
