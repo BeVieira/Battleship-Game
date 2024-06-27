@@ -17,7 +17,7 @@ public class TratadorEventosTeclado extends KeyAdapter implements Subject{
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+		if ((e.getKeyCode() == KeyEvent.VK_ESCAPE) && (ghost.posicionando == true)) {
 			if (ghost.getValid() == true) {
 				controle.adicionarEmbarcacao(ghost.getType());
 				ghost.remove();

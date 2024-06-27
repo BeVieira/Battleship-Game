@@ -28,24 +28,60 @@ class Tabuleiro implements Subject{
 		this.tabuleiro[coordenada.getLinha()][coordenada.getColuna()] = tipoEmbarcacao;
 	}
 	
-	public void posicionarEmbarcacao(Coordenada coordenada, Embarcacao embarcacao) {
-		int linha = coordenada.getLinha();
-		int coluna = coordenada.getColuna();
+	public void posicionarEmbarcacao(Embarcacao embarcacao, int orientacao) {
+		int linha = embarcacao.getPosicao().getLinha();
+		int coluna = embarcacao.getPosicao().getColuna();
 		int tipo = embarcacao.getTipo();
 		
 		if (tipo == 3) {
-			tabuleiro[linha][coluna] = tipo;
-			linha += 1;
-			coluna -= 1;
-			tabuleiro[linha][coluna] = tipo;
-			coluna += 2;
-			tabuleiro[linha][coluna] = tipo;
-			embarcacao.setPosicao(coordenada);
+			System.out.println("orientaçao " + orientacao);
+			switch(orientacao) {
+				case 0:
+
+					tabuleiro[linha][coluna] = tipo;
+					linha += 1;
+					coluna -= 1;
+					tabuleiro[linha][coluna] = tipo;
+					coluna += 2;
+					tabuleiro[linha][coluna] = tipo;
+			
+					break;
+				case 1:
+
+					tabuleiro[linha][coluna] = tipo;
+					linha -= 1;
+					coluna += 1;
+					tabuleiro[linha][coluna] = tipo;
+					linha += 2;
+					tabuleiro[linha][coluna] = tipo;
+					break;
+				case 2:
+
+					tabuleiro[linha][coluna] = tipo;
+					linha -= 1;
+					coluna += 1;
+					tabuleiro[linha][coluna] = tipo;
+					coluna -= 2;
+					tabuleiro[linha][coluna] = tipo;
+					break;
+				case 3:
+
+					tabuleiro[linha][coluna] = tipo;
+					linha -= 1;
+					coluna -= 1;
+					tabuleiro[linha][coluna] = tipo;
+					linha += 2;
+					tabuleiro[linha][coluna] = tipo;
+					break;
+					
+					
+			}
+			
 		}
 		else {
 			for (int i = 0; i < tipo; i++)
 				tabuleiro[linha][coluna + i] = tipo;
-			embarcacao.setPosicao(coordenada);
+			embarcacao.setPosicao(embarcacao.getPosicao());
 		}
 		//notificarObservadores();
 	}
@@ -125,13 +161,42 @@ class Tabuleiro implements Subject{
         return true; 
 	}
 	
-	public boolean validaPosicionarHidroaviao(Coordenada coordenada) { 
+	public boolean validaPosicionarHidroaviao(Coordenada coordenada, int orientacao) { 
 		int linha = coordenada.getLinha();
         int coluna = coordenada.getColuna();
-
-		if (coluna == 0 || coluna == 14 || linha == 14)
-			return false;
-		
+        System.out.println("orientacao ---> " + orientacao);
+        System.out.println("linha ---> " + linha);
+        System.out.println("coluna ---> " + coluna + "");
+        if(linha == 0) {
+        	if(coluna == 0 || coluna == 14) {
+        		return false;
+        	}
+        	if(orientacao == 0) {
+        		return true;
+        	}
+        	return false;
+        }
+        else if(linha == 14) {
+        	if(coluna == 0 || coluna == 14) {
+        		return false;
+        	}
+        	 if(orientacao == 2) {
+        		 return true;
+        	 }
+        	 return false;
+        }
+        if(coluna == 0) { 
+        	if(orientacao == 1) {
+        		return true;
+        	}
+        	return false;  	
+        }
+        if(coluna == 14) { 
+        	if(orientacao == 3) {
+        		return true;
+        	}
+        	return false;  	
+        }
 		//Verifica cabeça
 		if (!validaQuadrado(linha, coluna))
 			return false;
@@ -155,6 +220,7 @@ class Tabuleiro implements Subject{
 		int orientacao = embarcacao.getOrientacao();
 		int linha = embarcacao.getPosicao().getLinha();
 		int coluna = embarcacao.getPosicao().getColuna();
+	
 		
 		switch (orientacao) {
 		case 1:
@@ -170,6 +236,7 @@ class Tabuleiro implements Subject{
 			tabuleiro[linha + 1][coluna - 1] = tipo;
 			break;
 		}
+
 		
 	}
 

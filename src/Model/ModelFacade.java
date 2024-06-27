@@ -56,10 +56,14 @@ public class ModelFacade{
 	public void posicionarEmbarcacao(int tipo, int turno) {
 		if (turno == 1) {
 			Embarcacao embarcacao = jogador1.retiraNavio(tipo);
+			embarcacao.setPosicao(posicionando.getPosicao());
+			embarcacao.setOrientacao(posicionando.getOrientacao());
 			jogador1.inserirEmbarcacao(this.coordenada, embarcacao);	
 		}
 		else {
 			Embarcacao embarcacao = jogador2.retiraNavio(tipo);
+			embarcacao.setPosicao(posicionando.getPosicao());
+			embarcacao.setOrientacao(posicionando.getOrientacao());
 			jogador2.inserirEmbarcacao(this.coordenada, embarcacao);	
 		}
 	}
@@ -68,7 +72,7 @@ public class ModelFacade{
 		posicionando = new Embarcacao(tipo);
 		posicionando.setPosicao(coordenada);
 		posicionando.setOrientacao(0);
-		return isPosicaoValida(tipo);
+		return isPosicaoValida(tipo, turno);
 	}
 	
 	public int[] getGhostPosition() {
@@ -84,13 +88,30 @@ public class ModelFacade{
 		return posicionando.getTipo();
 	}
 	
-	public void setGhostOrientation(int orientacao) {
+	public boolean setGhostOrientation(int orientacao, int turno) {
+		System.out.println("orientaçao " + orientacao);
 		posicionando.setOrientacao(orientacao);
+		return this.isPosicaoValida(posicionando.getTipo(), turno);
 	}
 
-	public boolean isPosicaoValida(int tipo) {
-		//Incompleto
-		return jogador1.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+	public boolean isPosicaoValida(int tipo, int turno) {
+		int orientacao = posicionando.getOrientacao();
+		
+		if (turno == 1) {
+			if(tipo == 3) {
+				return jogador1.getTabuleiro().validaPosicionarHidroaviao(this.coordenada,orientacao);
+			}
+			System.out.println("orientaçao " + orientacao);
+			return jogador1.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+		}
+		else {
+			if(tipo == 3) {
+				System.out.println("entrei na isPosicaoValida do hidro");
+				return jogador2.getTabuleiro().validaPosicionarHidroaviao(this.coordenada,orientacao);
+			}
+			System.out.println("orientaçao " + orientacao);
+			return jogador2.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+		}
 	}
 
 	public void definirCoordenada(int x, int y) {

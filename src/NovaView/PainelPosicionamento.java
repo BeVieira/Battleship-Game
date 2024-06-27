@@ -144,7 +144,8 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     }
 
 	private void atualizaGhost(Graphics g) {
-    	if (ghost.posicionando == false) return;
+    	if (ghost.posicionando == false) 
+    		return;
     	int pos[] = ghost.getPosition();
     	
         int x = xInicial + pos[0] * 20;
@@ -323,7 +324,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     	
     	add(bt);
     	
-    	System.out.println("getturno = " + controle.getTurno());
+    	//System.out.println("getturno = " + controle.getTurno());
         g.setColor(Color.BLACK);
         g.drawString(controle.getNome()  + " posicione suas armas", 270, 380);
         
