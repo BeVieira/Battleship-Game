@@ -35,7 +35,7 @@ class Tabuleiro implements Subject{
 		
 		if (tipo == 3) {
 			switch(orientacao) {
-			case 0:
+			case 1:
 				System.out.println("case 0");
 				tabuleiro[linha][coluna] = tipo;
 				linha += 1;
@@ -44,7 +44,7 @@ class Tabuleiro implements Subject{
 				coluna += 2;
 				tabuleiro[linha][coluna] = tipo;
 				break;
-			case 1:
+			case 2:
 				System.out.println("case 1");
 				tabuleiro[linha][coluna] = tipo;
 				linha -= 1;

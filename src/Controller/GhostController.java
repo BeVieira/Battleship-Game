@@ -8,6 +8,7 @@ import Observer.Subject;
 
 public class GhostController implements Subject {
 	private static GhostController controle = null;
+	private Control ctrl = Control.getController();
 	private ModelFacade fachada;
 	private ArrayList<Observer> observadores;
 	public boolean posicionando = false;
@@ -55,7 +56,7 @@ public class GhostController implements Subject {
 	
 	public void rotate() {
 		int orientacao = (this.getOrientation() + 1) % 4;
-		isValid = fachada.setGhostOrientation(orientacao);
+		isValid = fachada.setGhostOrientation(orientacao, ctrl.getTurno());
 		this.notificarObservadores();
 	}
 

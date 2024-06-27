@@ -86,21 +86,32 @@ public class ModelFacade{
 		return posicionando.getTipo();
 	}
 	
-	public boolean setGhostOrientation(int orientacao) {
+	public boolean setGhostOrientation(int orientacao, int turno) {
 		System.out.println("orientaçao " + orientacao);
 		posicionando.setOrientacao(orientacao);
-		return this.isPosicaoValida(posicionando.getTipo());
+		return this.isPosicaoValida(posicionando.getTipo(), turno);
 	}
 
-	public boolean isPosicaoValida(int tipo) {
+	public boolean isPosicaoValida(int tipo, int turno) {
 		int orientacao = posicionando.getOrientacao();
 		System.out.println("entrei na isPosicaoValida");
-		if(tipo == 3) {
-			System.out.println("entrei na isPosicaoValida do hidro");
-			return jogador1.getTabuleiro().validaPosicionarHidroaviao(this.coordenada,orientacao);
+		
+		if (turno == 1) {
+			if(tipo == 3) {
+				System.out.println("entrei na isPosicaoValida do hidro");
+				return jogador1.getTabuleiro().validaPosicionarHidroaviao(this.coordenada,orientacao);
+			}
+			System.out.println("orientaçao " + orientacao);
+			return jogador1.getTabuleiro().validaPosicionar(this.coordenada, tipo);
 		}
-		System.out.println("orientaçao " + orientacao);
-		return jogador1.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+		else {
+			if(tipo == 3) {
+				System.out.println("entrei na isPosicaoValida do hidro");
+				return jogador2.getTabuleiro().validaPosicionarHidroaviao(this.coordenada,orientacao);
+			}
+			System.out.println("orientaçao " + orientacao);
+			return jogador2.getTabuleiro().validaPosicionar(this.coordenada, tipo);
+		}
 	}
 
 	public void definirCoordenada(int x, int y) {
