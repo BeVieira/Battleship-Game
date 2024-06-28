@@ -336,25 +336,20 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 	
     @Override
 	public void actionPerformed(ActionEvent e) {
-    	if(controle.getTurno() == 1) {
-    		if(controle.getEmbarcacaoNum(0, controle.getTurno()) == 0) {
-    			controle.trocaTurno();
-            	bt.setText("Iniciar game");
-            	ghost.notificarObservadores();
-    		}
-        	
-    	}
-    	else {
-    		if (e.getActionCommand() == "Iniciar game") {
-    			if (criadoAtaque == false) {
+    	if(true/*controle.getEmbarcacaoNum(0, controle.getTurno()) == 0*/) {
+	    	if(controle.getTurno() == 1) {
+	    		controle.trocaTurno();
+	            bt.setText("Iniciar game");
+	            ghost.notificarObservadores();
+	    	}
+	    	else {
+	    		if (e.getActionCommand() == "Iniciar game") {
     				controle.removerObservador(this);
+    				controle.trocaTurno();
         			new Ataque();
         			javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
-        			//this.setEnabled(false);
-        			//criadoAtaque = true;
-    			}
-    		}
+	    		}
+	    	}
     	}
-
 	}
 }

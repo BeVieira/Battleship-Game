@@ -118,6 +118,17 @@ public class ModelFacade{
 			return jogador1.getTabuleiro().getTabuleiroEstado();
 		return jogador2.getTabuleiro().getTabuleiroEstado();
 	}
+	
+	public int getCasa (int turno, int coluna, int linha) {
+		if (turno == 1)
+			return jogador1.getTabuleiro().getTabuleiroEstado()[linha][coluna];
+		return jogador2.getTabuleiro().getTabuleiroEstado()[linha][coluna];
+	}
+	public void setCasa (int turno, int coluna, int linha, int valor) {
+		if (turno == 1)
+			jogador1.getTabuleiro().getTabuleiroEstado()[linha][coluna] = valor;
+		jogador2.getTabuleiro().getTabuleiroEstado()[linha][coluna] = valor;
+	}
 
 	public String getNome(int turno) {
 		if (turno == 1)

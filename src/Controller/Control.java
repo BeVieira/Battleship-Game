@@ -78,6 +78,14 @@ public class Control implements Subject {
 		return fachada.getTabuleiro(this.turno);
 	}
 	
+	public int getCasa(int coluna, int linha, int jogador) {
+		return fachada.getCasa(jogador, coluna, linha);
+	}
+	
+	public void setCasa(int coluna, int linha, int valor, int jogador) {
+		fachada.setCasa(jogador, coluna, linha, valor);
+	}
+	
 	public int getEmbarcacaoNum(int tipo, int jogador) {
 		return fachada.getEmbarcacaoNum(tipo, jogador);
 	}
