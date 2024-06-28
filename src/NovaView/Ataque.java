@@ -25,13 +25,12 @@ public class Ataque extends JFrame implements ActionListener {
 			int y = e.getY();
 			int xInicial, yInicial;
 			if (turno == 1) {
-				xInicial = 40;
-				yInicial = 100;
+				xInicial = 500;
 			}
 			else {
-				xInicial = 500;
-				yInicial = 100;
+				xInicial = 40;
 			}
+			yInicial = 100;
 			
 			int outroJogador = (turno % 2) + 1;
 			if ((x >= xInicial) && (x <= (xInicial+300))) {
@@ -42,12 +41,15 @@ public class Ataque extends JFrame implements ActionListener {
 					int casa = controle.getCasa(indexX,indexY, outroJogador);
 					
 					if (casa == 0) {
-						System.out.println("casa 0");
 						controle.setCasa(indexX, indexY, -100, outroJogador);
+					}
+					else {
+						if (casa > 0) controle.setCasa(indexX, indexY, -casa, outroJogador);
 					}
 					System.out.println("casa: "+casa);
 				}
 			}
+			repaint();
 		}
 	}
 	
@@ -116,6 +118,36 @@ public class Ataque extends JFrame implements ActionListener {
 			g.fillRect(xInicial, yInicial, 300, 300);
 		}
 		
+		for (int i = 0; i < 15; i++) {
+			for (int j = 0; j < 15; j++) {
+				int casa = controle.getCasa(j, i, jogador);
+				if (casa < 0) {
+					switch (casa) {
+					default:
+						g.setColor(Color.gray);
+						break;
+					case -1:
+						g.setColor(Color.YELLOW);
+						break;
+					case -2:
+						g.setColor(Color.CYAN);
+						break;
+					case -3:
+						g.setColor(Color.GREEN);
+						break;
+					case -4:
+						g.setColor(Color.magenta);
+						break;
+					case -5:
+						g.setColor(Color.orange);
+						break;
+				}
+				g.fillRect(x1 + (j*20), y1 + (i*20), 20, 20);
+				}
+				
+			}
+		}
+		
 		
 		g.setColor(Color.black);
 		
@@ -176,8 +208,9 @@ public class Ataque extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("bloqueado: " + bloqueado);
+		
 		if (bloqueado == true) {
-			System.out.println("turno: "+controle.getTurno());
+			
 			bloqueado = false;
 			repaint();
 		}
@@ -186,6 +219,7 @@ public class Ataque extends JFrame implements ActionListener {
 			bloqueado = true;
 			repaint();
 		}
+		System.out.println("turno: "+controle.getTurno());
 		//dispose(); terminar implementaçao
 	}
 }
