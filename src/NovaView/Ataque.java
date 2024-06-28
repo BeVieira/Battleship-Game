@@ -15,11 +15,12 @@ import Controller.Control;
 public class Ataque extends JFrame implements ActionListener {
 	Control controle;
 	boolean bloqueado = true;
-	int tiros = 3;
+	int tiros;
 	
 	private class TratadorMouse extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e){
+			if (tiros <= 0) return;
 			int turno = controle.getTurno();
 			int x = e.getX();
 			int y = e.getY();
@@ -48,6 +49,7 @@ public class Ataque extends JFrame implements ActionListener {
 					}
 					System.out.println("casa: "+casa);
 				}
+				tiros--;
 			}
 			repaint();
 		}
@@ -210,15 +212,16 @@ public class Ataque extends JFrame implements ActionListener {
 		System.out.println("bloqueado: " + bloqueado);
 		
 		if (bloqueado == true) {
-			
+			tiros = 3;
 			bloqueado = false;
-			repaint();
 		}
 		else {
 			controle.trocaTurno();
+			tiros = 0;
 			bloqueado = true;
-			repaint();
+			
 		}
+		repaint();
 		System.out.println("turno: "+controle.getTurno());
 		//dispose(); terminar implementaçao
 	}
