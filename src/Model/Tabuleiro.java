@@ -274,6 +274,50 @@ class Tabuleiro implements Subject{
         return true; 
 	}	
 
+	public void foiAfundada() {
+		int orientacao;
+		for (int i = 0; i < 15; i++) {
+			for (int j = 0; j < 15; j++) {
+				if (tabuleiro[i][j] == -10) {
+					orientacao = descobrirOrientacao(i,j);
+					afundarEmbarcacao(i,j,orientacao);
+				}
+			}
+		}
+	}
+	
+	private int descobrirOrientacao(int i, int j) {
+		for (int linha = -1; linha < 1; linha++) {
+			for (int coluna = -1; coluna < 1; coluna++) {
+				if (linha == 0 && coluna == 0)
+					continue;
+				int casa = tabuleiro[i+linha][j+coluna];
+				if (casa == -10) {
+					if (coluna == 1 && linha == 0)
+						return 1;
+					else if (coluna == 0 && linha == -1)
+						return 2;
+					else if (coluna == -1 && linha == 0)
+						return 3;
+					else if (coluna == 0 && linha == 1)
+						return 4;
+					else
+						return 0;
+				}	
+			}
+		}
+		return -1;
+	}
+	
+	private void afundarEmbarcacao(int linha, int coluna, int orientacao) {
+		int casa = tabuleiro[linha][coluna];
+		int tipo = 0;
+		while (casa != 0) {
+			tipo++;
+			casa = tabuleiro[linha][coluna];
+		}
+		
+	}
 	private void girarHidroaviao(Embarcacao embarcacao) {
 		int tipo = embarcacao.getTipo();
 		int orientacao = embarcacao.getOrientacao();
