@@ -68,19 +68,18 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		b = new JButton("Avançar");
 		setLayout(null);
 		b.addActionListener(this);
-		b.setBounds(330, 440, 150, 40);
+		b.setBounds(330, 400, 150, 40);
 		b.setVisible(true);
 		b.setFocusable(false);
 		add(b);
 		
 		aviso = new JLabel();
-		aviso.setBounds(250, 400, 300, 40);
+		aviso.setBounds(250, 375, 300, 20);
 		add(aviso);
 		
 		tiroResult = new JLabel();
-		tiroResult.setBounds(250, 400, 300, 40);
-		//tiroResult.setForeground(Color.red);
-		//tiroResult.setBackground(Color.blue);
+		tiroResult.setBounds(250, 355, 300, 20);
+		tiroResult.setForeground(Color.red);
 		add(tiroResult);
 		
 	}
@@ -247,35 +246,34 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		System.out.println("atirou: "+atirou);
 		if (atirou == true) {
 			System.out.println("result: "+controle.getTiro());
-			if (controle.getTiro() != 0) {
-				tiroResult.setVisible(true);
-			}
-			else {
-				tiroResult.setVisible(false);
-			}
-			
-			str = "Acertou um ";
+			tiroResult.setVisible(true);
+
 			switch (controle.getTiro()) {
 				case 1:
-					str += "submarino\n";
+					str = "Acertou um submarino";
 					break;
 				case 2:
-					str += "destroier\n";
+					str = "Acertou um destroier";
 					break;
 				case 3:
-					str += "hidroaviao\n";
+					str = "Acertou um hidroaviao";
 					break;
 				case 4:
-					str += "cruzador\n";
+					str = "Acertou um cruzador";
 					break;
 				case 5:
-					str += "couracado\n";
+					str = "Acertou um couracado";
+					break;
+				default:
+					str = "Acertou água";
 					break;
 			}
 		}
 		else {
+			str = "";
 			tiroResult.setVisible(false);
 		}
+		tiroResult.setText(str);
 		tiroResult.repaint();
 		
 		str = "";
