@@ -114,21 +114,29 @@ public class ModelFacade{
 	}
 	
 	public int getCasa (int turno, int coluna, int linha) {
+		Coordenada coordenada = new Coordenada(coluna,linha);
 		if (turno == 1)
-			return jogador1.getTabuleiro().getTabuleiroEstado()[linha][coluna];
-		return jogador2.getTabuleiro().getTabuleiroEstado()[linha][coluna];
+			return jogador1.getTabuleiro().getCasa(coordenada);
+		return jogador2.getTabuleiro().getCasa(coordenada);
 	}
 	public void setCasa (int turno, int coluna, int linha, int valor) {
+		Coordenada coordenada = new Coordenada(coluna,linha);
 		if (turno == 1)
-			jogador1.getTabuleiro().getTabuleiroEstado()[linha][coluna] = valor;
+			jogador1.getTabuleiro().setCasa(coordenada,valor);
 		else
-		jogador2.getTabuleiro().getTabuleiroEstado()[linha][coluna] = valor;
+		jogador2.getTabuleiro().setCasa(coordenada,valor);;
 	}
 
 	public String getNome(int turno) {
 		if (turno == 1)
 			return jogador1.getNome();
 		return jogador2.getNome();
+	}
+	
+	public int atirar(int turno) {
+		if (turno == 1)
+			return jogador1.realizarTiro(coordenada);
+		return jogador2.realizarTiro(coordenada);
 	}
 
 }

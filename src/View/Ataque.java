@@ -9,10 +9,12 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import Controller.Control;
+import Observer.Observer;
 
-public class Ataque extends JFrame implements ActionListener {
+public class Ataque extends JFrame implements Observer,ActionListener {
 	Control controle;
 	boolean bloqueado = true;
 	int tiros;
@@ -20,6 +22,9 @@ public class Ataque extends JFrame implements ActionListener {
     final Color verdeClaro = new Color(144, 238, 144);
     final Color verdeEscuro = new Color(0, 100, 0);
 
+    JLabel aviso;
+    JButton b;
+    
 	private class TratadorMouse extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e){
@@ -36,30 +41,27 @@ public class Ataque extends JFrame implements ActionListener {
 			}
 			yInicial = 100;
 			
-			int outroJogador = (turno % 2) + 1;
 			if ((x >= xInicial) && (x <= (xInicial+300))) {
 				if ((y >= yInicial) && (y <= (yInicial+300))) {
 					int indexX = (x - xInicial)/20;
 					int indexY = (y - yInicial)/20;
 					
-					int casa = controle.getCasa(indexX,indexY, outroJogador);
-					
-					if (casa == 0) {
-						controle.setCasa(indexX, indexY, -100, outroJogador);
-					}
-					else {
-						if (casa > 0) controle.setCasa(indexX, indexY, -casa, outroJogador);
-					}
-					System.out.println("casa: "+casa);
+					controle.atirar(turno, indexX, indexY);
+					System.out.println("casa: "+controle.getTiro());
 				}
 				tiros--;
+				if (tiros == 0) {
+					controle.trocaTurno();
+					bloqueado = true;
+					repaint();
+				}
 			}
-			repaint();
 		}
 	}
 	
 	public Ataque() {
 		controle = Control.getController();
+		controle.registrarObservador(this);
 		setVisible(true);
 		setSize(870, 550);
 		setTitle("Batalha Naval");
@@ -67,6 +69,18 @@ public class Ataque extends JFrame implements ActionListener {
 		setResizable(false);
 		setLocationRelativeTo(null); // faz ir pro meio da tela ao abrir
 		addMouseListener(new TratadorMouse());
+		
+		b = new JButton("Avançar");
+		setLayout(null);
+		b.addActionListener(this);
+		b.setBounds(330, 430, 150, 40);
+		b.setVisible(true);
+		b.setFocusable(false);
+		add(b);
+		
+		aviso = new JLabel();
+		aviso.setBounds(250, 390, 300, 40);
+		add(aviso);
 	}
 	
 	public void desenhaTabuleiro(Graphics g, int jogador) {
@@ -128,16 +142,18 @@ public class Ataque extends JFrame implements ActionListener {
 				int casa = controle.getCasa(j, i, jogador);
 				if (casa < 0) {
 					switch (casa) {
-					default:
-						g.setColor(Color.RED);
-						break;
-					case -100:
-						g.setColor(Color.GRAY);
-						break;
+						case -1:
+							g.setColor(Color.orange);
+							break;
+						case -2:
+							g.setColor(Color.RED);
+							break;
+						case -100:
+							g.setColor(Color.GRAY);
+							break;
 					}
-				g.fillRect(x1 + (j*20), y1 + (i*20), 20, 20);
+					g.fillRect(x1 + (j*20), y1 + (i*20), 20, 20);
 				}
-				
 			}
 		}
 		
@@ -182,20 +198,22 @@ public class Ataque extends JFrame implements ActionListener {
 		
 	}
 
+	
 	public void paint(Graphics g) {
+		//super.paint(g);
 		
 		desenhaTabuleiro(g, 1);
 		desenhaTabuleiro(g, 2);
 		
+		String str;
+		if (bloqueado == true) str = "Visao bloqueda, " + controle.getNome() + " deve clicar para desbloquear visao";
+		else str = "Tiros restantes: " + tiros;
+		aviso.setText(str);
 		
-		JButton b = new JButton("Avançar");
-		setLayout(null);
-		b.setBounds(330, 430, 150, 40);
-		b.setVisible(true);
-		add(b);
-		b.addActionListener(this);
-
-		if (bloqueado == true) g.drawString("Visao bloqueda, " + controle.getNome() + " deve clicar para desbloquear visao", 250, 450);
+		b.repaint();
+		aviso.repaint();
+		
+		
 		g.drawString("tabuleiro do " + controle.getNome(1), 40, 65);
 		g.drawString("tabuleiro do " + controle.getNome(2), 500, 65);
 	}
@@ -215,5 +233,10 @@ public class Ataque extends JFrame implements ActionListener {
 		}
 		repaint();
 		System.out.println("turno: "+controle.getTurno());
+	}
+
+	@Override
+	public void atualizar() {
+		repaint();
 	}
 }
