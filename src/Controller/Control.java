@@ -29,11 +29,9 @@ public class Control implements Subject {
 	public String getNome() {
 		return fachada.getNome(this.turno);
 	}
-	public String getNome1() {
-		return fachada.getNome(1);
-	}
-	public String getNome2() {
-		return fachada.getNome(2);
+	
+	public String getNome(int turno) {
+		return fachada.getNome(turno);
 	}
 
 	@Override
@@ -71,7 +69,6 @@ public class Control implements Subject {
 
 	public void definirCoordenada(int xIndex, int yIndex) {
 		fachada.definirCoordenada(xIndex, yIndex);
-		
 	}
 	
 	public int getCasa(int coluna, int linha, int jogador) {

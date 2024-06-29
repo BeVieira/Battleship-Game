@@ -1,4 +1,4 @@
-package NovaView;
+package View;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

@@ -1,4 +1,4 @@
-package NovaView;
+package View;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -339,11 +339,11 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     	if(true/*controle.getEmbarcacaoNum(0, controle.getTurno()) == 0*/) {
 	    	if(controle.getTurno() == 1) {
 	    		controle.trocaTurno();
-	            bt.setText("Iniciar game");
+	            bt.setText("Começar");
 	            ghost.notificarObservadores();
 	    	}
 	    	else {
-	    		if (e.getActionCommand() == "Iniciar game") {
+	    		if (e.getActionCommand() == "Começar") {
     				controle.removerObservador(this);
     				controle.trocaTurno();
         			new Ataque();
