@@ -17,12 +17,13 @@ import Observer.Observer;
 public class Ataque extends JFrame implements Observer,ActionListener {
 	Control controle;
 	boolean bloqueado = true;
+	boolean atirou = false;
 	int tiros;
     final Color ciano = new Color(173, 216, 230);
     final Color verdeClaro = new Color(144, 238, 144);
     final Color verdeEscuro = new Color(0, 100, 0);
 
-    JLabel aviso;
+    JLabel aviso, tiroResult;
     JButton b;
     
 	private class TratadorMouse extends MouseAdapter {
@@ -49,8 +50,10 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 					controle.atirar(turno, indexX, indexY);
 					System.out.println("casa: "+controle.getTiro());
 				}
+				atirou = true;
 				tiros--;
 				if (tiros == 0) {
+					atirou = false;
 					controle.trocaTurno();
 					bloqueado = true;
 					repaint();
@@ -73,14 +76,20 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		b = new JButton("Avançar");
 		setLayout(null);
 		b.addActionListener(this);
-		b.setBounds(330, 430, 150, 40);
+		b.setBounds(330, 450, 150, 40);
 		b.setVisible(true);
 		b.setFocusable(false);
 		add(b);
 		
 		aviso = new JLabel();
-		aviso.setBounds(250, 390, 300, 40);
+		aviso.setBounds(250, 400, 300, 40);
 		add(aviso);
+		
+		tiroResult = new JLabel();
+		tiroResult.setBounds(250, 400, 300, 40);
+		//tiroResult.setForeground(Color.red);
+		//tiroResult.setBackground(Color.blue);
+		add(tiroResult);
 	}
 	
 	public void desenhaTabuleiro(Graphics g, int jogador) {
@@ -204,13 +213,49 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		
 		desenhaTabuleiro(g, 1);
 		desenhaTabuleiro(g, 2);
+		b.repaint();
 		
 		String str;
-		if (bloqueado == true) str = "Visao bloqueda, " + controle.getNome() + " deve clicar para desbloquear visao";
-		else str = "Tiros restantes: " + tiros;
-		aviso.setText(str);
+		System.out.println("atirou: "+atirou);
+		if (atirou == true) {
+			System.out.println("result: "+controle.getTiro());
+			if (controle.getTiro() != 0) {
+				tiroResult.setVisible(true);
+			}
+			else {
+				tiroResult.setVisible(false);
+			}
+			
+			str = "Acertou um ";
+			switch (controle.getTiro()) {
+				case 1:
+					str += "submarino\n";
+					break;
+				case 2:
+					str += "destroier\n";
+					break;
+				case 3:
+					str += "hidroaviao\n";
+					break;
+				case 4:
+					str += "cruzador\n";
+					break;
+				case 5:
+					str += "couracado\n";
+					break;
+			}
+		}
+		else {
+			tiroResult.setVisible(false);
+		}
+		tiroResult.repaint();
 		
-		b.repaint();
+		str = "";
+		if (bloqueado == true) str = "Visao bloqueda, " + controle.getNome() + " deve clicar para desbloquear visao";
+		else {
+			str = "Tiros restantes: " + tiros;
+		}
+		aviso.setText(str);
 		aviso.repaint();
 		
 		
@@ -220,7 +265,6 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("bloqueado: " + bloqueado);
 		if (bloqueado == true) {
 			tiros = 3;
 			bloqueado = false;
@@ -231,8 +275,8 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 			bloqueado = true;
 			
 		}
+		atirou = false;
 		repaint();
-		System.out.println("turno: "+controle.getTurno());
 	}
 
 	@Override
