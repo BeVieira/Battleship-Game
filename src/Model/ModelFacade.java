@@ -1,5 +1,8 @@
 package Model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class ModelFacade{
@@ -138,5 +141,43 @@ public class ModelFacade{
 			return jogador1.realizarTiro(coordenada);
 		return jogador2.realizarTiro(coordenada);
 	}
+	
+	public void salvarJogo(File arquivo) throws FileNotFoundException {
+	 
+			PrintStream output = new PrintStream(arquivo);
+			output.println(jogador1.getNome());
+			
+			
+			//salva tabuleiro
+			for(int i = 0; i<15; i++) {
+				for(int k = 0; k<15; k++) {
+					Coordenada t = new Coordenada(k,i);
+					output.print(jogador1.getTabuleiro().getCasa(t));
+					if(k == 14) {
+						output.println();
+					}
+				}
+			}
+			output.println(jogador2.getNome());
+			for(int i = 0; i<15; i++) {
+				for(int k = 0; k<15; k++) {
+					Coordenada t = new Coordenada(k,i);
+					output.print(jogador2.getTabuleiro().getCasa(t));
+					if(k == 14) {
+						output.println();
+					}
+				}
+			}
+			
+			
+			output.close();
+		}
+	
+	public void Carregar_jogo() {
+		
+	}
+		
+	
+	
 
 }
