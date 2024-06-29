@@ -127,6 +127,7 @@ public class ModelFacade{
 	public void setCasa (int turno, int coluna, int linha, int valor) {
 		if (turno == 1)
 			jogador1.getTabuleiro().getTabuleiroEstado()[linha][coluna] = valor;
+		else
 		jogador2.getTabuleiro().getTabuleiroEstado()[linha][coluna] = valor;
 	}
 
