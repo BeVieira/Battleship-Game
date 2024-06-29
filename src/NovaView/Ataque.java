@@ -16,7 +16,7 @@ public class Ataque extends JFrame implements ActionListener {
 	Control controle;
 	boolean bloqueado = true;
 	int tiros;
-	
+
 	private class TratadorMouse extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e){
@@ -192,17 +192,19 @@ public class Ataque extends JFrame implements ActionListener {
 	}
 
 	public void paint(Graphics g) {
+		
 		desenhaTabuleiro(g, 1);
 		desenhaTabuleiro(g, 2);
 		
-		JButton b = new JButton("Começar Jogo");
+		
+		JButton b = new JButton("Avançar");
 		setLayout(null);
 		b.setBounds(330, 430, 150, 40);
 		b.setVisible(true);
 		add(b);
 		b.addActionListener(this);
 
-		g.drawString("Visao bloqueda, " + controle.getNome() + " deve clicar para desbloquear visao", 250, 450);
+		if (bloqueado == true) g.drawString("Visao bloqueda, " + controle.getNome() + " deve clicar para desbloquear visao", 250, 450);
 		g.drawString("tabuleiro do " + controle.getNome1(), 40, 65);
 		g.drawString("tabuleiro do " + controle.getNome2(), 500, 65);
 	}
@@ -210,7 +212,6 @@ public class Ataque extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("bloqueado: " + bloqueado);
-		
 		if (bloqueado == true) {
 			tiros = 3;
 			bloqueado = false;
@@ -223,6 +224,5 @@ public class Ataque extends JFrame implements ActionListener {
 		}
 		repaint();
 		System.out.println("turno: "+controle.getTurno());
-		//dispose(); terminar implementaçao
 	}
 }
