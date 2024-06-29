@@ -16,6 +16,9 @@ public class Ataque extends JFrame implements ActionListener {
 	Control controle;
 	boolean bloqueado = true;
 	int tiros;
+    final Color ciano = new Color(173, 216, 230);
+    final Color verdeClaro = new Color(144, 238, 144);
+    final Color verdeEscuro = new Color(0, 100, 0);
 
 	private class TratadorMouse extends MouseAdapter {
 		@Override
@@ -85,7 +88,7 @@ public class Ataque extends JFrame implements ActionListener {
 		x2 = x1 + 300;
 		y2 = y1 + 300;
 		
-		if ((bloqueado == false) && (controle.getTurno() == jogador)) {
+		if ((!bloqueado) && (controle.getTurno() == jogador)) {
 			for (int i = 0; i < 15; i++) {
 				for (int j = 0; j < 15; j++) {
 					int casa = controle.getCasa(j, i, jogador);
@@ -97,16 +100,16 @@ public class Ataque extends JFrame implements ActionListener {
 							g.setColor(Color.YELLOW);
 							break;
 						case 2:
-							g.setColor(Color.CYAN);
+							g.setColor(ciano);
 							break;
 						case 3:
-							g.setColor(Color.GREEN);
+							g.setColor(verdeClaro);
 							break;
 						case 4:
-							g.setColor(Color.red);
+							g.setColor(Color.ORANGE);
 							break;
 						case 5:
-							g.setColor(Color.orange);
+							g.setColor(verdeEscuro);
 							break;
 					}
 					g.fillRect(x1 + (j*20), y1 + (i*20), 20, 20);
@@ -115,7 +118,7 @@ public class Ataque extends JFrame implements ActionListener {
 		}
 		
 		// desenha quadradao
-		if ((bloqueado == true) || (controle.getTurno() != jogador)) {
+		if ((bloqueado) || (controle.getTurno() != jogador)) {
 			g.setColor(Color.cyan);
 			g.fillRect(xInicial, yInicial, 300, 300);
 		}
@@ -126,24 +129,12 @@ public class Ataque extends JFrame implements ActionListener {
 				if (casa < 0) {
 					switch (casa) {
 					default:
-						g.setColor(Color.gray);
+						g.setColor(Color.RED);
 						break;
-					case -1:
-						g.setColor(Color.YELLOW);
+					case -100:
+						g.setColor(Color.GRAY);
 						break;
-					case -2:
-						g.setColor(Color.CYAN);
-						break;
-					case -3:
-						g.setColor(Color.GREEN);
-						break;
-					case -4:
-						g.setColor(Color.magenta);
-						break;
-					case -5:
-						g.setColor(Color.orange);
-						break;
-				}
+					}
 				g.fillRect(x1 + (j*20), y1 + (i*20), 20, 20);
 				}
 				
@@ -205,8 +196,8 @@ public class Ataque extends JFrame implements ActionListener {
 		b.addActionListener(this);
 
 		if (bloqueado == true) g.drawString("Visao bloqueda, " + controle.getNome() + " deve clicar para desbloquear visao", 250, 450);
-		g.drawString("tabuleiro do " + controle.getNome1(), 40, 65);
-		g.drawString("tabuleiro do " + controle.getNome2(), 500, 65);
+		g.drawString("tabuleiro do " + controle.getNome(1), 40, 65);
+		g.drawString("tabuleiro do " + controle.getNome(2), 500, 65);
 	}
 
 	@Override
