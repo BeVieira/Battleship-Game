@@ -113,12 +113,6 @@ public class ModelFacade{
 		this.coordenada.setLinha(y);
 	}
 	
-	public int[][] getTabuleiro(int turno) {
-		if (turno == 1)
-			return jogador1.getTabuleiro().getTabuleiroEstado();
-		return jogador2.getTabuleiro().getTabuleiroEstado();
-	}
-	
 	public int getCasa (int turno, int coluna, int linha) {
 		if (turno == 1)
 			return jogador1.getTabuleiro().getTabuleiroEstado()[linha][coluna];

@@ -41,8 +41,8 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     	controle.registrarObservador(this);
     	ghost = GhostController.getController();
     	ghost.registrarObservador(this);
-    	bt = new JButton("Proximo jogador");
     	
+    	bt = new JButton("Proximo jogador");
     	bt.addActionListener(this);
     	bt.setVisible(true);
     	bt.setFocusable(false);
@@ -99,11 +99,11 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     }
 
     public void atualizarTab(Graphics g) {
-        int[][] tabuleiro = controle.getTabuleiro();
+        //int[][] tabuleiro = controle.getTabuleiro();
         
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
-                int tipo = tabuleiro[i][j];
+                int tipo = controle.getCasa(j, i, controle.getTurno());
                 int x = xInicial + j * 20;
                 int y = yInicial + i * 20;
                 

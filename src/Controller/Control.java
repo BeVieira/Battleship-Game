@@ -73,10 +73,6 @@ public class Control implements Subject {
 		fachada.definirCoordenada(xIndex, yIndex);
 		
 	}
-
-	public int[][] getTabuleiro() {
-		return fachada.getTabuleiro(this.turno);
-	}
 	
 	public int getCasa(int coluna, int linha, int jogador) {
 		return fachada.getCasa(jogador, coluna, linha);
