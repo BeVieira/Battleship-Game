@@ -316,7 +316,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     	add(bt);
     	
         g.setColor(Color.BLACK);
-        g.drawString(controle.getNome()  + " posicione suas armas", 270, 380);
+        g.drawString(controle.getNomeAtual()  + " posicione suas armas", 270, 380);
         
     }
 

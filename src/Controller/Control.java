@@ -3,6 +3,9 @@ package Controller;
 import Model.ModelFacade;
 import Observer.Observer;
 import Observer.Subject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Control implements Subject {
@@ -26,7 +29,7 @@ public class Control implements Subject {
 		fachada.inicializaJogadores(nomeJ1, nomeJ2);
 	}
 
-	public String getNome() {
+	public String getNomeAtual() {
 		return fachada.getNome(this.turno);
 	}
 	
@@ -81,6 +84,10 @@ public class Control implements Subject {
 	
 	public int getEmbarcacaoNum(int tipo, int jogador) {
 		return fachada.getEmbarcacaoNum(tipo, jogador);
+	}
+	
+	public void salvarJogo(File arquivo) throws FileNotFoundException {
+		fachada.salvarJogo(arquivo);
 	}
 
 }
