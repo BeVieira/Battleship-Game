@@ -8,6 +8,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 public class Control implements Subject {
 	private static Control controle = null;
 	private ModelFacade fachada;
@@ -112,8 +117,46 @@ public class Control implements Subject {
 		return fachada.indicaVencedor(this.turno);
 	}
 	
+	public void criarArquivo() throws FileNotFoundException {
+	    JFileChooser arq = new JFileChooser();
+	    FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de Texto (*.txt)", "txt");
+	    arq.setFileFilter(filtro);
+	    int resposta = arq.showSaveDialog(new JDialog());
+
+	    if (resposta == JFileChooser.APPROVE_OPTION) {
+	        File file = arq.getSelectedFile();
+	        
+	        if (!file.getAbsolutePath().endsWith(".txt")) {
+	            file = new File(file + ".txt");
+	        }
+	        controle.salvarJogo(file);
+	        JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso");
+	    } else if (resposta == JFileChooser.CANCEL_OPTION) {
+	        JOptionPane.showMessageDialog(null, "Cancelado");
+	    }
+	}
+	
 	public void salvarJogo(File arquivo) throws FileNotFoundException {
 		fachada.salvarJogo(arquivo);
 	}
-
+	
+	public boolean carregarJogo() throws FileNotFoundException {
+		JFileChooser arq = new JFileChooser();
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
+		arq.setFileFilter(filtro);
+		int resposta = arq.showOpenDialog(new JDialog());
+		if(resposta == JFileChooser.APPROVE_OPTION) {
+			File arquivo = arq.getSelectedFile();
+			fachada.carregarArquivo(arquivo);
+			JOptionPane.showMessageDialog(null, "Arquivo selecionado com sucesso");
+			this.trocaTurno();
+			new View.Ataque();
+			return true;
+		}
+		else if(resposta == JFileChooser.CANCEL_OPTION) {
+			JOptionPane.showMessageDialog(null, "Cancelado");
+			return false;
+		}
+		return false;
+	}
 }

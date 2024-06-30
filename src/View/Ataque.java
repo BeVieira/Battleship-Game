@@ -300,32 +300,12 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 	    }
 	}
 
-	private void criarArquivo() throws FileNotFoundException {
-	    JFileChooser arq = new JFileChooser();
-	    FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de Texto (*.txt)", "txt");
-	    arq.setFileFilter(filtro);
-	    int resposta = arq.showSaveDialog(new JDialog());
-
-	    if (resposta == JFileChooser.APPROVE_OPTION) {
-	        File file = arq.getSelectedFile();
-	        
-	        if (!file.getAbsolutePath().endsWith(".txt")) {
-	            file = new File(file + ".txt");
-	        }
-
-	        controle.salvarJogo(file);
-	        JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso");
-	    } else if (resposta == JFileChooser.CANCEL_OPTION) {
-	        JOptionPane.showMessageDialog(null, "Cancelado");
-	    }
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveItem && (bloqueado || tiros == 3)) {
 			saveItem.setVisible(true);
 			try {
-				criarArquivo();
+				controle.criarArquivo();
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}

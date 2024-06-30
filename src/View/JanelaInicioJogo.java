@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -105,9 +106,13 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Carregar Jogo")) {
-			getContentPane().removeAll();
-			// CarregarJogo();
-			repaint();
+			try {
+				if (controle.carregarJogo()) {
+					dispose();
+				}	
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
 		} else if (e.getActionCommand().equals("Novo Jogo")) {
 			getContentPane().removeAll();
 			DefineJogador();

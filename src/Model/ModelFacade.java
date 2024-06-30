@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ModelFacade{
 	static ModelFacade f = null;
@@ -159,41 +160,69 @@ public class ModelFacade{
 	}
 	
 	public void salvarJogo(File arquivo) throws FileNotFoundException {
-	 
 			PrintStream output = new PrintStream(arquivo);
 			output.println(jogador1.getNome());
-			
+			output.println(jogador2.getNome());
+			output.println(jogador1.getTabuleiro().getEmbarcacoesAfundadas());
+			output.println(jogador2.getTabuleiro().getEmbarcacoesAfundadas());
 			
 			//salva tabuleiro
 			for(int i = 0; i<15; i++) {
 				for(int k = 0; k<15; k++) {
 					Coordenada t = new Coordenada(k,i);
-					output.print(jogador1.getTabuleiro().getCasa(t));
+					output.print(jogador1.getTabuleiro().getCasa(t) + " ");
 					if(k == 14) {
 						output.println();
 					}
 				}
 			}
-			output.println(jogador2.getNome());
 			for(int i = 0; i<15; i++) {
 				for(int k = 0; k<15; k++) {
 					Coordenada t = new Coordenada(k,i);
-					output.print(jogador2.getTabuleiro().getCasa(t));
+					output.print(jogador2.getTabuleiro().getCasa(t) + " ");
 					if(k == 14) {
 						output.println();
 					}
 				}
 			}
-			
-			
 			output.close();
 		}
-	
-	public void Carregar_jogo() {
-		
-	}
-		
-	
-	
 
+	public void carregarArquivo(File arquivo) throws FileNotFoundException {
+	    Scanner input = new Scanner(arquivo);
+	    
+	    // Lê os nomes dos jogadores
+	    String nomeJogador1 = input.nextLine();
+	    String nomeJogador2 = input.nextLine(); 
+	    this.inicializaJogadores(nomeJogador1, nomeJogador2);
+	    int afundados1 = Integer.parseInt(input.nextLine());
+	    int afundados2 = Integer.parseInt(input.nextLine()); 
+	    this.jogador1.getTabuleiro().setEmbarcacoesAfundadas(afundados1);
+	    this.jogador2.getTabuleiro().setEmbarcacoesAfundadas(afundados2);
+	    // Lê o tabuleiro do jogador 1
+	    for (int i = 0; i < 15; i++) {
+	        String[] linha = input.nextLine().split(" ");
+	        for (int k = 0; k < 15; k++) {
+	            Coordenada t = new Coordenada(k, i);
+	            
+	            int casa = Integer.parseInt(linha[k]);
+	            jogador1.getTabuleiro().setCasa(t, casa);
+	            jogador2.getTabuleiroAlvo().setCasa(t, casa);
+	        }
+	    }
+	    
+	    // Lê o tabuleiro do jogador 2
+	    for (int i = 0; i < 15; i++) {
+	    	String[] linha = input.nextLine().split(" ");
+	        for (int k = 0; k < 15; k++) {
+	            Coordenada t = new Coordenada(k, i);
+	            int casa = Integer.parseInt(linha[k]);
+	            jogador2.getTabuleiro().setCasa(t, casa);
+	            jogador1.getTabuleiroAlvo().setCasa(t, casa);
+	        }
+	    }
+	    input.close();
+	    jogador1.getTabuleiro().exibeTabuleiro();
+	    jogador2.getTabuleiro().exibeTabuleiro();
+	}
 }

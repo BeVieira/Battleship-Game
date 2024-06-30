@@ -34,6 +34,10 @@ class Tabuleiro implements Subject {
 	public int getEmbarcacoesAfundadas() {
 		return embarcacoesAfundadas;
 	}
+	
+	public void setEmbarcacoesAfundadas(int num) {
+		this.embarcacoesAfundadas = num;
+	}
 
 	public void posicionarEmbarcacao(Embarcacao embarcacao, int orientacao) {
 		int linha = embarcacao.getPosicao().getLinha();
@@ -286,7 +290,7 @@ class Tabuleiro implements Subject {
 		for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 15; j++) {
 				tipo = tabuleiro[i][j];
-				if (tipo < 0 && tipo > -100) {
+				if (tipo < 0 && tipo != -100) {
 					if (tipo == -10) {
 						tabuleiro[i][j] = -1;
 						embarcacoesAfundadas++;
@@ -310,7 +314,7 @@ class Tabuleiro implements Subject {
 	}
 
 	private boolean indicaVertical(int i, int j, int tipo) {
-		return (i + 1 <= 14 && tabuleiro[i + 1][j] != 0);
+		return (i + 1 <= 14 && tabuleiro[i + 1][j] == tipo);
 	}
 
 	private void afundarEmbarcacao(int i, int j, boolean vertical, int tipo) {
