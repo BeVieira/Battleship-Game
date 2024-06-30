@@ -44,12 +44,14 @@ public class TratadorEventos extends MouseAdapter implements Subject{
 				if ((x >= 510) && (x <= 810) && (y >= 80) && (y <= 380)) {
 					int xIndex = (x - 510) / 20;
 					int yIndex = (y - 80) / 20;
-					controle.definirCoordenada(xIndex, yIndex);
-					ghost.definirGhost(ghost.tipo, controle.getTurno());
+					
+					if ((xIndex < 15) && (yIndex < 15)) {
+						controle.definirCoordenada(xIndex, yIndex);
+						ghost.definirGhost(ghost.tipo, controle.getTurno());
+					}
 				}
-			}	
+			}
 		}
-				
 	}
 	
 	@Override

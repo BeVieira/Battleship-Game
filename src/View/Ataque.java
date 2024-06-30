@@ -107,9 +107,9 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 					
 					controle.atirar(turno, indexX, indexY);
 					controle.afundarEmbarcacoes();
+					atirou = true;
+					if (controle.getTiro() >= 0) tiros--;
 				}
-				atirou = true;
-				tiros--;
 				if (tiros == 0) {
 					atirou = false;
 					controle.trocaTurno();
