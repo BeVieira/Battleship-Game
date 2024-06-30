@@ -38,17 +38,15 @@ public class TratadorEventos extends MouseAdapter implements Subject{
 			else if ((x >= 40) && (x <= 140) && (y >= 280) && (y <= 300)) {
 				ghost.tipo = 5;
 			}
-
+			controle.notificarObservadores();
 			if (ghost.tipo != 0) {
 				//Limites tabuleiro
-				if ((x >= 510) && (x <= 810) && (y >= 80) && (y <= 380)) {
+				if ((x > 510) && (x < 810) && (y > 80) && (y < 380)) {
 					int xIndex = (x - 510) / 20;
 					int yIndex = (y - 80) / 20;
 					if(controle.getEmbarcacaoNum(ghost.tipo, controle.getTurno()) != 0) {
-						if ((xIndex < 15) && (yIndex < 15)) {
-							controle.definirCoordenada(xIndex, yIndex);
-							ghost.definirGhost(ghost.tipo, controle.getTurno());
-						}
+						controle.definirCoordenada(xIndex, yIndex);
+						ghost.definirGhost(ghost.tipo, controle.getTurno());
 					}
 					
 				}

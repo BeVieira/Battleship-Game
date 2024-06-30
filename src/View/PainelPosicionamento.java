@@ -322,12 +322,14 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 
     private void desenhaNavio(Graphics g, int x, int y, int tam, Color cor) {
         g.setColor(cor);
+        if (ghost.tipo == tam) g.setColor(Color.blue);
         g.fillRect(x, y, tam * tamanhoCasa , tamanhoCasa);
     }
 
     private void desenhaHidroaviao(Graphics g, int x, int y, Color cor) {
 
         g.setColor(cor);
+        if (ghost.tipo == 3) g.setColor(Color.blue);
         g.fillRect(x + tamanhoCasa, y, tamanhoCasa, tamanhoCasa);
         g.fillRect(x, y + tamanhoCasa, tamanhoCasa, tamanhoCasa);
 		g.fillRect(x + 2 * tamanhoCasa, y + tamanhoCasa, tamanhoCasa, tamanhoCasa);

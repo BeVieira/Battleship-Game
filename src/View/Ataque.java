@@ -100,8 +100,8 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 			}
 			yInicial = 100;
 			
-			if ((x >= xInicial) && (x <= (xInicial+300))) {
-				if ((y >= yInicial) && (y <= (yInicial+300))) {
+			if ((x > xInicial) && (x < (xInicial+300))) {
+				if ((y > yInicial) && (y < (yInicial+300))) {
 					int indexX = (x - xInicial)/20;
 					int indexY = (y - yInicial)/20;
 					
@@ -112,7 +112,6 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 					if (controle.getTiro() >= 0) tiros--;
 				}
 				if (tiros == 0) {
-					atirou = false;
 					controle.trocaTurno();
 					bloqueado = true;
 					repaint();
@@ -360,8 +359,8 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 			if (bloqueado) {
 				tiros = 3;
 				bloqueado = false;
+				atirou = false;
 			}
-			atirou = false;
 			repaint();
 		}	
 	}
