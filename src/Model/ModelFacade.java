@@ -222,7 +222,5 @@ public class ModelFacade{
 	        }
 	    }
 	    input.close();
-	    jogador1.getTabuleiro().exibeTabuleiro();
-	    jogador2.getTabuleiro().exibeTabuleiro();
 	}
 }
