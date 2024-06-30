@@ -13,6 +13,7 @@ public class Control implements Subject {
 	private ModelFacade fachada;
 	private ArrayList<Observer> observadores;
 	private int turno = 0;
+	private int lastTiro = 0;
 
 	public static Control getController() {
 		if (controle == null)
@@ -84,6 +85,21 @@ public class Control implements Subject {
 	
 	public int getEmbarcacaoNum(int tipo, int jogador) {
 		return fachada.getEmbarcacaoNum(tipo, jogador);
+	}
+	
+	public void atirar(int turno, int coluna, int linha) {
+		fachada.definirCoordenada(coluna, linha);
+		lastTiro = fachada.atirar(turno);
+		notificarObservadores();
+	}
+	
+	public int getTiro() {
+		return lastTiro;
+	}
+	
+	public void afundarEmbarcacoes() {
+		fachada.afundarEmbarcacoes(this.turno);
+		notificarObservadores();
 	}
 	
 	public void salvarJogo(File arquivo) throws FileNotFoundException {

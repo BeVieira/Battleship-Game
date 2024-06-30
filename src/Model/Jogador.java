@@ -85,15 +85,12 @@ class Jogador {
 		tabuleiro.girarEmbarcacao(embarcacao);
 	}
 	
-	public boolean realizarTiro(Coordenada coordenada) {
+	public int realizarTiro(Coordenada coordenada) {
 		int casa = tabuleiroAlvo.getCasa(coordenada);
-		if (casa == 0)
+		if (casa > 0)
+			tabuleiroAlvo.setCasa(coordenada, -10*casa);
+		else if (casa == 0)
 			tabuleiroAlvo.setCasa(coordenada, -100);
-		else if (casa > 0)
-			tabuleiroAlvo.setCasa(coordenada, -casa);
-		else
-			return false;
-		return true;
-
+		return casa;
 	}
 }

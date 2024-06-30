@@ -6,20 +6,84 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Controller.Control;
+import Observer.Observer;
 
-public class Ataque extends JFrame implements ActionListener {
+public class Ataque extends JFrame implements Observer,ActionListener {
+	JMenuBar menuBar;
+	JMenu fileMenu;
+	JMenuItem loadItem;
+	JMenuItem saveItem;
+	
 	Control controle;
 	boolean bloqueado = true;
+	boolean atirou = false;
 	int tiros;
     final Color ciano = new Color(173, 216, 230);
     final Color verdeClaro = new Color(144, 238, 144);
     final Color verdeEscuro = new Color(0, 100, 0);
+    
+    JLabel aviso, tiroResult;
+    JButton b;
+    
+	public Ataque() {
+		controle = Control.getController();
+		setVisible(true);
+		setSize(870, 550);
+		setTitle("Batalha Naval");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);// encerra o programa quando clica no x
+		setResizable(false);
+		setLocationRelativeTo(null); // faz ir pro meio da tela ao abrir
+		addMouseListener(new TratadorMouse());
+		controle.registrarObservador(this);
+		
+		menuBar = new JMenuBar();
+		fileMenu = new  JMenu("file");
+		loadItem = new JMenuItem("carregar jogo");
+		saveItem = new JMenuItem("salvar jogo");
+		
+		fileMenu.add(loadItem);
+		fileMenu.add(saveItem);
+		
+		loadItem.addActionListener(this);
+		saveItem.addActionListener(this);
 
+		menuBar.add(fileMenu);
+		this.setJMenuBar(menuBar);
+		
+		b = new JButton("Avançar");
+		setLayout(null);
+		b.addActionListener(this);
+		b.setBounds(330, 400, 150, 40);
+		b.setVisible(true);
+		b.setFocusable(false);
+		add(b);
+		
+		aviso = new JLabel();
+		aviso.setBounds(250, 375, 300, 20);
+		add(aviso);
+		
+		tiroResult = new JLabel();
+		tiroResult.setBounds(250, 355, 300, 20);
+		tiroResult.setForeground(Color.red);
+		add(tiroResult);
+		
+	}
+    
 	private class TratadorMouse extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e){
@@ -36,42 +100,28 @@ public class Ataque extends JFrame implements ActionListener {
 			}
 			yInicial = 100;
 			
-			int outroJogador = (turno % 2) + 1;
 			if ((x >= xInicial) && (x <= (xInicial+300))) {
 				if ((y >= yInicial) && (y <= (yInicial+300))) {
 					int indexX = (x - xInicial)/20;
 					int indexY = (y - yInicial)/20;
 					
-					int casa = controle.getCasa(indexX,indexY, outroJogador);
-					
-					if (casa == 0) {
-						controle.setCasa(indexX, indexY, -100, outroJogador);
-					}
-					else {
-						if (casa > 0) controle.setCasa(indexX, indexY, -casa, outroJogador);
-					}
-					System.out.println("casa: "+casa);
+					controle.atirar(turno, indexX, indexY);
+					controle.afundarEmbarcacoes();
 				}
+				atirou = true;
 				tiros--;
+				if (tiros == 0) {
+					atirou = false;
+					controle.trocaTurno();
+					bloqueado = true;
+					repaint();
+				}
 			}
-			repaint();
 		}
-	}
-	
-	public Ataque() {
-		controle = Control.getController();
-		setVisible(true);
-		setSize(870, 550);
-		setTitle("Batalha Naval");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);// encerra o programa quando clica no x
-		setResizable(false);
-		setLocationRelativeTo(null); // faz ir pro meio da tela ao abrir
-		addMouseListener(new TratadorMouse());
 	}
 	
 	public void desenhaTabuleiro(Graphics g, int jogador) {
 		int xInicial, yInicial;
-		
 		
 		if (jogador == 1) {
 			xInicial = 40;
@@ -79,9 +129,9 @@ public class Ataque extends JFrame implements ActionListener {
 		}
 		else {
 			xInicial = 500;
-			yInicial = 100;
-			
+			yInicial = 100;	
 		}
+		
 		int x1, x2, y1, y2;
 		x1 = xInicial;
 		y1 = yInicial;
@@ -128,21 +178,29 @@ public class Ataque extends JFrame implements ActionListener {
 				int casa = controle.getCasa(j, i, jogador);
 				if (casa < 0) {
 					switch (casa) {
-					default:
+					case -1:
+					case -2:
+					case -3:
+					case -4:
+					case -5:
 						g.setColor(Color.BLACK);
 						break;
-					case -1:
+					case -10:
+					case -20:
+					case -30:
+					case -40:
+					case -50:
 						g.setColor(Color.RED);
 						break;
 					case -100:
 						g.setColor(Color.GRAY);
 						break;
-					}
-				g.fillRect(x1 + (j*20), y1 + (i*20), 20, 20);
 				}
-				
+					g.fillRect(x1 + (j*20), y1 + (i*20), 20, 20);
+				}
 			}
 		}
+		
 		g.setColor(Color.black);
 		
 		// faz linha em pé
@@ -184,26 +242,105 @@ public class Ataque extends JFrame implements ActionListener {
 	}
 
 	public void paint(Graphics g) {
+		//super.paint(g);
 		
 		desenhaTabuleiro(g, 1);
 		desenhaTabuleiro(g, 2);
+		b.repaint();
 		
-		
-		JButton b = new JButton("Avançar");
-		setLayout(null);
-		b.setBounds(330, 430, 150, 40);
-		b.setVisible(true);
-		add(b);
-		b.addActionListener(this);
+		String str;
+		if (atirou == true) {
+			tiroResult.setVisible(true);
 
-		if (bloqueado == true) g.drawString("Visao bloqueda, " + controle.getNomeAtual() + " deve clicar para desbloquear visao", 250, 450);
-			g.drawString("tabuleiro do " + controle.getNome(1), 40, 65);
-			g.drawString("tabuleiro do " + controle.getNome(2), 500, 65);
+			switch (controle.getTiro()) {
+				case 1:
+					str = "Acertou um submarino";
+					break;
+				case 2:
+					str = "Acertou um destroyer";
+					break;
+				case 3:
+					str = "Acertou um hidroaviao";
+					break;
+				case 4:
+					str = "Acertou um cruzador";
+					break;
+				case 5:
+					str = "Acertou um couracado";
+					break;
+				default:
+					str = "Acertou água";
+					break;
+			}
+		}
+		else {
+			str = "";
+			tiroResult.setVisible(false);
+		}
+		tiroResult.setText(str);
+		tiroResult.repaint();
+		
+		str = "";
+		if (bloqueado == true) str = "Visao bloqueda, " + controle.getNomeAtual() + " deve clicar para desbloquear visao";
+		else {
+			str = "Tiros restantes: " + tiros;
+		}
+		aviso.setText(str);
+		aviso.repaint();
+
+		g.drawString("tabuleiro do " + controle.getNome(1), 40, 65);
+		g.drawString("tabuleiro do " + controle.getNome(2), 500, 65);
+	}
+	
+	private void criarArquivo() throws FileNotFoundException {
+		JFileChooser arq = new JFileChooser();
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
+		arq.setFileFilter(filtro);
+		int resposta = arq.showOpenDialog(new JDialog());
+		File file = new File("");
+		if(resposta == JFileChooser.APPROVE_OPTION) {
+			file = arq.getSelectedFile();
+			controle.salvarJogo(file);
+			JOptionPane.showMessageDialog(null, "Arquivo selecionado com sucesso");
+		}
+		else if(resposta == JFileChooser.CANCEL_OPTION) {
+			JOptionPane.showMessageDialog(null, "cancelado");
+		}
+	}
+	
+	private void carregaArquivo() throws FileNotFoundException {
+		JFileChooser arq = new JFileChooser();
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
+		arq.setFileFilter(filtro);
+		int resposta = arq.showOpenDialog(new JDialog());
+		File file = new File("");
+		if(resposta == JFileChooser.APPROVE_OPTION) {
+			file = arq.getSelectedFile();
+			JOptionPane.showMessageDialog(null, "Arquivo selecionado com sucesso");
+		}
+		else if(resposta == JFileChooser.CANCEL_OPTION) {
+			JOptionPane.showMessageDialog(null, "cancelado");
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("bloqueado: " + bloqueado);
+		if(e.getSource() == loadItem) {
+			try {
+				carregaArquivo();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		if (e.getSource() == saveItem) {
+			try {
+				criarArquivo();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			//controle.salvarJogo();
+		}
 		if (bloqueado == true) {
 			tiros = 3;
 			bloqueado = false;
@@ -214,7 +351,12 @@ public class Ataque extends JFrame implements ActionListener {
 			bloqueado = true;
 			
 		}
+		atirou = false;
 		repaint();
-		System.out.println("turno: "+controle.getTurno());
+	}
+
+	@Override
+	public void atualizar() {
+		repaint();
 	}
 }

@@ -1,21 +1,22 @@
 package Model;
+
 import java.util.ArrayList;
 
 import Observer.Observer;
 import Observer.Subject;
 
-class Tabuleiro implements Subject{
+class Tabuleiro implements Subject {
 	private int[][] tabuleiro;
 	private ArrayList<Observer> observadores;
-	
+
 	public Tabuleiro() {
 		tabuleiro = new int[15][15];
 	}
-	
+
 	public int[][] getTabuleiroEstado() {
 		return tabuleiro;
 	}
-	
+
 	public void setTabuleiro(int[][] tabuleiro) {
 		this.tabuleiro = tabuleiro;
 	}
@@ -27,50 +28,49 @@ class Tabuleiro implements Subject{
 	public void setCasa(Coordenada coordenada, int tipoEmbarcacao) {
 		this.tabuleiro[coordenada.getLinha()][coordenada.getColuna()] = tipoEmbarcacao;
 	}
-	
+
 	public void posicionarEmbarcacao(Embarcacao embarcacao, int orientacao) {
 		int linha = embarcacao.getPosicao().getLinha();
 		int coluna = embarcacao.getPosicao().getColuna();
 		int tipo = embarcacao.getTipo();
-		
+
 		if (tipo == 3) {
 			tabuleiro[linha][coluna] = tipo;
-			switch(orientacao) {
-				case 1:
-					linha += 1;
-					coluna -= 1;
-					tabuleiro[linha][coluna] = tipo;
-					coluna += 2;
-					tabuleiro[linha][coluna] = tipo;
-					break;
-					
-				case 2:
-					linha -= 1;
-					coluna += 1;
-					tabuleiro[linha][coluna] = tipo;
-					linha += 2;
-					tabuleiro[linha][coluna] = tipo;
-					break;
-					
-				case 3:
-					linha -= 1;
-					coluna += 1;
-					tabuleiro[linha][coluna] = tipo;
-					coluna -= 2;
-					tabuleiro[linha][coluna] = tipo;
-					break;
-					
-				case 4:
-					linha -= 1;
-					coluna -= 1;
-					tabuleiro[linha][coluna] = tipo;
-					linha += 2;
-					tabuleiro[linha][coluna] = tipo;
-					break;		
+			switch (orientacao) {
+			case 1:
+				linha += 1;
+				coluna -= 1;
+				tabuleiro[linha][coluna] = tipo;
+				coluna += 2;
+				tabuleiro[linha][coluna] = tipo;
+				break;
+
+			case 2:
+				linha -= 1;
+				coluna += 1;
+				tabuleiro[linha][coluna] = tipo;
+				linha += 2;
+				tabuleiro[linha][coluna] = tipo;
+				break;
+
+			case 3:
+				linha -= 1;
+				coluna += 1;
+				tabuleiro[linha][coluna] = tipo;
+				coluna -= 2;
+				tabuleiro[linha][coluna] = tipo;
+				break;
+
+			case 4:
+				linha -= 1;
+				coluna -= 1;
+				tabuleiro[linha][coluna] = tipo;
+				linha += 2;
+				tabuleiro[linha][coluna] = tipo;
+				break;
 			}
-			
-		}
-		else {
+
+		} else {
 			for (int i = 0; i < tipo; i++) {
 				switch (orientacao) {
 				case 1:
@@ -89,9 +89,9 @@ class Tabuleiro implements Subject{
 			}
 		}
 		embarcacao.setPosicao(embarcacao.getPosicao());
-		//notificarObservadores();
+		// notificarObservadores();
 	}
-	
+
 	public void removerEmbarcacao(Embarcacao embarcacao) {
 		int linha = embarcacao.getPosicao().getLinha();
 		int coluna = embarcacao.getPosicao().getColuna();
@@ -119,19 +119,18 @@ class Tabuleiro implements Subject{
 			}
 		}
 	}
-	
+
 	public void girarEmbarcacao(Embarcacao embarcacao) {
 		int tipo = embarcacao.getTipo();
 		int orientacao = embarcacao.getOrientacao();
 		int linha = embarcacao.getPosicao().getLinha();
 		int coluna = embarcacao.getPosicao().getColuna();
-		
+
 		removerEmbarcacao(embarcacao);
 		orientacao = alterarOrientacao(orientacao);
 		if (tipo == 3) {
 			girarHidroaviao(embarcacao);
-		}
-		else {
+		} else {
 			for (int i = 0; i < tipo; i++) {
 				switch (orientacao) {
 				case 1:
@@ -147,56 +146,56 @@ class Tabuleiro implements Subject{
 					tabuleiro[linha + i][coluna] = tipo;
 					break;
 				}
-			}	
+			}
 		}
 		embarcacao.setOrientacao(orientacao);
-		//notificarObservadores();
+		// notificarObservadores();
 	}
-	
+
 	public boolean validaPosicionar(Coordenada coordenada, int tipo, int orientacao) {
 		int linha = coordenada.getLinha();
-        int coluna = coordenada.getColuna();
-        
-        switch (orientacao) {
-        case 1:
-        	if (coluna + tipo > 15)
-        		return false;
-        	for (int i = 0; i < tipo; i++) {
-        		if (!validaQuadrado(linha, coluna + i))
-        			return false;
-        	}
+		int coluna = coordenada.getColuna();
+
+		switch (orientacao) {
+		case 1:
+			if (coluna + tipo > 15)
+				return false;
+			for (int i = 0; i < tipo; i++) {
+				if (!validaQuadrado(linha, coluna + i))
+					return false;
+			}
 			break;
-        case 2:
-        	if (linha - tipo < -1)
-        		return false;
-        	for (int i = 0; i < tipo; i++) {
-        		if (!validaQuadrado(linha - i, coluna))
-        			return false;
-        	}
+		case 2:
+			if (linha - tipo < -1)
+				return false;
+			for (int i = 0; i < tipo; i++) {
+				if (!validaQuadrado(linha - i, coluna))
+					return false;
+			}
 			break;
-        case 3:
-        	if (coluna - tipo < -1)
-        		return false;
-        	for (int i = 0; i < tipo; i++) {
-        		if (!validaQuadrado(linha, coluna - i))
-        			return false;
-        	}
+		case 3:
+			if (coluna - tipo < -1)
+				return false;
+			for (int i = 0; i < tipo; i++) {
+				if (!validaQuadrado(linha, coluna - i))
+					return false;
+			}
 			break;
-        case 4:
-        	if (linha + tipo > 15)
-        		return false;
-        	for (int i = 0; i < tipo; i++) {
-        		if (!validaQuadrado(linha + i, coluna))
-        			return false;
-        	}
+		case 4:
+			if (linha + tipo > 15)
+				return false;
+			for (int i = 0; i < tipo; i++) {
+				if (!validaQuadrado(linha + i, coluna))
+					return false;
+			}
 			break;
-        }
-        return true; 
+		}
+		return true;
 	}
-	
-	public boolean validaPosicionarHidroaviao(Coordenada coordenada, int orientacao) { 
+
+	public boolean validaPosicionarHidroaviao(Coordenada coordenada, int orientacao) {
 		int linha = coordenada.getLinha();
-        int coluna = coordenada.getColuna();
+		int coluna = coordenada.getColuna();
 		switch (orientacao) {
 		case 1:
 			if (coluna == 0 || coluna == 14 || linha == 14)
@@ -215,116 +214,154 @@ class Tabuleiro implements Subject{
 				return false;
 			break;
 		}
-        
-        //Valida colisão
-		//Verifica cabeça
+
+		// Valida colisão
+		// Verifica cabeça
 		if (!validaQuadrado(linha, coluna))
 			return false;
 		switch (orientacao) {
-		
-    	case 1:
-    		//Esquerda embaixo
-    		linha+=1;
-    		coluna-=1;
-            if (!validaQuadrado(linha, coluna))
-    			return false;
-            //Direita embaixo
-            coluna += 2;
-            if (!validaQuadrado(linha, coluna))
-    			return false;
-            
-    		break;
-    	case 2:
-    		//Direita em cima
-    		linha-=1;
-    		coluna+=1;
-            if (!validaQuadrado(linha, coluna))
-    			return false;
-            //Direita embaixo
-            linha += 2;
-            if (!validaQuadrado(linha, coluna))
-    			return false;
-            
-    		break;
-    	case 3:
-    		//Esquerda em cima
-    		linha-=1;
-    		coluna-=1;
-            if (!validaQuadrado(linha, coluna))
-    			return false;
-            //Direita em cima
-            coluna += 2;
-            if (!validaQuadrado(linha, coluna))
-    			return false;
-            
-    		break;
-    	case 4:
-    		//Esquerda em cima
-    		linha-=1;
-    		coluna-=1;
-            if (!validaQuadrado(linha, coluna))
-    			return false;
-            //Direita embaixo
-            linha += 2;
-            if (!validaQuadrado(linha, coluna))
-    			return false;
-            
-    		break;
-		}  
-        return true; 
-	}	
 
-	public void foiAfundada() {
-		int orientacao;
+		case 1:
+			// Esquerda embaixo
+			linha += 1;
+			coluna -= 1;
+			if (!validaQuadrado(linha, coluna))
+				return false;
+			// Direita embaixo
+			coluna += 2;
+			if (!validaQuadrado(linha, coluna))
+				return false;
+
+			break;
+		case 2:
+			// Direita em cima
+			linha -= 1;
+			coluna += 1;
+			if (!validaQuadrado(linha, coluna))
+				return false;
+			// Direita embaixo
+			linha += 2;
+			if (!validaQuadrado(linha, coluna))
+				return false;
+
+			break;
+		case 3:
+			// Esquerda em cima
+			linha -= 1;
+			coluna -= 1;
+			if (!validaQuadrado(linha, coluna))
+				return false;
+			// Direita em cima
+			coluna += 2;
+			if (!validaQuadrado(linha, coluna))
+				return false;
+
+			break;
+		case 4:
+			// Esquerda em cima
+			linha -= 1;
+			coluna -= 1;
+			if (!validaQuadrado(linha, coluna))
+				return false;
+			// Direita embaixo
+			linha += 2;
+			if (!validaQuadrado(linha, coluna))
+				return false;
+
+			break;
+		}
+		return true;
+	}
+
+	public void afundarEmbarcacoes() {
+		boolean vertical;
+		int tipo;
+
 		for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 15; j++) {
-				if (tabuleiro[i][j] == -10) {
-					orientacao = descobrirOrientacao(i,j);
-					afundarEmbarcacao(i,j,orientacao);
+				tipo = tabuleiro[i][j];
+				if (tipo < 0 && tipo > -100) {
+					if (tipo == -10) {
+						tabuleiro[i][j] = -1;						
+					}
+					else if (tipo == -30) {
+						if (verificarSeAfundada(i,j)) {
+							afundarEmbarcacao(i, j);
+						}
+					}
+					else if (tipo < -10) {
+						vertical = indicaVertical(i, j, tipo);
+						if (verificarSeAfundada(i,j, vertical, tipo)) {
+							afundarEmbarcacao(i, j, vertical, tipo);							
+						}
+					}
 				}
 			}
 		}
 	}
-	
-	private int descobrirOrientacao(int i, int j) {
-		for (int linha = -1; linha < 1; linha++) {
-			for (int coluna = -1; coluna < 1; coluna++) {
-				if (linha == 0 && coluna == 0)
-					continue;
-				int casa = tabuleiro[i+linha][j+coluna];
-				if (casa == -10) {
-					if (coluna == 1 && linha == 0)
-						return 1;
-					else if (coluna == 0 && linha == -1)
-						return 2;
-					else if (coluna == -1 && linha == 0)
-						return 3;
-					else if (coluna == 0 && linha == 1)
-						return 4;
-					else
-						return 0;
-				}	
+
+	private boolean indicaVertical(int i, int j, int tipo) {
+		return (i + 1 <= 14 && tabuleiro[i + 1][j] != 0);
+	}
+
+	private void afundarEmbarcacao(int i, int j, boolean vertical, int tipo) {
+		int tam = (tipo*-1)/10;
+		for (int n = 0; n < tam; n++) {
+			if (vertical) {
+				tabuleiro[i + n][j] = tipo / 10;				
+			}
+			else {				
+				tabuleiro[i][j + n] = tipo / 10;
 			}
 		}
-		return -1;
+	}
+
+	private boolean verificarSeAfundada(int i, int j, boolean vertical, int tipo) {
+		int afundou = 0;
+		int tam = (tipo*-1)/10;
+		for (int n = 0; n < tam; n++) {
+			if (vertical) {
+				if (tabuleiro[i + n][j] == tipo) {
+					afundou++;
+				}
+			}
+			else {				
+				if (tabuleiro[i][j + n] == tipo) {
+					afundou++;
+				}
+			}
+		}
+		return (afundou == tam);
 	}
 	
-	private void afundarEmbarcacao(int linha, int coluna, int orientacao) {
-		int casa = tabuleiro[linha][coluna];
-		int tipo = 0;
-		while (casa != 0) {
-			tipo++;
-			casa = tabuleiro[linha][coluna];
+	private void afundarEmbarcacao(int i, int j) {
+		for (int a = -1; a <= 1; a++) {
+			for (int b = -1; b <= 1; b++) {
+				if ((i + a >= 0 && i + a <= 14) && (j + b >= 0 && j + b <= 14))
+					if (tabuleiro[i+a][j+b] == -30)
+						tabuleiro[i+a][j+b] = -3;
+			}
 		}
-		
 	}
+
+	private boolean verificarSeAfundada(int i, int j) {
+		int afundou = 0;
+		for (int a = -1; a <= 1; a++) {
+			for (int b = -1; b <= 1; b++) {
+				if ((i + a >= 0 && i + a <= 14) && (j + b >= 0 && j + b <= 14))
+					if (tabuleiro[i+a][j+b] == -30)
+						afundou++;
+			}
+		}
+		return (afundou == 3);
+	}
+	
 	private void girarHidroaviao(Embarcacao embarcacao) {
 		int tipo = embarcacao.getTipo();
 		int orientacao = embarcacao.getOrientacao();
 		int linha = embarcacao.getPosicao().getLinha();
 		int coluna = embarcacao.getPosicao().getColuna();
-	
-		
+
 		switch (orientacao) {
 		case 1:
 			tabuleiro[linha + 1][coluna + 1] = tipo;
@@ -340,34 +377,33 @@ class Tabuleiro implements Subject{
 			break;
 		}
 
-		
 	}
 
 	private void removerHidroaviao(Embarcacao embarcacao) {
 		int orientacao = embarcacao.getOrientacao();
 		int linha = embarcacao.getPosicao().getLinha();
 		int coluna = embarcacao.getPosicao().getColuna();
-		
+
 		switch (orientacao) {
-			case 1:
-				tabuleiro[linha + 1][coluna - 1] = 0;
-				break;
-			case 2:
-				tabuleiro[linha + 1][coluna + 1] = 0;
-				break;
-			case 3:
-				tabuleiro[linha - 1][coluna + 1] = 0;
-				break;
-			case 4:
-				tabuleiro[linha - 1][coluna - 1] = 0;
-				break;
-			}
+		case 1:
+			tabuleiro[linha + 1][coluna - 1] = 0;
+			break;
+		case 2:
+			tabuleiro[linha + 1][coluna + 1] = 0;
+			break;
+		case 3:
+			tabuleiro[linha - 1][coluna + 1] = 0;
+			break;
+		case 4:
+			tabuleiro[linha - 1][coluna - 1] = 0;
+			break;
+		}
 	}
-		
+
 	private int alterarOrientacao(int orientacao) {
 		return (orientacao % 4 + 1);
 	}
-	
+
 	private boolean validaQuadrado(int linha, int coluna) {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
@@ -380,28 +416,28 @@ class Tabuleiro implements Subject{
 		}
 		return true;
 	}
-	
+
 	@Override
-    public void registrarObservador(Observer observador) {
-        observadores.add(observador);
-    }
+	public void registrarObservador(Observer observador) {
+		observadores.add(observador);
+	}
 
-    @Override
-    public void removerObservador(Observer observador) {
-        observadores.remove(observador);
-    }
+	@Override
+	public void removerObservador(Observer observador) {
+		observadores.remove(observador);
+	}
 
-    @Override
-    public void notificarObservadores() {
-        for (Observer observador : observadores) {
-            observador.atualizar();
-        }
-    }
-	
+	@Override
+	public void notificarObservadores() {
+		for (Observer observador : observadores) {
+			observador.atualizar();
+		}
+	}
+
 	public void exibeTabuleiro() {
 		System.out.println("  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4");
 		for (int i = 0; i < 15; i++) {
-			System.out.print(String.format("%d ", i>= 10 ? i-10 : i));
+			System.out.print(String.format("%d ", i >= 10 ? i - 10 : i));
 			for (int j = 0; j < 15; j++) {
 				System.out.print(tabuleiro[i][j] == 0 ? "- " : tabuleiro[i][j] + " ");
 			}
