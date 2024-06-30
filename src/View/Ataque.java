@@ -52,8 +52,8 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		menuBar = new JMenuBar();
 		fileMenu = new JMenu("Arquivo");
 		saveItem = new JMenuItem("Salvar jogo");
-
 		fileMenu.add(saveItem);
+		
 		saveItem.addActionListener(this);
 
 		menuBar.add(fileMenu);
@@ -76,7 +76,7 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		tiroResult.setBounds(250, 355, 300, 20);
 		tiroResult.setForeground(Color.red);
 		add(tiroResult);
-		setVisible(true);	
+		setVisible(true);
 	}
     
 	private class TratadorMouse extends MouseAdapter {
@@ -301,25 +301,29 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 	}
 
 	private void criarArquivo() throws FileNotFoundException {
-		JFileChooser arq = new JFileChooser();
-		FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
-		arq.setFileFilter(filtro);
-		int resposta = arq.showOpenDialog(new JDialog());
-		File file = new File("");
-		if(resposta == JFileChooser.APPROVE_OPTION) {
-			file = arq.getSelectedFile();
-			controle.salvarJogo(file);
-			JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso");
-		}
-		else if(resposta == JFileChooser.CANCEL_OPTION) {
-			JOptionPane.showMessageDialog(null, "Cancelado");
-		}
+	    JFileChooser arq = new JFileChooser();
+	    FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de Texto (*.txt)", "txt");
+	    arq.setFileFilter(filtro);
+	    int resposta = arq.showSaveDialog(new JDialog());
+
+	    if (resposta == JFileChooser.APPROVE_OPTION) {
+	        File file = arq.getSelectedFile();
+	        
+	        if (!file.getAbsolutePath().endsWith(".txt")) {
+	            file = new File(file + ".txt");
+	        }
+
+	        controle.salvarJogo(file);
+	        JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso");
+	    } else if (resposta == JFileChooser.CANCEL_OPTION) {
+	        JOptionPane.showMessageDialog(null, "Cancelado");
+	    }
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveItem && (bloqueado || tiros == 3)) {
+			saveItem.setVisible(true);
 			try {
 				criarArquivo();
 			} catch (FileNotFoundException e1) {
