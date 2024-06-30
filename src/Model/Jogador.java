@@ -81,9 +81,9 @@ class Jogador {
 		tabuleiro.posicionarEmbarcacao(embarcacao,embarcacao.getOrientacao());
 	}
 
-	public void girarEmbarcacao(Embarcacao embarcacao) {
+	/*public void girarEmbarcacao(Embarcacao embarcacao) {
 		tabuleiro.girarEmbarcacao(embarcacao);
-	}
+	}*/
 	
 	public int realizarTiro(Coordenada coordenada) {
 		int casa = tabuleiroAlvo.getCasa(coordenada);

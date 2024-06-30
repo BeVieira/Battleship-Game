@@ -1,10 +1,9 @@
-package Testes;
+package Model;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import Model.Tabuleiro.*;
 public class TestTabuleiro {
 
 	@Test

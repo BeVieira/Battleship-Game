@@ -123,5 +123,9 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 			dispose();
 		}
 	}
-
+	
+	public static void main(String[] args) {
+		new JanelaInicioJogo();
+	}
 }
+

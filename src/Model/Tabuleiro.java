@@ -1,13 +1,7 @@
 package Model;
 
-import java.util.ArrayList;
-
-import Observer.Observer;
-import Observer.Subject;
-
-class Tabuleiro implements Subject {
+class Tabuleiro {
 	private int[][] tabuleiro;
-	private ArrayList<Observer> observadores;
 	private int embarcacoesAfundadas;
 
 	public Tabuleiro() {
@@ -99,66 +93,6 @@ class Tabuleiro implements Subject {
 			}
 		}
 		embarcacao.setPosicao(embarcacao.getPosicao());
-		// notificarObservadores();
-	}
-
-	public void removerEmbarcacao(Embarcacao embarcacao) {
-		int linha = embarcacao.getPosicao().getLinha();
-		int coluna = embarcacao.getPosicao().getColuna();
-		int tipo = embarcacao.getTipo();
-		int orientacao = embarcacao.getOrientacao();
-
-		if (tipo == 3) {
-			removerHidroaviao(embarcacao);
-		} else {
-			for (int i = 0; i < tipo; i++) {
-				switch (orientacao) {
-				case 1:
-					tabuleiro[linha][coluna + i] = 0;
-					break;
-				case 2:
-					tabuleiro[linha - i][coluna] = 0;
-					break;
-				case 3:
-					tabuleiro[linha][coluna - i] = 0;
-					break;
-				case 4:
-					tabuleiro[linha + i][coluna] = 0;
-					break;
-				}
-			}
-		}
-	}
-
-	public void girarEmbarcacao(Embarcacao embarcacao) {
-		int tipo = embarcacao.getTipo();
-		int orientacao = embarcacao.getOrientacao();
-		int linha = embarcacao.getPosicao().getLinha();
-		int coluna = embarcacao.getPosicao().getColuna();
-
-		removerEmbarcacao(embarcacao);
-		orientacao = alterarOrientacao(orientacao);
-		if (tipo == 3) {
-			girarHidroaviao(embarcacao);
-		} else {
-			for (int i = 0; i < tipo; i++) {
-				switch (orientacao) {
-				case 1:
-					tabuleiro[linha][coluna + i] = tipo;
-					break;
-				case 2:
-					tabuleiro[linha - i][coluna] = tipo;
-					break;
-				case 3:
-					tabuleiro[linha][coluna - i] = tipo;
-					break;
-				case 4:
-					tabuleiro[linha + i][coluna] = tipo;
-					break;
-				}
-			}
-		}
-		embarcacao.setOrientacao(orientacao);
 		// notificarObservadores();
 	}
 
@@ -329,6 +263,16 @@ class Tabuleiro implements Subject {
 		}
 	}
 
+	private void afundarEmbarcacao(int i, int j) {
+		for (int a = -1; a <= 1; a++) {
+			for (int b = -1; b <= 1; b++) {
+				if ((i + a >= 0 && i + a <= 14) && (j + b >= 0 && j + b <= 14))
+					if (tabuleiro[i+a][j+b] == -30)
+						tabuleiro[i+a][j+b] = -3;
+			}
+		}
+	}
+
 	private boolean verificarSeAfundada(int i, int j, boolean vertical, int tipo) {
 		int afundou = 0;
 		int tam = (tipo*-1)/10;
@@ -347,16 +291,6 @@ class Tabuleiro implements Subject {
 		return (afundou == tam);
 	}
 	
-	private void afundarEmbarcacao(int i, int j) {
-		for (int a = -1; a <= 1; a++) {
-			for (int b = -1; b <= 1; b++) {
-				if ((i + a >= 0 && i + a <= 14) && (j + b >= 0 && j + b <= 14))
-					if (tabuleiro[i+a][j+b] == -30)
-						tabuleiro[i+a][j+b] = -3;
-			}
-		}
-	}
-
 	private boolean verificarSeAfundada(int i, int j) {
 		int afundou = 0;
 		for (int a = -1; a <= 1; a++) {
@@ -367,54 +301,6 @@ class Tabuleiro implements Subject {
 			}
 		}
 		return (afundou == 3);
-	}
-	
-	private void girarHidroaviao(Embarcacao embarcacao) {
-		int tipo = embarcacao.getTipo();
-		int orientacao = embarcacao.getOrientacao();
-		int linha = embarcacao.getPosicao().getLinha();
-		int coluna = embarcacao.getPosicao().getColuna();
-
-		switch (orientacao) {
-		case 1:
-			tabuleiro[linha + 1][coluna + 1] = tipo;
-			break;
-		case 2:
-			tabuleiro[linha - 1][coluna + 1] = tipo;
-			break;
-		case 3:
-			tabuleiro[linha - 1][coluna - 1] = tipo;
-			break;
-		case 4:
-			tabuleiro[linha + 1][coluna - 1] = tipo;
-			break;
-		}
-
-	}
-
-	private void removerHidroaviao(Embarcacao embarcacao) {
-		int orientacao = embarcacao.getOrientacao();
-		int linha = embarcacao.getPosicao().getLinha();
-		int coluna = embarcacao.getPosicao().getColuna();
-
-		switch (orientacao) {
-		case 1:
-			tabuleiro[linha + 1][coluna - 1] = 0;
-			break;
-		case 2:
-			tabuleiro[linha + 1][coluna + 1] = 0;
-			break;
-		case 3:
-			tabuleiro[linha - 1][coluna + 1] = 0;
-			break;
-		case 4:
-			tabuleiro[linha - 1][coluna - 1] = 0;
-			break;
-		}
-	}
-
-	private int alterarOrientacao(int orientacao) {
-		return (orientacao % 4 + 1);
 	}
 
 	private boolean validaQuadrado(int linha, int coluna) {
@@ -428,33 +314,5 @@ class Tabuleiro implements Subject {
 			}
 		}
 		return true;
-	}
-
-	@Override
-	public void registrarObservador(Observer observador) {
-		observadores.add(observador);
-	}
-
-	@Override
-	public void removerObservador(Observer observador) {
-		observadores.remove(observador);
-	}
-
-	@Override
-	public void notificarObservadores() {
-		for (Observer observador : observadores) {
-			observador.atualizar();
-		}
-	}
-
-	public void exibeTabuleiro() {
-		System.out.println("  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4");
-		for (int i = 0; i < 15; i++) {
-			System.out.print(String.format("%d ", i >= 10 ? i - 10 : i));
-			for (int j = 0; j < 15; j++) {
-				System.out.print(tabuleiro[i][j] == 0 ? "- " : tabuleiro[i][j] + " ");
-			}
-			System.out.println();
-		}
 	}
 }
