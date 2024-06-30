@@ -3,10 +3,16 @@ package View;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class FramePrincipal extends JFrame {
 	final int LARG_DEFAULT=850;
 	final int ALT_DEFAULT=500;
+	JMenuBar menuBar;
+	JMenu fileMenu;
+	JMenuItem saveItem;
 	
 	public FramePrincipal() {
 		setVisible(true);
@@ -23,6 +29,9 @@ public class FramePrincipal extends JFrame {
 		addKeyListener(new TratadorEventosTeclado());
 		getContentPane().add(new PainelPosicionamento());
 		setTitle("Batalha Naval");
+		menuBar = new JMenuBar();
+		fileMenu = new  JMenu("Arquivo");
+		this.setJMenuBar(menuBar);
 	}
 	
 }

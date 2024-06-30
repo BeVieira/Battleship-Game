@@ -14,7 +14,6 @@ public class Control implements Subject {
 	private ArrayList<Observer> observadores;
 	private int turno = 0;
 	private int lastTiro = 0;
-	private boolean venceu = false;
 
 	public static Control getController() {
 		if (controle == null)
