@@ -149,6 +149,15 @@ public class ModelFacade{
 			jogador2.getTabuleiroAlvo().afundarEmbarcacoes();
 	}
 	
+	public boolean indicaVencedor(int turno) {
+		if (turno == 1) {
+			return (jogador1.getTabuleiroAlvo().getEmbarcacoesAfundadas() == 15);
+		}
+		else {
+			return (jogador2.getTabuleiroAlvo().getEmbarcacoesAfundadas() == 15);
+		}
+	}
+	
 	public void salvarJogo(File arquivo) throws FileNotFoundException {
 	 
 			PrintStream output = new PrintStream(arquivo);

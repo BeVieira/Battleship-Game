@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
-class FramePrincipal extends JFrame {
+public class FramePrincipal extends JFrame {
 	final int LARG_DEFAULT=850;
 	final int ALT_DEFAULT=500;
 	

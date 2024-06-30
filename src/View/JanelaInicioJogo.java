@@ -101,22 +101,20 @@ public class JanelaInicioJogo extends JFrame implements ActionListener {
 
 		getContentPane().add(nomeJ1);
 		getContentPane().add(nomeJ2);
-
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Carregar Jogo")) {
 			getContentPane().removeAll();
 			// CarregarJogo();
-			repaint();// Adicionar aqui a lógica para carregar o painel de carregamento de jogo
+			repaint();
 		} else if (e.getActionCommand().equals("Novo Jogo")) {
 			getContentPane().removeAll();
 			DefineJogador();
 			repaint();
-		} else if (e.getActionCommand().equals("Começar")) {
+		} else if (e.getActionCommand().equals("Começar") && !nomeJ1.getText().isEmpty() && !nomeJ2.getText().isEmpty()) {
 			controle.comecar(nomeJ1.getText(), nomeJ2.getText());
 			controle.trocaTurno();
-			new FramePrincipal();
 			dispose();
 		}
 	}

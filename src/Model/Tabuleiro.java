@@ -8,9 +8,11 @@ import Observer.Subject;
 class Tabuleiro implements Subject {
 	private int[][] tabuleiro;
 	private ArrayList<Observer> observadores;
+	private int embarcacoesAfundadas;
 
 	public Tabuleiro() {
 		tabuleiro = new int[15][15];
+		embarcacoesAfundadas = 0;
 	}
 
 	public int[][] getTabuleiroEstado() {
@@ -27,6 +29,10 @@ class Tabuleiro implements Subject {
 
 	public void setCasa(Coordenada coordenada, int tipoEmbarcacao) {
 		this.tabuleiro[coordenada.getLinha()][coordenada.getColuna()] = tipoEmbarcacao;
+	}
+
+	public int getEmbarcacoesAfundadas() {
+		return embarcacoesAfundadas;
 	}
 
 	public void posicionarEmbarcacao(Embarcacao embarcacao, int orientacao) {
@@ -282,17 +288,20 @@ class Tabuleiro implements Subject {
 				tipo = tabuleiro[i][j];
 				if (tipo < 0 && tipo > -100) {
 					if (tipo == -10) {
-						tabuleiro[i][j] = -1;						
+						tabuleiro[i][j] = -1;
+						embarcacoesAfundadas++;
 					}
 					else if (tipo == -30) {
 						if (verificarSeAfundada(i,j)) {
 							afundarEmbarcacao(i, j);
+							embarcacoesAfundadas++;
 						}
 					}
 					else if (tipo < -10) {
 						vertical = indicaVertical(i, j, tipo);
 						if (verificarSeAfundada(i,j, vertical, tipo)) {
-							afundarEmbarcacao(i, j, vertical, tipo);							
+							afundarEmbarcacao(i, j, vertical, tipo);
+							embarcacoesAfundadas++;
 						}
 					}
 				}
@@ -320,16 +329,16 @@ class Tabuleiro implements Subject {
 		int afundou = 0;
 		int tam = (tipo*-1)/10;
 		for (int n = 0; n < tam; n++) {
-			if (vertical) {
-				if (tabuleiro[i + n][j] == tipo) {
-					afundou++;
+				if (vertical) {
+					if ((i + n <= 14) && tabuleiro[i + n][j] == tipo) {
+		                afundou++;
+					}
 				}
-			}
-			else {				
-				if (tabuleiro[i][j + n] == tipo) {
-					afundou++;
-				}
-			}
+				else {				
+					if ((j + n <= 14) && tabuleiro[i][j + n] == tipo) {
+		                afundou++;
+					}
+				}		
 		}
 		return (afundou == tam);
 	}

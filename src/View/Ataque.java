@@ -74,7 +74,7 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		add(b);
 		
 		aviso = new JLabel();
-		aviso.setBounds(250, 375, 300, 20);
+		aviso.setBounds(250, 375, 500, 20);
 		add(aviso);
 		
 		tiroResult = new JLabel();
@@ -107,6 +107,7 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 					
 					controle.atirar(turno, indexX, indexY);
 					controle.afundarEmbarcacoes();
+					verificarVitoria();
 					atirou = true;
 					if (controle.getTiro() >= 0) tiros--;
 				}
@@ -291,7 +292,21 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		g.drawString("tabuleiro do " + controle.getNome(1), 40, 65);
 		g.drawString("tabuleiro do " + controle.getNome(2), 500, 65);
 	}
-	
+
+
+	private void verificarVitoria() {
+	    if (controle.indicaVencedor()) {
+	        JOptionPane.showMessageDialog(this, controle.getNomeAtual() + " venceu a partida!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+	        int resposta = JOptionPane.showConfirmDialog(this, "Desejam continuar jogando?", "Continuar?", JOptionPane.YES_NO_OPTION);
+	        if (resposta == JOptionPane.YES_OPTION) {
+	            controle.recomecarJogo();
+	            dispose();
+	        } else {
+	            System.exit(0);
+	        }
+	    }
+	}
+
 	private void criarArquivo() throws FileNotFoundException {
 		JFileChooser arq = new JFileChooser();
 		FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
@@ -333,7 +348,7 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == saveItem) {
+		if (e.getSource() == saveItem && tiros == 3) {
 			try {
 				criarArquivo();
 			} catch (FileNotFoundException e1) {
@@ -341,18 +356,14 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 			}
 			//controle.salvarJogo();
 		}
-		if (bloqueado == true) {
-			tiros = 3;
-			bloqueado = false;
-		}
-		else {
-			controle.trocaTurno();
-			tiros = 0;
-			bloqueado = true;
-			
-		}
-		atirou = false;
-		repaint();
+		if (e.getActionCommand().equals("Avançar")) {
+			if (bloqueado) {
+				tiros = 3;
+				bloqueado = false;
+			}
+			atirou = false;
+			repaint();
+		}	
 	}
 
 	@Override

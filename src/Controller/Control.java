@@ -14,6 +14,7 @@ public class Control implements Subject {
 	private ArrayList<Observer> observadores;
 	private int turno = 0;
 	private int lastTiro = 0;
+	private boolean venceu = false;
 
 	public static Control getController() {
 		if (controle == null)
@@ -28,8 +29,12 @@ public class Control implements Subject {
 
 	public void comecar(String nomeJ1, String nomeJ2) {
 		fachada.inicializaJogadores(nomeJ1, nomeJ2);
+		new View.FramePrincipal();
 	}
-
+	
+	public void recomecarJogo() {
+		this.comecar(getNome(1), getNome(2));
+	}
 	public String getNomeAtual() {
 		return fachada.getNome(this.turno);
 	}
@@ -61,10 +66,12 @@ public class Control implements Subject {
 	}
 
 	public void trocaTurno() {
-		if (this.turno == 0)
-			this.turno = 1;
-		else
-			this.turno = this.turno % 2 + 1;	
+		if (this.turno == 0) {
+			this.turno = 1;			
+		}
+		else {
+			this.turno = this.turno % 2 + 1;				
+		}
 	}
 
 	public int getTurno() {
@@ -100,6 +107,10 @@ public class Control implements Subject {
 	public void afundarEmbarcacoes() {
 		fachada.afundarEmbarcacoes(this.turno);
 		notificarObservadores();
+	}
+	
+	public boolean indicaVencedor() {
+		return fachada.indicaVencedor(this.turno);
 	}
 	
 	public void salvarJogo(File arquivo) throws FileNotFoundException {

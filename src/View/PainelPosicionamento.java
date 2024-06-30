@@ -336,6 +336,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
 	
     @Override
 	public void actionPerformed(ActionEvent e) {
+    	//TODO tirar o mocking
     	if(true/*controle.getEmbarcacaoNum(0, controle.getTurno()) == 0*/) {
 	    	if(controle.getTurno() == 1) {
 	    		controle.trocaTurno();
