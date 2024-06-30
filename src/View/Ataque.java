@@ -26,7 +26,6 @@ import Observer.Observer;
 public class Ataque extends JFrame implements Observer,ActionListener {
 	JMenuBar menuBar;
 	JMenu fileMenu;
-	JMenuItem loadItem;
 	JMenuItem saveItem;
 	
 	Control controle;
@@ -42,28 +41,24 @@ public class Ataque extends JFrame implements Observer,ActionListener {
     
 	public Ataque() {
 		controle = Control.getController();
-		setVisible(true);
 		setSize(870, 550);
 		setTitle("Batalha Naval");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);// encerra o programa quando clica no x
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
-		setLocationRelativeTo(null); // faz ir pro meio da tela ao abrir
+		setLocationRelativeTo(null); 
 		addMouseListener(new TratadorMouse());
 		controle.registrarObservador(this);
 		
 		menuBar = new JMenuBar();
-		fileMenu = new  JMenu("file");
-		loadItem = new JMenuItem("carregar jogo");
-		saveItem = new JMenuItem("salvar jogo");
-		
-		fileMenu.add(loadItem);
+		fileMenu = new JMenu("Arquivo");
+		saveItem = new JMenuItem("Salvar jogo");
+
 		fileMenu.add(saveItem);
-		
-		loadItem.addActionListener(this);
 		saveItem.addActionListener(this);
 
 		menuBar.add(fileMenu);
-		this.setJMenuBar(menuBar);
+		setJMenuBar(menuBar);
+
 		
 		b = new JButton("Avançar");
 		setLayout(null);
@@ -81,7 +76,7 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		tiroResult.setBounds(250, 355, 300, 20);
 		tiroResult.setForeground(Color.red);
 		add(tiroResult);
-		
+		setVisible(true);	
 	}
     
 	private class TratadorMouse extends MouseAdapter {
@@ -242,7 +237,7 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 	}
 
 	public void paint(Graphics g) {
-		//super.paint(g);
+		super.paint(g);
 		
 		desenhaTabuleiro(g, 1);
 		desenhaTabuleiro(g, 2);
@@ -288,10 +283,9 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		aviso.setText(str);
 		aviso.repaint();
 
-		g.drawString("tabuleiro do " + controle.getNome(1), 40, 65);
-		g.drawString("tabuleiro do " + controle.getNome(2), 500, 65);
+		g.drawString("Tabuleiro do " + controle.getNome(1), 140, 75);
+		g.drawString("Tabuleiro do " + controle.getNome(2), 600, 75);
 	}
-
 
 	private void verificarVitoria() {
 	    if (controle.indicaVencedor()) {
@@ -315,45 +309,22 @@ public class Ataque extends JFrame implements Observer,ActionListener {
 		if(resposta == JFileChooser.APPROVE_OPTION) {
 			file = arq.getSelectedFile();
 			controle.salvarJogo(file);
-			JOptionPane.showMessageDialog(null, "Arquivo selecionado com sucesso");
+			JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso");
 		}
 		else if(resposta == JFileChooser.CANCEL_OPTION) {
-			JOptionPane.showMessageDialog(null, "cancelado");
+			JOptionPane.showMessageDialog(null, "Cancelado");
 		}
 	}
 	
-	private void carregaArquivo() throws FileNotFoundException {
-		JFileChooser arq = new JFileChooser();
-		FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
-		arq.setFileFilter(filtro);
-		int resposta = arq.showOpenDialog(new JDialog());
-		File file = new File("");
-		if(resposta == JFileChooser.APPROVE_OPTION) {
-			file = arq.getSelectedFile();
-			JOptionPane.showMessageDialog(null, "Arquivo selecionado com sucesso");
-		}
-		else if(resposta == JFileChooser.CANCEL_OPTION) {
-			JOptionPane.showMessageDialog(null, "cancelado");
-		}
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == loadItem) {
-			try {
-				carregaArquivo();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		if (e.getSource() == saveItem && tiros == 3) {
+		if (e.getSource() == saveItem && (bloqueado || tiros == 3)) {
 			try {
 				criarArquivo();
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
-			//controle.salvarJogo();
 		}
 		if (e.getActionCommand().equals("Avançar")) {
 			if (bloqueado) {

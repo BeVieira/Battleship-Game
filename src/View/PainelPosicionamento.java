@@ -23,7 +23,6 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     final int xInicial = 500;
     final int yInicial = 50;
     final int tamanhoTabuleiro = lado * tamanhoCasa;
-    
     boolean criadoAtaque = false;
     
     int hidro = 5;
@@ -45,8 +44,7 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     	bt = new JButton("Proximo jogador");
     	bt.addActionListener(this);
     	bt.setVisible(true);
-    	bt.setFocusable(false);
-    	
+    	bt.setFocusable(false);	
     }
     
 

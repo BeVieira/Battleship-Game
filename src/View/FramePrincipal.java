@@ -2,11 +2,21 @@ package View;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.JFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
-public class FramePrincipal extends JFrame {
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+public class FramePrincipal extends JFrame implements ActionListener {
 	final int LARG_DEFAULT=850;
 	final int ALT_DEFAULT=500;
+	JMenuBar menuBar;
+	JMenu fileMenu;
+	JMenuItem loadItem;
 	
 	public FramePrincipal() {
 		setVisible(true);
@@ -23,6 +33,26 @@ public class FramePrincipal extends JFrame {
 		addKeyListener(new TratadorEventosTeclado());
 		getContentPane().add(new PainelPosicionamento());
 		setTitle("Batalha Naval");
+		menuBar = new JMenuBar();
+		fileMenu = new JMenu("Arquivo");
+		loadItem = new JMenuItem("Carregar jogo");
+
+		fileMenu.add(loadItem);
+		loadItem.addActionListener(this);
+
+		menuBar.add(fileMenu);
+		setJMenuBar(menuBar);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == saveItem && (bloqueado || tiros == 3)) {
+			try {
+				criarArquivo();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 	
 }
