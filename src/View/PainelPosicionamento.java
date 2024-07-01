@@ -58,9 +58,6 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
         if(controle.getEmbarcacaoNum(0, controle.getTurno()) == 0) {
         	bt.setEnabled(true);
         }
-        else {
-        //	bt.setEnabled(false);
-        }
     }
 
     private void desenhaTabuleiro(Graphics g) {
@@ -97,8 +94,6 @@ public class PainelPosicionamento extends JPanel implements Observer, ActionList
     }
 
     public void atualizarTab(Graphics g) {
-        //int[][] tabuleiro = controle.getTabuleiro();
-        
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
                 int tipo = controle.getCasa(j, i, controle.getTurno());

@@ -14,7 +14,7 @@ public class TratadorEventosTeclado extends KeyAdapter implements Subject{
 	GhostController ghost = GhostController.getController();
 	
 	private ArrayList<Observer> observadores;
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if ((e.getKeyCode() == KeyEvent.VK_ESCAPE) && (ghost.posicionando == true)) {

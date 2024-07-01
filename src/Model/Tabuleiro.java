@@ -92,8 +92,6 @@ class Tabuleiro {
 				}
 			}
 		}
-		embarcacao.setPosicao(embarcacao.getPosicao());
-		// notificarObservadores();
 	}
 
 	public boolean validaPosicionar(Coordenada coordenada, int tipo, int orientacao) {
